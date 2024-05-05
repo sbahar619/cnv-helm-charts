@@ -33,18 +33,7 @@ spec:
       - containerDisk:
           image: {{ .Values.vm.image }}
         name: containerdisk
-      - cloudInitNoCloud:
-          networkData: |
-            ethernets:
-              eth0:
-                addresses:
-                - fd10:0:2::2/120
-                dhcp4: true
-                gateway6: fd10:0:2::1
-              eth1:
-                addresses:
-                - 10.200.0.2/24
-            version: 2
+      {{- include "vm.spec.template.spec.volumes.cloudInitNoCloud" . | indent 6 }}
           userData: |-
             #cloud-config
             password: password
