@@ -1,3 +1,4 @@
+{{- if .Values.vm.enable }}
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
@@ -50,5 +51,6 @@ spec:
             chpasswd: { expire: False }
         name: cloudinitdisk
       networks:
-        {{- include "vm.spec.template.spec.networks" . | indent 8 }} 
+        {{- include "vm.spec.template.spec.networks" . | indent 8 }}
+{{- end }}
     
