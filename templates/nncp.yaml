@@ -1,0 +1,11 @@
+{{- if .Values.nncp.enable }}
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: {{ .Release.Name }}-nncp 
+  namespace: {{ .Release.namespace }}
+spec:
+  desiredState:
+    interfaces:
+    {{- include "nncp.spec.interfaces" . | indent 4 }}
+{{- end }}

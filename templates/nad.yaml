@@ -1,0 +1,26 @@
+{{- if .Values.nad.enable }}
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: {{ .Values.nad.name }} 
+  namespace: {{ .Release.namespace }}
+spec:
+  config:
+     {{- $network := .Values.nad.network }}
+     '{
+       "cniVersion": "{{ $network.cniVersion }}",
+       "name": "{{ $network.name }}",
+       "type": "{{ $network.type }}",
+       "bridge": "{{ $network.bridge }}",
+       "macspoofchk": {{ $network.macspoofchk | toString }},
+       {{- if $network.ipam.enable }}
+       "ipam": {{ $network.ipam.value }},
+       {{- end }}
+       {{- if $network.vlan.enable }}
+       "vlan": {{ $network.vlan.value }},
+       {{- end }}
+       {{- if $network.preserveDefaultVlan.enable }}
+       "preserveDefaultVlan": {{ $network.preserveDefaultVlan.value | toString }}
+       {{- end }}
+     }'
+{{- end }}
