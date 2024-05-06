@@ -11,6 +11,7 @@ spec:
       labels:
         kubevirt.io/vm: {{ .Release.Name }}-vm
     spec:
+      {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
       domain:
         devices:
           interfaces:

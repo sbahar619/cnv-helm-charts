@@ -63,3 +63,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
   {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the vm.spec.template.spec.nodeSelector object
+*/}}
+
+{{- define "vm.spec.template.spec.nodeSelector" -}}
+{{- if .Values.vm.nodeSelector.enable }}
+nodeSelector:
+  {{ .Values.vm.nodeSelector.key }}: {{ .Values.vm.nodeSelector.value }}
+{{- end }}
+{{- end }}
