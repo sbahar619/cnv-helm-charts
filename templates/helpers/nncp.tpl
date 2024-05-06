@@ -5,7 +5,6 @@ Return the nncp.spec.interfaces object
 {{- define "nncp.spec.interfaces" -}}
 {{- range .Values.nncp.interfaces }}
   - name: {{ .name }} 
-    description: {{ .description }} 
     type: {{ .type }}
     state: {{ .state }} 
     ipv4:
@@ -18,5 +17,16 @@ Return the nncp.spec.interfaces object
       {{- range .ports }}
         - name: {{ . }} 
       {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the nncp.spec.nodeSelector object
+*/}}
+
+{{- define "nncp.spec.nodeSelector" -}}
+{{- if .Values.nncp.nodeSelector.enable }}
+nodeSelector:
+  {{ .Values.nncp.nodeSelector.key }}: {{ .Values.nncp.nodeSelector.value }}
 {{- end }}
 {{- end }}

@@ -5,7 +5,9 @@ metadata:
   name: {{ .Release.Name }}-nncp 
   namespace: {{ .Release.namespace }}
 spec:
+  {{- include "nncp.spec.nodeSelector" . | indent 2 }}
   desiredState:
     interfaces:
     {{- include "nncp.spec.interfaces" . | indent 4 }}
+
 {{- end }}
