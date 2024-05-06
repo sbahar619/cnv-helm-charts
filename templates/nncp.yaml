@@ -1,13 +1,16 @@
 {{- if .Values.nncp.enable }}
+{{- $initialContext := . }}
+{{- range .Values.nncp.nncps }}
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: {{ .Release.Name }}-nncp 
-  namespace: {{ .Release.namespace }}
+  name: {{ $initialContext.Release.Name }}-{{ .name }}-nncp 
+  namespace: {{ $initialContext.Release.namespace }}
 spec:
   {{- include "nncp.spec.nodeSelector" . | indent 2 }}
   desiredState:
     interfaces:
     {{- include "nncp.spec.interfaces" . | indent 4 }}
-
+---
+{{- end }}
 {{- end }}

@@ -3,7 +3,7 @@ Return the nncp.spec.interfaces object
 */}}
 
 {{- define "nncp.spec.interfaces" -}}
-{{- range .Values.nncp.interfaces }}
+{{- range .interfaces }}
   - name: {{ .name }} 
     type: {{ .type }}
     state: {{ .state }} 
@@ -25,8 +25,8 @@ Return the nncp.spec.nodeSelector object
 */}}
 
 {{- define "nncp.spec.nodeSelector" -}}
-{{- if .Values.nncp.nodeSelector.enable }}
+{{- if .nodeSelector.enable }}
 nodeSelector:
-  {{ .Values.nncp.nodeSelector.key }}: {{ .Values.nncp.nodeSelector.value }}
+  {{ .nodeSelector.key }}: {{ .nodeSelector.value }}
 {{- end }}
 {{- end }}
