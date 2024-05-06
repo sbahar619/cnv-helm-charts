@@ -1,15 +1,17 @@
 {{- if .Values.vm.enable }}
+{{- $initialContext := . }}
+{{- range .Values.vm.vms }}
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  namespace: {{ .Release.namespace }}
-  name: {{ .Release.Name }}-vm
+  namespace: {{ $initialContext.Release.namespace }}
+  name: {{ $initialContext.Release.Name }}-{{ .name }}-vm
 spec:
-  running: {{ .Values.vm.running }}
+  running: {{ .running }}
   template:
     metadata:
       labels:
-        kubevirt.io/vm: {{ .Release.Name }}-vm
+        kubevirt.io/vm: {{ $initialContext.Release.Name }}-{{ .name }}-vm
     spec:
       {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
       domain:
@@ -32,7 +34,7 @@ spec:
       terminationGracePeriodSeconds: 0
       volumes:
       - containerDisk:
-          image: {{ .Values.vm.image }}
+          image: {{ .image }}
         name: containerdisk
       {{- include "vm.spec.template.spec.volumes.cloudInitNoCloud" . | indent 6 }}
           userData: |-
@@ -42,5 +44,7 @@ spec:
         name: cloudinitdisk
       networks:
         {{- include "vm.spec.template.spec.networks" . | indent 8 }}
+---
+{{- end }}
 {{- end }}
     

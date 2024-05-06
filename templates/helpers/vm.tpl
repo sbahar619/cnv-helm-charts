@@ -3,8 +3,8 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
-{{- if .Values.vm.domain.devices.interface.enable }}
-{{- range .Values.vm.domain.devices.interface.interfaces }}
+{{- if .domain.devices.interface.enable }}
+{{- range .domain.devices.interface.interfaces }}
 - {{ .type }}: {}
   name: {{ .name }}
 {{- end }}
@@ -16,8 +16,8 @@ Return the vm.spec.template.spec.networks object
 */}}
 
 {{- define "vm.spec.template.spec.networks" -}}
-{{- if .Values.vm.network.enable }}
-{{- range .Values.vm.network.networks }}
+{{- if .network.enable }}
+{{- range .network.networks }}
 - name: {{ .name }}
   {{- if ( eq .type "multus") }}
   {{ .type }}:
@@ -34,16 +34,16 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 */}}
 
 {{- define "vm.spec.template.spec.volumes.cloudInitNoCloud" -}}
-{{- if .Values.vm.cloudInitNoCloud.enable }}
+{{- if .cloudInitNoCloud.enable }}
 - cloudInitNoCloud:
 
-  {{- if .Values.vm.cloudInitNoCloud.networkData.enable }}
+  {{- if .cloudInitNoCloud.networkData.enable }}
     networkData: |
-      version: {{ .Values.vm.cloudInitNoCloud.networkData.version }}
+      version: {{ .cloudInitNoCloud.networkData.version }}
 
-      {{- if .Values.vm.cloudInitNoCloud.networkData.ethernet.enable }}
+      {{- if .cloudInitNoCloud.networkData.ethernet.enable }}
       ethernets:
-      {{- range .Values.vm.cloudInitNoCloud.networkData.ethernet.ethernets }}
+      {{- range .cloudInitNoCloud.networkData.ethernet.ethernets }}
         {{ .name }}:
         {{- if .address.enable }}
           addresses:
@@ -69,8 +69,8 @@ Return the vm.spec.template.spec.nodeSelector object
 */}}
 
 {{- define "vm.spec.template.spec.nodeSelector" -}}
-{{- if .Values.vm.nodeSelector.enable }}
+{{- if .nodeSelector.enable }}
 nodeSelector:
-  {{ .Values.vm.nodeSelector.key }}: {{ .Values.vm.nodeSelector.value }}
+  {{ .nodeSelector.key }}: {{ .nodeSelector.value }}
 {{- end }}
 {{- end }}
