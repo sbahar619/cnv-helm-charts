@@ -27,6 +27,6 @@ Return the nncp.spec.nodeSelector object
 {{- define "nncp.spec.nodeSelector" -}}
 {{- if .nodeSelector.enable }}
 nodeSelector:
-  {{ .nodeSelector.key }}: {{ .nodeSelector.value }}
+  {{ .nodeSelector.key }}: {{ .nodeSelector.value | quote}}
 {{- end }}
 {{- end }}
