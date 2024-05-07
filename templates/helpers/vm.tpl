@@ -61,6 +61,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
       {{- end }}
 
   {{- end }}
+  {{- if .cloudInitNoCloud.userData.enable }}
+    userData: |-
+      #cloud-config
+      user: {{ .cloudInitNoCloud.userData.user }}
+      password: {{ .cloudInitNoCloud.userData.password }}
+      chpasswd: { expire: False }
+  {{- end }}
+
 {{- end }}
 {{- end }}
 

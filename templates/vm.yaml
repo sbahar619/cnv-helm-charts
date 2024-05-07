@@ -37,10 +37,6 @@ spec:
           image: {{ .image }}
         name: containerdisk
       {{- include "vm.spec.template.spec.volumes.cloudInitNoCloud" . | indent 6 }}
-          userData: |-
-            #cloud-config
-            password: password
-            chpasswd: { expire: False }
         name: cloudinitdisk
       networks:
         {{- include "vm.spec.template.spec.networks" . | indent 8 }}
