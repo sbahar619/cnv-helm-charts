@@ -1,0 +1,213 @@
+vm:
+  enable: false
+
+  vms:
+
+    - name: 1 
+      running: true
+
+      # image example:
+      #   registry.redhat.io/rhel8/rhel-guest-image
+      #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
+      image: registry.redhat.io/rhel8/rhel-guest-image:latest
+
+      nodeSelector:
+        enable: true
+        key: test
+        value: mig
+
+      network:
+        enable: true
+        networks:
+        - name: default 
+          type: pod
+        - name: bridge-net 
+          type: multus
+          networkName: bridge-nad
+
+      domain:
+        devices:
+          interface:
+            enable: true
+            interfaces:
+            - type: masquerade
+              name: default
+            - type: bridge
+              name: bridge-net 
+
+      cloudInitNoCloud:
+        enable: true
+
+        userData:
+          enable: true
+          user: u
+          password: p
+
+        networkData:
+          enable: true
+          version: 2
+
+          ethernet:
+            enable: true
+            ethernets:
+            - name: eth0
+              address:
+                enable: true
+                addresses:
+                - fd10:0:2::2/120
+              dhcp4:
+                enable: true
+                value: true
+              gateway6:
+                enable: true
+                value: fd10:0:2::1
+            - name: eth1
+              address:
+                enable: true
+                addresses:
+                - 10.200.0.2/24
+              dhcp4:
+                enable: false
+                value: true
+              gateway6:
+                enable: false
+                value: true
+
+    - name: 2 
+      running: true
+
+      # image example:
+      #   registry.redhat.io/rhel8/rhel-guest-image
+      #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
+      image: registry.redhat.io/rhel8/rhel-guest-image:latest
+
+      nodeSelector:
+        enable: true
+        key: test
+        value: mig
+
+      network:
+        enable: true
+        networks:
+        - name: default 
+          type: pod
+        - name: bridge-net 
+          type: multus
+          networkName: bridge-nad
+
+      domain:
+        devices:
+          interface:
+            enable: true
+            interfaces:
+            - type: masquerade
+              name: default
+            - type: bridge
+              name: bridge-net 
+
+      cloudInitNoCloud:
+        enable: true
+
+        userData:
+          enable: true
+          user: u
+          password: p
+
+        networkData:
+          enable: true
+          version: 2
+
+          ethernet:
+            enable: true
+            ethernets:
+            - name: eth0
+              address:
+                enable: true
+                addresses:
+                - fd10:0:2::2/120
+              dhcp4:
+                enable: true
+                value: true
+              gateway6:
+                enable: true
+                value: fd10:0:2::1
+            - name: eth1
+              address:
+                enable: true
+                addresses:
+                - 10.200.0.2/24
+              dhcp4:
+                enable: false
+                value: true
+              gateway6:
+                enable: false
+                value: true
+
+nncp:
+  enable: false
+  nncps:
+
+  - name: 1
+    interfaces:
+    - name: br1
+      type: linux-bridge
+      state: up
+      ports:
+      - ens1f3
+    nodeSelector:
+      enable: true
+      key: kubernetes.io/hostname
+      value: master2.bm02-ibm.ibmc.cnv-qe.rhood.us
+
+  - name: 2 
+    interfaces:
+    - name: br1
+      type: linux-bridge
+      state: up
+      ports:
+      - ens1f3
+    nodeSelector:
+      enable: true
+      key: rrrrrr
+      value: rrrrr
+
+nad:
+  enable: false
+  name: bridge-nad
+  network:
+    cniVersion: "0.3.1"
+    name: "bridge-network"
+    type: "cnv-bridge"
+    bridge: "br1"
+    macspoofchk: true
+    ipam:
+      enable: true
+      value: "{}"
+    vlan:
+      enable: true
+      value: 861
+    preserveDefaultVlan:
+       enable: true
+       value: false
+
+pvc:
+  enable: false
+  storageClassName: ocs-storagecluster-ceph-rbd
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+dv:
+  enable: false
+  pvc:
+    enable: true
+    storageClassName: ocs-storagecluster-ceph-rbd
+    # Filesystem
+    volumeMode: Block
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi

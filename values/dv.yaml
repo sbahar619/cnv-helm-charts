@@ -1,0 +1,11 @@
+dv:
+  enable: true
+  pvc:
+    enable: true
+    storageClassName: ocs-storagecluster-ceph-rbd
+    volumeMode: Block
+    accessModes:
+    - ReadWriteMany
+    resources:
+      requests:
+        storage: 1Gi
