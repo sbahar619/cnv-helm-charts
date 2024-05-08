@@ -82,3 +82,14 @@ nodeSelector:
   {{ .nodeSelector.key }}: {{ .nodeSelector.value }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue" -}}
+{{- $networkInterfaceMultiqueueContext := .domain.devices.networkInterfaceMultiqueue }}
+{{- if $networkInterfaceMultiqueueContext.enable }}
+networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueueContext.value }}
+{{- end }}
+{{- end }}

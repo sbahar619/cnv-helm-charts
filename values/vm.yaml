@@ -27,6 +27,10 @@ vm:
 
       domain:
         devices:
+          networkInterfaceMultiqueue:
+            enable: false
+            value: true
+
           interface:
             enable: true
             interfaces:
@@ -97,6 +101,10 @@ vm:
 
       domain:
         devices:
+          networkInterfaceMultiqueue:
+            enable: false
+            value: true
+
           interface:
             enable: true
             interfaces:
