@@ -1,0 +1,10 @@
+SriovNetworkNodePolicy:
+  enable: true
+  SriovNetworkNodePolicys:
+  - name: 1
+    namespace: openshift-sriov-network-operator
+    resourceName: sriov_net
+    nodeSelector:
+      key: feature.node.kubernetes.io/network-sriov.capable
+      value: true
+    

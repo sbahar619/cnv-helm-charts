@@ -1,0 +1,16 @@
+{{- if .Values.SriovNetworkNodePolicy.enable }}
+{{- $initialContext := . }}
+{{- $SriovNetworkNodePolicyContext := .Values.SriovNetworkNodePolicy.SriovNetworkNodePolicys }}
+{{- range $SriovNetworkNodePolicyContext }}
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetworkNodePolicy
+metadata:
+  name: {{ $initialContext.Release.Name }}-{{ .name }}-snnp
+  namespace: {{ .namespace }} 
+spec:
+  resourceName: {{ .resourceName }} 
+  nodeSelector:
+    {{ .nodeSelector.key }}: {{ .nodeSelector.value }} 
+---
+{{- end }}
+{{- end }}

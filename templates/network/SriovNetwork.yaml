@@ -1,0 +1,15 @@
+{{- if .Values.SriovNetwork.enable }}
+{{- $initialContext := . }}
+{{- $SriovNetworkContext := .Values.SriovNetwork.SriovNetworks }}
+{{- range $SriovNetworkContext }}
+apiVersion: sriovnetwork.openshift.io/v1
+kind: SriovNetwork
+metadata:
+  name: {{ $initialContext.Release.Name }}-{{ .name }}-sriov-network
+  namespace: {{ .namespace }}
+spec:
+  resourceName: {{ .resourceName }}
+  networkNamespace: {{ $initialContext.Release.namespace }}
+---
+{{- end }}
+{{- end }}
