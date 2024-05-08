@@ -96,3 +96,22 @@ Return the vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue objec
 networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueueContext.value }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain.cpu object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.cpu" -}}
+{{- $cpuContext := .domain.cpu }}
+{{- if $cpuContext.enable }}
+cpu:
+{{- $coresContext := $cpuContext.cores }}
+{{- if $coresContext.enable }}
+  cores: {{ $coresContext.value }}
+{{- end }}
+{{- $dedicatedCpuPlacementContext := $cpuContext.dedicatedCpuPlacement }}
+{{- if $dedicatedCpuPlacementContext.enable }}
+  dedicatedCpuPlacement: {{ $dedicatedCpuPlacementContext.value }}
+{{- end }}
+{{- end }}
+{{- end }}

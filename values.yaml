@@ -12,7 +12,7 @@ vm:
       image: registry.redhat.io/rhel8/rhel-guest-image:latest
 
       nodeSelector:
-        enable: true
+        enable: false
         key: test
         value: mig
 
@@ -26,6 +26,15 @@ vm:
           networkName: bridge-nad
 
       domain:
+        cpu:
+          enable: false
+          cores:
+            enable: false
+            value: 16
+          dedicatedCpuPlacement:
+            enable: false
+            value: true
+
         devices:
           networkInterfaceMultiqueue:
             enable: false

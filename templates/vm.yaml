@@ -15,6 +15,7 @@ spec:
     spec:
       {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
       domain:
+        {{- include "vm.spec.template.spec.domain.cpu" . | indent 8}}
         devices:
           {{- include "vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue" . | indent 10 }}
           interfaces:
