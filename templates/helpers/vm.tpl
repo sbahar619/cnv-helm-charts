@@ -3,8 +3,9 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
-{{- if .domain.devices.interface.enable }}
-{{- range .domain.devices.interface.interfaces }}
+{{- $interfaceContext := .domain.devices.interface }}
+{{- if $interfaceContext.enable }}
+{{- range $interfaceContext.interfaces }}
 - {{ .type }}: {}
   name: {{ .name }}
 {{- end }}
@@ -37,13 +38,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 {{- if .cloudInitNoCloud.enable }}
 - cloudInitNoCloud:
 
-  {{- if .cloudInitNoCloud.networkData.enable }}
+  {{- $networkDataContext := .cloudInitNoCloud.networkData }}
+  {{- if $networkDataContext.enable }}
     networkData: |
-      version: {{ .cloudInitNoCloud.networkData.version }}
-
-      {{- if .cloudInitNoCloud.networkData.ethernet.enable }}
+      version: {{ $networkDataContext.version }}
+      {{- $ethernetContext := $networkDataContext.ethernet }}
+      {{- if $ethernetContext.enable }}
       ethernets:
-      {{- range .cloudInitNoCloud.networkData.ethernet.ethernets }}
+      {{- range $ethernetContext.ethernets }}
         {{ .name }}:
         {{- if .address.enable }}
           addresses:
@@ -59,13 +61,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
         {{- end }}
       {{- end }}
       {{- end }}
-
   {{- end }}
+
   {{- if .cloudInitNoCloud.userData.enable }}
+  {{- $userDataContext := .cloudInitNoCloud.userData }}
     userData: |-
       #cloud-config
-      user: {{ .cloudInitNoCloud.userData.user }}
-      password: {{ .cloudInitNoCloud.userData.password }}
+      user: {{ $userDataContext.user }}
+      password: {{ $userDataContext.password }}
       chpasswd: { expire: False }
   {{- end }}
 
