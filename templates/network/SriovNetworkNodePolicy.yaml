@@ -10,7 +10,9 @@ metadata:
 spec:
   resourceName: {{ .resourceName }} 
   nodeSelector:
-    {{ .nodeSelector.key }}: {{ .nodeSelector.value }} 
+    {{ .nodeSelector.key }}: {{ .nodeSelector.value | quote }}
+  numVfs: {{ .numVfs }}
+  {{- include "SriovNetworkNodePolicy.spec.nicSelector" . | indent 2}}
 ---
 {{- end }}
 {{- end }}

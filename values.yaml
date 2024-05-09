@@ -133,6 +133,29 @@ nad:
        enable: true
        value: false
 
+SriovNetworkNodePolicy:
+  enable: false
+  SriovNetworkNodePolicys:
+  - name: 1
+    namespace: openshift-sriov-network-operator
+    resourceName: sriov_net
+    nodeSelector:
+      key: feature.node.kubernetes.io/network-sriov.capable
+      value: true
+    nicSelector:
+      pfNames:
+      - eno2
+      - eno2
+      - eno2
+    numVfs: 32
+
+SriovNetwork:
+  enable: false
+  SriovNetworks:
+  - name: 1
+    namespace: openshift-sriov-network-operator
+    resourceName: sriov_net
+
 pvc:
   enable: false
   storageClassName: ocs-storagecluster-ceph-rbd

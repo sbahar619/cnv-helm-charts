@@ -7,4 +7,10 @@ SriovNetworkNodePolicy:
     nodeSelector:
       key: feature.node.kubernetes.io/network-sriov.capable
       value: true
+    nicSelector:
+      pfNames:
+      - eno2
+      - eno2
+      - eno2
+    numVfs: 32
     
