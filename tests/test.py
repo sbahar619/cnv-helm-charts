@@ -3,11 +3,23 @@ import os
 import subprocess
 import uuid
 import logging 
-  
-# configuring the logger to display log message 
-# along with log level and time  
-logging.basicConfig(format='%(levelname)s: %(asctime)s %(message)s', 
-                    level=logging.INFO,) 
+import argparse
+
+parser = argparse.ArgumentParser(description='Your script description')
+parser.add_argument('-v', '--verbose', action='store_true', help='Increase logging verbosity to DEBUG')
+# Add other command line arguments as needed
+args = parser.parse_args()
+
+# Set logging configuration
+if args.verbose:
+    logging.basicConfig(format='%(levelname)s: %(asctime)s %(message)s',
+                level=logging.DEBUG,)
+else:
+    # configuring the logger to display log message
+    # along with log level and time
+    logging.basicConfig(format='%(levelname)s: %(asctime)s %(message)s',
+                level=logging.INFO,)
+
 
 def get_git_root():
     # Run git command to get root path of git repository
@@ -29,11 +41,14 @@ def update_values_file(values_file):
 
     # Update 'enable' key to True
     def update_enable_value(data):
-        for key, value in data.items():
-            if isinstance(value, dict):
+        if isinstance(data, dict):
+            if 'enable' in data:
+                data['enable'] = True
+            for value in data.values():
                 update_enable_value(value)
-            elif key == 'enable':
-                data[key] = True
+        elif isinstance(data, list):
+            for item in data:
+                update_enable_value(item)
         return data
 
     values_data = update_enable_value(values_data)
@@ -44,6 +59,10 @@ def update_values_file(values_file):
     # Write updated values to the unique filename
     with open(unique_filename, 'w') as f:
         yaml.dump(values_data, f)
+
+    with open(unique_filename, 'r') as f:
+        file_content = f.read()
+        logging.debug(f"File {unique_filename} content:\n{file_content}")
 
     return unique_filename
 
