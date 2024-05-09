@@ -4,7 +4,7 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  namespace: {{ $initialContext.Release.namespace }}
+  namespace: {{ $initialContext.Release.Namespace }}
   name: {{ $initialContext.Release.Name }}-{{ .name }}-vm
 spec:
   running: {{ .running }}

@@ -9,7 +9,7 @@ metadata:
   namespace: {{ .namespace }}
 spec:
   resourceName: {{ .resourceName }}
-  networkNamespace: {{ $initialContext.Release.namespace }}
+  networkNamespace: {{ $initialContext.Release.Namespace }}
 ---
 {{- end }}
 {{- end }}
