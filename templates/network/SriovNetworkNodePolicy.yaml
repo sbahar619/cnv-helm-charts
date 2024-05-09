@@ -1,7 +1,7 @@
 {{- if .Values.SriovNetworkNodePolicy.enable }}
 {{- $initialContext := . }}
-{{- $SriovNetworkNodePolicyContext := .Values.SriovNetworkNodePolicy.SriovNetworkNodePolicys }}
-{{- range $SriovNetworkNodePolicyContext }}
+{{- $SriovNetworkNodePolicy := .Values.SriovNetworkNodePolicy.SriovNetworkNodePolicys }}
+{{- range $SriovNetworkNodePolicy }}
 apiVersion: sriovnetwork.openshift.io/v1
 kind: SriovNetworkNodePolicy
 metadata:

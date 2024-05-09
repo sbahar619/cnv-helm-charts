@@ -3,9 +3,9 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
-{{- $interfaceContext := .domain.devices.interface }}
-{{- if $interfaceContext.enable }}
-{{- range $interfaceContext.interfaces }}
+{{- $interface := .domain.devices.interface }}
+{{- if $interface.enable }}
+{{- range $interface.interfaces }}
 - {{ .type }}: {}
   name: {{ .name }}
 {{- end }}
@@ -38,14 +38,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 {{- if .cloudInitNoCloud.enable }}
 - cloudInitNoCloud:
 
-  {{- $networkDataContext := .cloudInitNoCloud.networkData }}
-  {{- if $networkDataContext.enable }}
+  {{- $networkData := .cloudInitNoCloud.networkData }}
+  {{- if $networkData.enable }}
     networkData: |
-      version: {{ $networkDataContext.version }}
-      {{- $ethernetContext := $networkDataContext.ethernet }}
-      {{- if $ethernetContext.enable }}
+      version: {{ $networkData.version }}
+      {{- $ethernet := $networkData.ethernet }}
+      {{- if $ethernet.enable }}
       ethernets:
-      {{- range $ethernetContext.ethernets }}
+      {{- range $ethernet.ethernets }}
         {{ .name }}:
         {{- if .address.enable }}
           addresses:
@@ -64,11 +64,11 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
   {{- end }}
 
   {{- if .cloudInitNoCloud.userData.enable }}
-  {{- $userDataContext := .cloudInitNoCloud.userData }}
+  {{- $userData := .cloudInitNoCloud.userData }}
     userData: |-
       #cloud-config
-      user: {{ $userDataContext.user }}
-      password: {{ $userDataContext.password }}
+      user: {{ $userData.user }}
+      password: {{ $userData.password }}
       chpasswd: { expire: False }
   {{- end }}
 
@@ -91,9 +91,9 @@ Return the vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue objec
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue" -}}
-{{- $networkInterfaceMultiqueueContext := .domain.devices.networkInterfaceMultiqueue }}
-{{- if $networkInterfaceMultiqueueContext.enable }}
-networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueueContext.value }}
+{{- $networkInterfaceMultiqueue := .domain.devices.networkInterfaceMultiqueue }}
+{{- if $networkInterfaceMultiqueue.enable }}
+networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
 {{- end }}
 {{- end }}
 
@@ -102,16 +102,16 @@ Return the vm.spec.template.spec.domain.cpu object
 */}}
 
 {{- define "vm.spec.template.spec.domain.cpu" -}}
-{{- $cpuContext := .domain.cpu }}
-{{- if $cpuContext.enable }}
+{{- $cpu := .domain.cpu }}
+{{- if $cpu.enable }}
 cpu:
-{{- $coresContext := $cpuContext.cores }}
-{{- if $coresContext.enable }}
-  cores: {{ $coresContext.value }}
+{{- $cores := $cpu.cores }}
+{{- if $cores.enable }}
+  cores: {{ $cores.value }}
 {{- end }}
-{{- $dedicatedCpuPlacementContext := $cpuContext.dedicatedCpuPlacement }}
-{{- if $dedicatedCpuPlacementContext.enable }}
-  dedicatedCpuPlacement: {{ $dedicatedCpuPlacementContext.value }}
+{{- $dedicatedCpuPlacement := $cpu.dedicatedCpuPlacement }}
+{{- if $dedicatedCpuPlacement.enable }}
+  dedicatedCpuPlacement: {{ $dedicatedCpuPlacement.value }}
 {{- end }}
 {{- end }}
 {{- end }}
