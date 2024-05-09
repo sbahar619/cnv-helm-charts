@@ -43,7 +43,7 @@ def update_values_file(values_file):
 
     # Write updated values to the unique filename
     with open(unique_filename, 'w') as f:
-        logging.info(yaml.dump(values_data, f))
+        yaml.dump(values_data, f)
 
     return unique_filename
 
@@ -52,11 +52,26 @@ def helm_template(namespace, values_file):
     cmd = ['helm', 'template', '--debug', f'--namespace={namespace}', '-f', f"{values_file}", '.']
     try:
         result = subprocess.run(cmd, check=True, capture_output=True, text=True)
+        logging.debug(f"Helm template command {' '.join(cmd)} output:\n{result.stdout}")
+        return True
     except subprocess.CalledProcessError as e:
-        logging.error(f"Helm template command failed with error: {e}")
+        logging.error(f"Helm template command {' '.join(cmd)} failed with error: {e}")
+        if e.stderr:
+            logging.error(f"Command stderr:\n{e.stderr}")
         return False
-    logging.info(result.stdout)
-    return True
+    
+def delete_file(file_path):
+    if os.path.exists(file_path):
+        try:
+            os.remove(file_path)
+            logging.debug(f"File '{file_path}' deleted successfully.")
+            return True
+        except OSError as e:
+            logging.error(f"Error deleting file '{file_path}': {e}")
+            return False
+    else:
+        logging.error(f"File '{file_path}' does not exist.")
+        return False
 
 def main():
     # Path to the values file
@@ -70,6 +85,8 @@ def main():
         logging.info("Helm template command ran successfully.")
     else:
         logging.info("Helm template command failed.")
+    
+    delete_file(test_values_file)
 
 if __name__ == "__main__":
     main()
