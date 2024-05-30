@@ -1,5 +1,5 @@
 vm:
-  enable: false
+  enable: true
 
   vms:
 
@@ -13,8 +13,20 @@ vm:
 
       nodeSelector:
         enable: false
-        key: test
-        value: mig
+        key: key
+        value: value
+
+      template:
+        metadata:
+          annotations:
+            enable: true
+            annotations:
+            - key: cpu-load-balancing.crio.io
+              value: disable
+            - key: cpu-quota.crio.io
+              value: disable
+            - key: irq-load-balancing.crio.io
+              value: disable
 
       network:
         enable: true
@@ -26,14 +38,43 @@ vm:
           networkName: bridge-nad
 
       domain:
+        memory:
+          enable: true
+          guest: 4Gi
+          hugepages:
+            enable: true
+            pageSize: 1Gi
+        ioThreadsPolicy:
+          enable: true
+          value: auto
+        terminationGracePeriodSeconds:
+          enable: true
+          value: 0
         cpu:
-          enable: false
+          enable: true
           cores:
-            enable: false
-            value: 16
+            enable: true
+            value: 2
+          sockets:
+            enable: true
+            value: 2
+          threads:
+            enable: true
+            value: 2
           dedicatedCpuPlacement:
-            enable: false
+            enable: true
             value: true
+          isolateEmulatorThread:
+            enable: true
+            value: true
+          model:
+            enable: true
+            value: passthrough
+          numa:
+            enable: true
+            key: guestMappingPassthrough
+          realtime:
+            enable: true
 
         devices:
           networkInterfaceMultiqueue:
@@ -48,6 +89,18 @@ vm:
             - type: bridge
               name: bridge-net 
 
+          autoattachGraphicsDevice:
+            enable: true
+            value: false
+          
+          autoattachMemBalloon:
+            enable: true
+            value: false
+
+          autoattachSerialConsole:
+            enable: true
+            value: true
+
       cloudInitNoCloud:
         enable: true
 
@@ -57,7 +110,7 @@ vm:
           password: p
 
         networkData:
-          enable: true
+          enable: false
           version: 2
 
           ethernet:
@@ -111,8 +164,8 @@ nncp:
       - ens1f3
     nodeSelector:
       enable: true
-      key: rrrrrr
-      value: rrrrr
+      key: mykey
+      value: myval
 
 nad:
   enable: false
@@ -177,3 +230,45 @@ dv:
     resources:
       requests:
         storage: 1Gi
+
+mcp:
+  enable: false
+  labels:
+  - key: machineconfiguration.openshift.io/role
+    value: worker-realtime
+  machineConfigSelector:
+    matchExpressions:
+      enable: true
+      matchExpressions:
+      - key: machineconfiguration.openshift.io/role
+        operator: In
+        values:
+          - worker
+          - worker-realtime
+  nodeSelector:
+    matchLabels:
+      enable: true
+      key: node-role.kubernetes.io/worker-realtime
+      value: ""
+
+PerformanceProfile:
+  enable: false
+  cpu:
+    isolated: 4-39,44-79
+    reserved: 0-3,40-43
+  globallyDisableIrqLoadBalancing: true
+  hugepages:
+    defaultHugepagesSize: 1G
+    pages:
+    - count: 8
+      size: 1G
+  realTimeKernel:
+    enabled: true
+  workloadHints:
+    highPowerConsumption: true
+    realTime: true
+  nodeSelector:
+    key: node-role.kubernetes.io/worker-realtime
+    value: ""
+  numa:
+    topologyPolicy: single-numa-node
