@@ -1,0 +1,12 @@
+{{- if .Values.mcp.enable }}
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfigPool
+metadata:
+  name: {{ .Release.Name }}
+  {{- include "mcp.metadata.labels" . | indent 2 }}
+spec:
+  machineConfigSelector:
+    {{- include "mcp.spec.machineConfigSelector.matchExpressions" . | indent 4}}
+  nodeSelector:
+    {{- include "mcp.spec.nodeSelector.matchLabels" . | indent 4 }}
+{{- end }}
