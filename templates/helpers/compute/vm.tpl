@@ -3,15 +3,55 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
-{{- $interface := .domain.devices.interface }}
+{{- $devices := .domain.devices }}
+{{- $interface := $devices.interface }}
 {{- if $interface.enable }}
+interfaces:
 {{- range $interface.interfaces }}
-- {{ .type }}: {}
-  name: {{ .name }}
+  - {{ .type }}: {}
+    name: {{ .name }}
 {{- end }}
+{{- end }}
+{{- $networkInterfaceMultiqueue := $devices.networkInterfaceMultiqueue }}
+{{- if $networkInterfaceMultiqueue.enable }}
+networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
+{{- end }}
+{{- $autoattachGraphicsDevice := $devices.autoattachGraphicsDevice }}
+{{- if $autoattachGraphicsDevice.enable }}
+autoattachGraphicsDevice: {{ $autoattachGraphicsDevice.value }}
+{{- end }}
+{{- $autoattachMemBalloon := $devices.autoattachMemBalloon }}
+{{- if $autoattachMemBalloon.enable }}
+autoattachMemBalloon: {{ $autoattachMemBalloon.value }}
+{{- end }}
+
+{{- $autoattachSerialConsole := $devices.autoattachSerialConsole }}
+{{- if $autoattachSerialConsole.enable }}
+autoattachSerialConsole: {{ $autoattachSerialConsole.value }}
 {{- end }}
 {{- end }}
 
+{{/*
+Return the vm.spec.template.spec.domain.ioThreadsPolicy object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
+{{- $ioThreadsPolicy := .domain.ioThreadsPolicy }}
+{{- if $ioThreadsPolicy.enable }}
+ioThreadsPolicy: {{ $ioThreadsPolicy.value }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain.terminationGracePeriodSeconds object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.terminationGracePeriodSeconds" -}}
+{{- $terminationGracePeriodSeconds := .domain.terminationGracePeriodSeconds }}
+{{- if $terminationGracePeriodSeconds.enable }}
+terminationGracePeriodSeconds: {{ $terminationGracePeriodSeconds.value }}
+{{- end }}
+{{- end }}
 {{/*
 Return the vm.spec.template.spec.networks object
 */}}
@@ -87,17 +127,6 @@ nodeSelector:
 {{- end }}
 
 {{/*
-Return the vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue" -}}
-{{- $networkInterfaceMultiqueue := .domain.devices.networkInterfaceMultiqueue }}
-{{- if $networkInterfaceMultiqueue.enable }}
-networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
-{{- end }}
-{{- end }}
-
-{{/*
 Return the vm.spec.template.spec.domain.cpu object
 */}}
 
@@ -109,9 +138,65 @@ cpu:
 {{- if $cores.enable }}
   cores: {{ $cores.value }}
 {{- end }}
+{{- $sockets := $cpu.sockets }}
+{{- if $sockets.enable }}
+  sockets: {{ $sockets.value }}
+{{- end }}
+{{- $threads := $cpu.threads }}
+{{- if $threads.enable }}
+  threads: {{ $threads.value }}
+{{- end }}
 {{- $dedicatedCpuPlacement := $cpu.dedicatedCpuPlacement }}
 {{- if $dedicatedCpuPlacement.enable }}
   dedicatedCpuPlacement: {{ $dedicatedCpuPlacement.value }}
+{{- end }}
+{{- $isolateEmulatorThread := $cpu.isolateEmulatorThread }}
+{{- if $isolateEmulatorThread.enable }}
+  isolateEmulatorThread: {{ $isolateEmulatorThread.value }}
+{{- end }}
+{{- $model := $cpu.model }}
+{{- if $model.enable }}
+  model: {{ $model.value }}
+{{- end }}
+{{- $numa := $cpu.numa }}
+{{- if $numa.enable }}
+  numa:
+    {{ $numa.key }}: {}
+{{- end }}
+{{- $realtime := $cpu.realtime }}
+{{- if $realtime.enable }}
+  realtime: {}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain.memory object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.memory" -}}
+{{- $memory := .domain.memory }}
+{{- if $memory.enable }}
+memory:
+  guest: {{ $memory.guest }}
+  {{- $hugepages := $memory.hugepages }}
+  {{- if $hugepages }}
+  hugepages:
+    pageSize: {{ $hugepages.pageSize }}
+  {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.metadata.annotations object
+*/}}
+
+{{- define "vm.spec.template.metadata.annotations" -}}
+{{- $annotations := .template.metadata.annotations }}
+{{- if $annotations.enable }}
+annotations:
+{{- range $annotations.annotations }}
+  {{ .key }}: {{ .value }}
 {{- end }}
 {{- end }}
 {{- end }}
