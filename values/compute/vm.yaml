@@ -12,28 +12,84 @@ vm:
       image: registry.redhat.io/rhel8/rhel-guest-image:latest
 
       nodeSelector:
-        enable: false
-        key: test
-        value: mig
+        enable: true
+        key: node-role.kubernetes.io/worker-realtime
+        value: ""
+
+      template:
+        metadata:
+          annotations:
+            enable: true
+            annotations:
+            - key: cpu-load-balancing.crio.io
+              value: disable
+            - key: cpu-quota.crio.io
+              value: disable
+            - key: irq-load-balancing.crio.io
+              value: disable
+        spec:
+          tolerations:
+            enable: true
+            tolerations:
+            - key: node-role.kubernetes.io/worker-realtime
+              operator: Exists
 
       network:
         enable: true
         networks:
         - name: default 
           type: pod
-        - name: bridge-net 
-          type: multus
-          networkName: bridge-nad
+        # - name: sriov-net-1 
+        #   type: multus
+        #   networkName: sriov-network-1-sriov-network
+        # - name: sriov-net-2 
+        #   type: multus
+        #   networkName: sriov-network-2-sriov-network
+        # - name: sriov-net-3 
+        #   type: multus
+        #   networkName: sriov-network-3-sriov-network
 
       domain:
+        resources:
+          requests:
+            memory: 1Gi
+        memory:
+          enable: true
+          guest: 4Gi
+          hugepages:
+            enable: true
+            pageSize: 1Gi
+        ioThreadsPolicy:
+          enable: true
+          value: auto
+        terminationGracePeriodSeconds:
+          enable: true
+          value: 0
         cpu:
-          enable: false
+          enable: true
           cores:
             enable: true
-            value: 16
+            value: 2
+          sockets:
+            enable: true
+            value: 2
+          threads:
+            enable: true
+            value: 2
           dedicatedCpuPlacement:
             enable: true
             value: true
+          isolateEmulatorThread:
+            enable: true
+            value: true
+          model:
+            enable: true
+            value: passthrough
+          numa:
+            enable: true
+            key: guestMappingPassthrough
+          realtime:
+            enable: true
 
         devices:
           networkInterfaceMultiqueue:
@@ -45,8 +101,24 @@ vm:
             interfaces:
             - type: masquerade
               name: default
-            - type: bridge
-              name: bridge-net 
+            # - type: sriov
+            #   name: sriov-net-1
+            # - type: sriov
+            #   name: sriov-net-2
+            # - type: sriov
+            #   name: sriov-net-3
+          
+          autoattachGraphicsDevice:
+            enable: true
+            value: false
+          
+          autoattachMemBalloon:
+            enable: true
+            value: false
+
+          autoattachSerialConsole:
+            enable: true
+            value: true
 
       cloudInitNoCloud:
         enable: true
@@ -61,7 +133,7 @@ vm:
           version: 2
 
           ethernet:
-            enable: true
+            enable: false
             ethernets:
             - name: eth0
               address:
@@ -86,85 +158,3 @@ vm:
                 enable: false
                 value: true
 
-    - name: 2 
-      running: true
-
-      # image example:
-      #   registry.redhat.io/rhel8/rhel-guest-image
-      #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
-      image: registry.redhat.io/rhel8/rhel-guest-image:latest
-
-      nodeSelector:
-        enable: false
-        key: test
-        value: mig
-
-      network:
-        enable: true
-        networks:
-        - name: default 
-          type: pod
-        - name: bridge-net 
-          type: multus
-          networkName: bridge-nad
-
-      domain:
-        cpu:
-          enable: false
-          cores:
-            enable: true
-            value: 16
-          dedicatedCpuPlacement:
-            enable: true
-            value: true
-
-        devices:
-          networkInterfaceMultiqueue:
-            enable: false
-            value: true
-
-          interface:
-            enable: true
-            interfaces:
-            - type: masquerade
-              name: default
-            - type: bridge
-              name: bridge-net 
-
-      cloudInitNoCloud:
-        enable: true
-
-        userData:
-          enable: true
-          user: u
-          password: p
-
-        networkData:
-          enable: true
-          version: 2
-
-          ethernet:
-            enable: true
-            ethernets:
-            - name: eth0
-              address:
-                enable: true
-                addresses:
-                - fd10:0:2::2/120
-              dhcp4:
-                enable: true
-                value: true
-              gateway6:
-                enable: true
-                value: fd10:0:2::1
-            - name: eth1
-              address:
-                enable: true
-                addresses:
-                - 10.200.0.2/24
-              dhcp4:
-                enable: false
-                value: true
-              gateway6:
-                enable: false
-                value: true

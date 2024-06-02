@@ -1,8 +1,8 @@
 PerformanceProfile:
   enable: true
   cpu:
-    isolated: 4-39,44-79
-    reserved: 0-3,40-43
+    isolated: 0-4
+    reserved: 5-7
   globallyDisableIrqLoadBalancing: true
   hugepages:
     defaultHugepagesSize: 1G

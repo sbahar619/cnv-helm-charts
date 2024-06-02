@@ -27,17 +27,27 @@ vm:
               value: disable
             - key: irq-load-balancing.crio.io
               value: disable
+        spec:
+          tolerations:
+            enable: true
+            tolerations:
+            - key: node-role.kubernetes.io/worker-realtime
+              operator: Exists
 
       network:
         enable: true
         networks:
         - name: default 
           type: pod
-        - name: bridge-net 
-          type: multus
-          networkName: bridge-nad
+        # - name: bridge-net 
+        #   type: multus
+        #   networkName: bridge-nad
 
       domain:
+        resources:
+          requests:
+            memory: 1024M
+
         memory:
           enable: true
           guest: 4Gi
@@ -86,8 +96,8 @@ vm:
             interfaces:
             - type: masquerade
               name: default
-            - type: bridge
-              name: bridge-net 
+            # - type: bridge
+            #   name: bridge-net 
 
           autoattachGraphicsDevice:
             enable: true

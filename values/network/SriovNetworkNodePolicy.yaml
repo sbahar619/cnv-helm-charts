@@ -3,14 +3,38 @@ SriovNetworkNodePolicy:
   SriovNetworkNodePolicys:
   - name: 1
     namespace: openshift-sriov-network-operator
-    resourceName: sriov_net
+    resourceName: sriov_net_new
     nodeSelector:
-      key: feature.node.kubernetes.io/network-sriov.capable
-      value: true
+      key: node-role.kubernetes.io/worker
+      value: ""
     nicSelector:
       pfNames:
       - eno2
       - eno2
       - eno2
     numVfs: 32
+  # - name: 2
+  #   namespace: openshift-sriov-network-operator
+  #   resourceName: sriov_net_2
+  #   nodeSelector:
+  #     key: net
+  #     value: 2
+  #   nicSelector:
+  #     pfNames:
+  #     - eno2
+  #     - eno2
+  #     - eno2
+  #   numVfs: 8
+  # - name: 3
+  #   namespace: openshift-sriov-network-operator
+  #   resourceName: sriov_net_3
+  #   nodeSelector:
+  #     key: net
+  #     value: 3
+  #   nicSelector:
+  #     pfNames:
+  #     - eno2
+  #     - eno2
+  #     - eno2
+  #   numVfs: 8
     

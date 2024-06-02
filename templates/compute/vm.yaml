@@ -15,6 +15,7 @@ spec:
       {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
     spec:
       {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
+      {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
       domain:
         {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 8 }}
         {{- include "vm.spec.template.spec.domain.cpu" . | indent 8 }}
@@ -31,9 +32,7 @@ spec:
           rng: {}
         machine:
           type: ""
-        resources:
-          requests:
-            memory: 1024M
+        {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 10 }}
       terminationGracePeriodSeconds: 0
       volumes:
       - containerDisk:

@@ -122,7 +122,24 @@ Return the vm.spec.template.spec.nodeSelector object
 {{- define "vm.spec.template.spec.nodeSelector" -}}
 {{- if .nodeSelector.enable }}
 nodeSelector:
-  {{ .nodeSelector.key }}: {{ .nodeSelector.value }}
+  {{ .nodeSelector.key }}: {{ default "" .nodeSelector.value | quote }}
+{{- end }}
+{{- end }}
+
+
+
+{{/*
+Return the vm.spec.template.spec.tolerations object
+*/}}
+
+{{- define "vm.spec.template.spec.tolerations" -}}
+{{- $tolerations := .template.spec.tolerations }}
+{{- if $tolerations.enable }}
+tolerations:
+{{- range $tolerations.tolerations }}
+- key: {{ .key }}
+  operator: {{ .operator}}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -185,6 +202,17 @@ memory:
     pageSize: {{ $hugepages.pageSize }}
   {{- end }}
 {{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain.resources object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.resources.requests.memory" -}}
+{{- $memory := .domain.resources.requests.memory }}
+resources:
+  requests:
+    memory: {{  $memory }}
 {{- end }}
 
 {{/*

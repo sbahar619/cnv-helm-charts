@@ -6,9 +6,10 @@ nncp:
     interfaces:
     - name: br1
       type: linux-bridge
-      state: up
+      state: absent
+      # ens10
       ports:
-      - ens10
+      - eno3
     nodeSelector:
       enable: true
       key: node-role.kubernetes.io/worker
