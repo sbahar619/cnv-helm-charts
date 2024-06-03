@@ -252,6 +252,10 @@ volumes:
 - {{ .type }}:
   {{- include "vm.spec.template.spec.volumes.cloudInitNoCloud" . }}
   name: {{ .name }}
+{{- else if eq .type "dataVolume" }}
+- {{ .type }}:
+    name: {{ .dataVolume.name }}
+  name: {{ .name }}
 {{- end }}
 {{- end }}
 {{- end }}

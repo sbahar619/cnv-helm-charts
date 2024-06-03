@@ -47,6 +47,10 @@ vm:
         #   registry.redhat.io/rhel8/rhel-guest-image
         #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
         image: registry.redhat.io/rhel8/rhel-guest-image:latest
+      - name: root-disk
+        type: dataVolume
+        dataVolume:
+          name: rt-dv-dv
       - name: cloudinitdisk
         type: cloudInitNoCloud
         cloudInitNoCloud:
