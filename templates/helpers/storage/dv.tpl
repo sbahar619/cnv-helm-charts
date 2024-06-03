@@ -17,7 +17,12 @@ Return the dv.spec.source.registry object
 {{- if $registry.enable }}
 registry:
   url: {{ $registry.url }}
-  secretRef: {{ $registry.secretRef }}
+  {{- if $registry.secretRef.enable }}
+  secretRef: {{ $registry.secretRef.value }}
+  {{- end }}
+  {{- if $registry.pullMethod.enable }}
+  pullMethod: {{ $registry.pullMethod.value }}
+  {{- end }}
 {{- end }}
 {{- end }}
 

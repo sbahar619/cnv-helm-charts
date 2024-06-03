@@ -246,7 +246,12 @@ dv:
     registry:
       enable: false
       url: registry.redhat.io/rhel8/rhel-guest-image:latest
-      secretRef: openshift-config/pull-secret
+      secretRef:
+        enable: true
+        value: pull-secret
+      pullMethod:
+        enable: true
+        value: node
     blank:
       enable: false
   pvc:
