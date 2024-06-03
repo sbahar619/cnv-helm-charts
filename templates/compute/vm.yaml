@@ -22,13 +22,6 @@ spec:
         {{- include "vm.spec.template.spec.domain.memory" . | indent 8 }}
         devices:
             {{- include "vm.spec.template.spec.domain.devices" . | indent 10 }}
-          disks:
-          - disk:
-              bus: virtio
-            name: containerdisk
-          - disk:
-              bus: virtio
-            name: cloudinitdisk
           rng: {}
         machine:
           type: ""

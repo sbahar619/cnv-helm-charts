@@ -1,5 +1,5 @@
 vm:
-  enable: false
+  enable: true
 
   vms:
 
@@ -39,9 +39,6 @@ vm:
         networks:
         - name: default 
           type: pod
-        # - name: bridge-net 
-        #   type: multus
-        #   networkName: bridge-nad
 
       domain:
         resources:
@@ -87,6 +84,12 @@ vm:
             enable: true
 
         devices:
+          disks:
+          - name: cloudinitdisk
+            bus: virtio
+          - name: containerdisk
+            bus: virtio
+
           networkInterfaceMultiqueue:
             enable: false
             value: true

@@ -92,6 +92,11 @@ vm:
             enable: true
 
         devices:
+          disks:
+          - name: cloudinitdisk
+            bus: virtio
+          - name: containerdisk
+            bus: virtio
           networkInterfaceMultiqueue:
             enable: false
             value: true

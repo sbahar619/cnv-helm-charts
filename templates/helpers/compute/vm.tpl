@@ -29,6 +29,14 @@ autoattachMemBalloon: {{ $autoattachMemBalloon.value }}
 {{- if $autoattachSerialConsole.enable }}
 autoattachSerialConsole: {{ $autoattachSerialConsole.value }}
 {{- end }}
+
+{{- $disks := $devices.disks }}
+disks:
+{{- range $disks }}
+- name: {{ .name }}
+  disk:
+    bus: {{ .bus }}
+{{- end }}
 {{- end }}
 
 {{/*
