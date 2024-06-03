@@ -13,9 +13,11 @@ Return the dv.spec.source.registry object
 */}}
 
 {{- define "dv.spec.source.registry" -}}
-{{- if .Values.dv.source.registry.enable }}
+{{- $registry := .Values.dv.source.registry }}
+{{- if $registry.enable }}
 registry:
-  url: {{ .Values.dv.source.registry.url }}
+  url: {{ $registry.url }}
+  secretRef: {{ $registry.secretRef }}
 {{- end }}
 {{- end }}
 

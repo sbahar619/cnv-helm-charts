@@ -1,5 +1,5 @@
 vm:
-  enable: true
+  enable: false
 
   vms:
 
@@ -246,6 +246,7 @@ dv:
     registry:
       enable: false
       url: registry.redhat.io/rhel8/rhel-guest-image:latest
+      secretRef: openshift-config/pull-secret
     blank:
       enable: false
   pvc:
