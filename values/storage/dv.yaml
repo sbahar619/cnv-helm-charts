@@ -1,5 +1,11 @@
 dv:
   enable: true
+  source:
+    registry:
+      enable: true
+      url: registry.redhat.io/rhel8/rhel-guest-image:latest
+    blank:
+      enable: false
   pvc:
     enable: true
     storageClassName: ocs-storagecluster-ceph-rbd

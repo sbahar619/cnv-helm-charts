@@ -5,7 +5,8 @@ metadata:
   name: {{ .Release.Name }}-dv
 spec:
   source:
-    blank: {}
+    {{- include "dv.spec.source.registry" . | indent 4 }}
+    {{- include "dv.spec.source.blank" . | indent 4 }}
   {{- if .Values.dv.pvc.enable }}
   pvc:
     accessModes:
