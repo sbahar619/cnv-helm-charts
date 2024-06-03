@@ -32,7 +32,7 @@ spec:
           rng: {}
         machine:
           type: ""
-        {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 10 }}
+        {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 8 }}
       terminationGracePeriodSeconds: 0
       volumes:
       - containerDisk:
