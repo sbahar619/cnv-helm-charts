@@ -49,6 +49,53 @@ vm:
         #   type: multus
         #   networkName: sriov-network-3-sriov-network
 
+      volumes:
+        - name: containerdisk
+          type: containerDisk
+          # image example:
+          #   registry.redhat.io/rhel8/rhel-guest-image
+          #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
+          image: registry.redhat.io/rhel8/rhel-guest-image:latest
+        - name: cloudinitdisk
+          type: cloudInitNoCloud
+          cloudInitNoCloud:
+            enable: true
+
+            userData:
+              enable: true
+              user: u
+              password: p
+
+            networkData:
+              enable: false
+              version: 2
+
+              ethernet:
+                enable: true
+                ethernets:
+                - name: eth0
+                  address:
+                    enable: true
+                    addresses:
+                    - fd10:0:2::2/120
+                  dhcp4:
+                    enable: true
+                    value: true
+                  gateway6:
+                    enable: true
+                    value: fd10:0:2::1
+                - name: eth1
+                  address:
+                    enable: true
+                    addresses:
+                    - 10.200.0.2/24
+                  dhcp4:
+                    enable: false
+                    value: true
+                  gateway6:
+                    enable: false
+                    value: true
+
       domain:
         resources:
           requests:
@@ -124,42 +171,3 @@ vm:
           autoattachSerialConsole:
             enable: true
             value: true
-
-      cloudInitNoCloud:
-        enable: true
-
-        userData:
-          enable: true
-          user: u
-          password: p
-
-        networkData:
-          enable: true
-          version: 2
-
-          ethernet:
-            enable: false
-            ethernets:
-            - name: eth0
-              address:
-                enable: true
-                addresses:
-                - fd10:0:2::2/120
-              dhcp4:
-                enable: true
-                value: true
-              gateway6:
-                enable: true
-                value: fd10:0:2::1
-            - name: eth1
-              address:
-                enable: true
-                addresses:
-                - 10.200.0.1/24
-              dhcp4:
-                enable: false
-                value: true
-              gateway6:
-                enable: false
-                value: true
-

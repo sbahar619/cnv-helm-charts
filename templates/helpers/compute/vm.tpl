@@ -84,7 +84,6 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 
 {{- define "vm.spec.template.spec.volumes.cloudInitNoCloud" -}}
 {{- if .cloudInitNoCloud.enable }}
-- cloudInitNoCloud:
 
   {{- $networkData := .cloudInitNoCloud.networkData }}
   {{- if $networkData.enable }}
@@ -233,6 +232,26 @@ Return the vm.spec.template.metadata.annotations object
 annotations:
 {{- range $annotations.annotations }}
   {{ .key }}: {{ .value }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec.volumess object
+*/}}
+
+{{- define "vm.spec.template.spec.volumes" -}}
+{{- $volumes := .volumes }}
+volumes:
+{{- range $volumes }}
+{{- if eq .type "containerDisk" }}
+- {{ .type }}:
+    image: {{ .image }}
+  name: {{ .name }}
+{{- else if eq .type "cloudInitNoCloud" }}
+- {{ .type }}:
+  {{- include "vm.spec.template.spec.volumes.cloudInitNoCloud" . }}
+  name: {{ .name }}
 {{- end }}
 {{- end }}
 {{- end }}
