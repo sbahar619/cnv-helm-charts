@@ -26,8 +26,8 @@ spec:
         machine:
           type: ""
         {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 8 }}
-      terminationGracePeriodSeconds: 0
-      {{- include "vm.spec.template.spec.volumes" . | indent 6}}
+      {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
+      {{- include "vm.spec.template.spec.domain.terminationGracePeriodSeconds" . | indent 6 }}
       networks:
         {{- include "vm.spec.template.spec.networks" . | indent 8 }}
 ---
