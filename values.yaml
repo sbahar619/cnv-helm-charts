@@ -1,273 +1,144 @@
+# COMPUTE
 vm:
   enable: false
-
   vms:
-
-    - name: 1 
-      running: true
-
-      # image example:
-      #   registry.redhat.io/rhel8/rhel-guest-image
-      #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
-      image: registry.redhat.io/rhel8/rhel-guest-image:latest
-
-      nodeSelector:
+  - domain:
+      cpu:
+        cores:
+          enable: false
+          value: 2
+        dedicatedCpuPlacement:
+          enable: false
+          value: true
         enable: false
-        key: key
-        value: value
-
-      template:
-        metadata:
+        isolateEmulatorThread:
+          enable: false
+          value: true
+        model:
+          enable: false
+          value: passthrough
+        numa:
+          enable: false
+          key: guestMappingPassthrough
+        realtime:
+          enable: false
+        sockets:
+          enable: false
+          value: 2
+        threads:
+          enable: false
+          value: 2
+      devices:
+        autoattachGraphicsDevice:
+          enable: false
+          value: false
+        autoattachMemBalloon:
+          enable: false
+          value: false
+        autoattachSerialConsole:
+          enable: false
+          value: true
+        disks:
+        - bus: virtio
+          name: cloudinitdisk
+        - bus: virtio
+          name: containerdisk
+        interface:
+          enable: false
+          interfaces:
+          - name: default
+            type: masquerade
+        networkInterfaceMultiqueue:
+          enable: false
+          value: true
+      ioThreadsPolicy:
+        enable: false
+        value: auto
+      memory:
+        enable: false
+        guest: 4Gi
+        hugepages:
+          enable: false
+          pageSize: 1Gi
+      resources:
+        requests:
+          memory: 1024M
+      terminationGracePeriodSeconds:
+        enable: false
+        value: 0
+    image: registry.redhat.io/rhel8/rhel-guest-image:latest
+    name: 1
+    network:
+      enable: false
+      networks:
+      - name: default
+        type: pod
+    nodeSelector:
+      enable: false
+      key: key
+      value: value
+    running: true
+    template:
+      metadata:
+        annotations:
           annotations:
-            enable: true
-            annotations:
-            - key: cpu-load-balancing.crio.io
-              value: disable
-            - key: cpu-quota.crio.io
-              value: disable
-            - key: irq-load-balancing.crio.io
-              value: disable
-        spec:
+          - key: cpu-load-balancing.crio.io
+            value: disable
+          - key: cpu-quota.crio.io
+            value: disable
+          - key: irq-load-balancing.crio.io
+            value: disable
+          enable: false
+      spec:
+        tolerations:
+          enable: false
           tolerations:
-            enable: true
-            tolerations:
-            - key: node-role.kubernetes.io/worker-realtime
-              operator: Exists
-
-      network:
-        enable: true
-        networks:
-        - name: default 
-          type: pod
-
-      volumes:
-      - name: containerdisk
-        type: containerDisk
-        # image example:
-        #   registry.redhat.io/rhel8/rhel-guest-image
-        #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
-        image: registry.redhat.io/rhel8/rhel-guest-image:latest
-      - name: root-disk
-        type: dataVolume
-        dataVolume:
-          name: rt-dv-dv
-      - name: cloudinitdisk
-        type: cloudInitNoCloud
-        cloudInitNoCloud:
-          enable: true
-
-          userData:
-            enable: true
-            user: u
-            password: p
-
-          networkData:
+          - key: node-role.kubernetes.io/worker-realtime
+            operator: Exists
+    volumes:
+    - image: registry.redhat.io/rhel8/rhel-guest-image:latest
+      name: containerdisk
+      type: containerDisk
+    - dataVolume:
+        name: rt-dv-dv
+      name: root-disk
+      type: dataVolume
+    - cloudInitNoCloud:
+        enable: false
+        networkData:
+          enable: false
+          ethernet:
             enable: false
-            version: 2
-
-            ethernet:
-              enable: true
-              ethernets:
-              - name: eth0
-                address:
-                  enable: true
-                  addresses:
-                  - fd10:0:2::2/120
-                dhcp4:
-                  enable: true
-                  value: true
-                gateway6:
-                  enable: true
-                  value: fd10:0:2::1
-              - name: eth1
-                address:
-                  enable: true
-                  addresses:
-                  - 10.200.0.2/24
-                dhcp4:
-                  enable: false
-                  value: true
-                gateway6:
-                  enable: false
-                  value: true
-
-      domain:
-        resources:
-          requests:
-            memory: 1024M
-
-        memory:
-          enable: true
-          guest: 4Gi
-          hugepages:
-            enable: true
-            pageSize: 1Gi
-        ioThreadsPolicy:
-          enable: true
-          value: auto
-        terminationGracePeriodSeconds:
-          enable: true
-          value: 0
-        cpu:
-          enable: true
-          cores:
-            enable: true
-            value: 2
-          sockets:
-            enable: true
-            value: 2
-          threads:
-            enable: true
-            value: 2
-          dedicatedCpuPlacement:
-            enable: true
-            value: true
-          isolateEmulatorThread:
-            enable: true
-            value: true
-          model:
-            enable: true
-            value: passthrough
-          numa:
-            enable: true
-            key: guestMappingPassthrough
-          realtime:
-            enable: true
-
-        devices:
-          disks:
-          - name: cloudinitdisk
-            bus: virtio
-          - name: containerdisk
-            bus: virtio
-
-          networkInterfaceMultiqueue:
-            enable: false
-            value: true
-
-          interface:
-            enable: true
-            interfaces:
-            - type: masquerade
-              name: default
-            # - type: bridge
-            #   name: bridge-net 
-
-          autoattachGraphicsDevice:
-            enable: true
-            value: false
-          
-          autoattachMemBalloon:
-            enable: true
-            value: false
-
-          autoattachSerialConsole:
-            enable: true
-            value: true
-
-nncp:
-  enable: false
-  nncps:
-
-  - name: 1
-    interfaces:
-    - name: br1
-      type: linux-bridge
-      state: up
-      ports:
-      - ens1f3
-    nodeSelector:
-      enable: true
-      key: kubernetes.io/hostname
-      value: master2.bm02-ibm.ibmc.cnv-qe.rhood.us
-
-  - name: 2 
-    interfaces:
-    - name: br1
-      type: linux-bridge
-      state: up
-      ports:
-      - ens1f3
-    nodeSelector:
-      enable: true
-      key: mykey
-      value: myval
-
-nad:
-  enable: false
-  name: bridge-nad
-  network:
-    cniVersion: "0.3.1"
-    name: "bridge-network"
-    type: "cnv-bridge"
-    bridge: "br1"
-    macspoofchk: true
-    ipam:
-      enable: true
-      value: "{}"
-    vlan:
-      enable: true
-      value: 861
-    preserveDefaultVlan:
-       enable: true
-       value: false
-
-SriovNetworkNodePolicy:
-  enable: false
-  SriovNetworkNodePolicys:
-  - name: 1
-    namespace: openshift-sriov-network-operator
-    resourceName: sriov_net
-    nodeSelector:
-      key: feature.node.kubernetes.io/network-sriov.capable
-      value: true
-    nicSelector:
-      pfNames:
-      - eno2
-      - eno2
-      - eno2
-    numVfs: 32
-
-SriovNetwork:
-  enable: false
-  SriovNetworks:
-  - name: 1
-    namespace: openshift-sriov-network-operator
-    resourceName: sriov_net
-
-pvc:
-  enable: false
-  storageClassName: ocs-storagecluster-ceph-rbd
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-
-dv:
-  enable: false
-  source:
-    registry:
-      enable: false
-      url: registry.redhat.io/rhel8/rhel-guest-image:latest
-      secretRef:
-        enable: true
-        value: pull-secret
-      pullMethod:
-        enable: true
-        value: node
-    blank:
-      enable: false
-  pvc:
-    enable: true
-    storageClassName: ocs-storagecluster-ceph-rbd
-    # Filesystem
-    volumeMode: Block
-    accessModes:
-    - ReadWriteOnce
-    resources:
-      requests:
-        storage: 1Gi
+            ethernets:
+            - address:
+                addresses:
+                - fd10:0:2::2/120
+                enable: false
+              dhcp4:
+                enable: false
+                value: true
+              gateway6:
+                enable: false
+                value: fd10:0:2::1
+              name: eth0
+            - address:
+                addresses:
+                - 10.200.0.2/24
+                enable: false
+              dhcp4:
+                enable: false
+                value: true
+              gateway6:
+                enable: false
+                value: true
+              name: eth1
+          version: 2
+        userData:
+          enable: false
+          password: p
+          user: u
+      name: cloudinitdisk
+      type: cloudInitNoCloud
 
 mcp:
   enable: false
@@ -276,37 +147,140 @@ mcp:
     value: worker-realtime
   machineConfigSelector:
     matchExpressions:
-      enable: true
+      enable: false
       matchExpressions:
       - key: machineconfiguration.openshift.io/role
         operator: In
         values:
-          - worker
-          - worker-realtime
+        - worker
+        - worker-realtime
   nodeSelector:
     matchLabels:
-      enable: true
+      enable: false
       key: node-role.kubernetes.io/worker-realtime
-      value: ""
+      value: ''
 
 PerformanceProfile:
+cpu:
+  isolated: 4-39,44-79
+  reserved: 0-3,40-43
+enable: false
+globallyDisableIrqLoadBalancing: true
+hugepages:
+  defaultHugepagesSize: 1G
+  pages:
+  - count: 8
+    size: 1G
+nodeSelector:
+  key: node-role.kubernetes.io/worker-realtime
+  value: ''
+numa:
+  topologyPolicy: single-numa-node
+realTimeKernel:
+  enabled: true
+workloadHints:
+  highPowerConsumption: true
+  realTime: true
+
+# NETWORK
+nncp:
   enable: false
-  cpu:
-    isolated: 4-39,44-79
-    reserved: 0-3,40-43
-  globallyDisableIrqLoadBalancing: true
-  hugepages:
-    defaultHugepagesSize: 1G
-    pages:
-    - count: 8
-      size: 1G
-  realTimeKernel:
-    enabled: true
-  workloadHints:
-    highPowerConsumption: true
-    realTime: true
-  nodeSelector:
-    key: node-role.kubernetes.io/worker-realtime
-    value: ""
-  numa:
-    topologyPolicy: single-numa-node
+  nncps:
+  - interfaces:
+    - name: br1
+      ports:
+      - ens1f3
+      state: up
+      type: linux-bridge
+    name: 1
+    nodeSelector:
+      enable: false
+      key: kubernetes.io/hostname
+      value: master2.bm02-ibm.ibmc.cnv-qe.rhood.us
+  - interfaces:
+    - name: br1
+      ports:
+      - ens1f3
+      state: up
+      type: linux-bridge
+    name: 2
+    nodeSelector:
+      enable: false
+      key: mykey
+      value: myval
+
+nad:
+  enable: false
+  name: bridge-nad
+  network:
+    bridge: br1
+    cniVersion: 0.3.1
+    ipam:
+      enable: false
+      value: '{}'
+    macspoofchk: true
+    name: bridge-network
+    preserveDefaultVlan:
+      enable: false
+      value: false
+    type: cnv-bridge
+    vlan:
+      enable: false
+      value: 861
+
+SriovNetwork:
+  SriovNetworks:
+  - name: 1
+    namespace: openshift-sriov-network-operator
+    resourceName: sriov_net
+  enable: false
+
+SriovNetworkNodePolicy:
+  SriovNetworkNodePolicys:
+  - name: 1
+    namespace: openshift-sriov-network-operator
+    nicSelector:
+      pfNames:
+      - eno2
+      - eno2
+      - eno2
+    nodeSelector:
+      key: feature.node.kubernetes.io/network-sriov.capable
+      value: true
+    numVfs: 32
+    resourceName: sriov_net
+  enable: false
+
+# STORAGE
+dv:
+  enable: false
+  pvc:
+    accessModes:
+    - ReadWriteOnce
+    enable: false
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: ocs-storagecluster-ceph-rbd
+    volumeMode: Block
+  source:
+    blank:
+      enable: false
+    registry:
+      enable: false
+      pullMethod:
+        enable: false
+        value: node
+      secretRef:
+        enable: false
+        value: pull-secret
+      url: registry.redhat.io/rhel8/rhel-guest-image:latest
+
+pvc:
+  accessModes:
+  - ReadWriteOnce
+  enable: false
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ocs-storagecluster-ceph-rbd
