@@ -140,12 +140,14 @@ Return the vm.spec.template.spec.tolerations object
 */}}
 
 {{- define "vm.spec.template.spec.tolerations" -}}
+{{- if and .template .template.spec .template.spec.tolerations }}
 {{- $tolerations := .template.spec.tolerations }}
 {{- if $tolerations.enable }}
 tolerations:
 {{- range $tolerations.tolerations }}
 - key: {{ .key }}
   operator: {{ .operator}}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -227,11 +229,13 @@ Return the vm.spec.template.metadata.annotations object
 */}}
 
 {{- define "vm.spec.template.metadata.annotations" -}}
+{{- if and .template  .template.metadata .template.metadata.annotations }}
 {{- $annotations := .template.metadata.annotations }}
 {{- if $annotations.enable }}
 annotations:
 {{- range $annotations.annotations }}
   {{ .key }}: {{ .value }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
