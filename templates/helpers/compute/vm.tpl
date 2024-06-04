@@ -234,7 +234,7 @@ Return the vm.spec.template.metadata.annotations object
 {{- if $annotations.enable }}
 annotations:
 {{- range $annotations.annotations }}
-  {{ .key }}: {{ .value }}
+  {{ .key }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
 {{- end }}
