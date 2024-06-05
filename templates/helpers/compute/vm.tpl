@@ -55,8 +55,8 @@ Return the vm.spec.template.spec.domain.terminationGracePeriodSeconds object
 */}}
 
 {{- define "vm.spec.template.spec.domain.terminationGracePeriodSeconds" -}}
+{{- if and .domain .domain.terminationGracePeriodSeconds }}
 {{- $terminationGracePeriodSeconds := .domain.terminationGracePeriodSeconds }}
-{{- if $terminationGracePeriodSeconds.enable }}
 terminationGracePeriodSeconds: {{ $terminationGracePeriodSeconds.value }}
 {{- end }}
 {{- end }}

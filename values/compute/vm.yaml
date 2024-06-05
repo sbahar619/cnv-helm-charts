@@ -96,7 +96,6 @@ vm:
         ioThreadsPolicy:
           value: auto
         terminationGracePeriodSeconds:
-          enable: true
           value: 0
         cpu:
           enable: true
