@@ -93,37 +93,24 @@ vm:
       name: root-disk
       type: dataVolume
     - cloudInitNoCloud:
-        enable: false
         networkData:
-          enable: false
-          ethernet:
-            enable: false
-            ethernets:
-            - address:
-                addresses:
+          ethernets:
+            - addresses:
                 - fd10:0:2::2/120
-                enable: false
               dhcp4:
-                enable: false
                 value: true
               gateway6:
-                enable: false
                 value: fd10:0:2::1
               name: eth0
-            - address:
-                addresses:
+            - addresses:
                 - 10.200.0.2/24
-                enable: false
               dhcp4:
-                enable: false
                 value: true
               gateway6:
-                enable: false
                 value: true
               name: eth1
           version: 2
         userData:
-          enable: false
           password: p
           user: u
       name: cloudinitdisk

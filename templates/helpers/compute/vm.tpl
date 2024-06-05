@@ -85,39 +85,43 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 */}}
 
 {{- define "vm.spec.template.spec.volumes.cloudInitNoCloud" -}}
-{{- if .cloudInitNoCloud.enable }}
+{{- if .cloudInitNoCloud }}
 
+  {{- if .cloudInitNoCloud.networkData }}
   {{- $networkData := .cloudInitNoCloud.networkData }}
-  {{- if $networkData.enable }}
     networkData: |
       version: {{ $networkData.version }}
-      {{- $ethernet := $networkData.ethernet }}
-      {{- if $ethernet.enable }}
+      {{- if $networkData.ethernets }}
+      {{- $ethernets := $networkData.ethernets }}
       ethernets:
-      {{- range $ethernet.ethernets }}
+      {{- range $ethernets }}
         {{ .name }}:
-        {{- if .address.enable }}
+        {{- if .addresses }}
           addresses:
-          {{- range .address.addresses }}
+          {{- range .addresses }}
           - {{ . }}
           {{- end }}
         {{- end }}
-        {{- if .dhcp4.enable }}
+        {{- if and .dhcp4 .dhcp4.value }}
           dhcp4: {{ .dhcp4.value }}
         {{- end }}
-        {{- if .gateway6.enable }}
+        {{- if and .gateway6 .gateway6.value }}
           gateway6: {{ .gateway6.value }}
         {{- end }}
       {{- end }}
       {{- end }}
   {{- end }}
 
-  {{- if .cloudInitNoCloud.userData.enable }}
+  {{- if .cloudInitNoCloud.userData }}
   {{- $userData := .cloudInitNoCloud.userData }}
     userData: |-
       #cloud-config
+      {{- if $userData.user }}
       user: {{ $userData.user }}
+      {{- end }}
+      {{- if $userData.password }}
       password: {{ $userData.password }}
+      {{- end }}
       chpasswd: { expire: False }
   {{- end }}
 
