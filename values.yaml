@@ -32,26 +32,20 @@ vm:
           value: 2
       devices:
         autoattachGraphicsDevice:
-          enable: false
           value: false
         autoattachMemBalloon:
-          enable: false
           value: false
         autoattachSerialConsole:
-          enable: false
           value: true
         disks:
         - bus: virtio
           name: cloudinitdisk
         - bus: virtio
           name: containerdisk
-        interface:
-          enable: false
-          interfaces:
+        interfaces:
           - name: default
             type: masquerade
         networkInterfaceMultiqueue:
-          enable: false
           value: true
       ioThreadsPolicy:
         value: auto

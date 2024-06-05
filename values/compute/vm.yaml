@@ -128,23 +128,17 @@ vm:
           - name: cloudinitdisk
             bus: virtio
           networkInterfaceMultiqueue:
-            enable: false
             value: true
 
-          interface:
-            enable: true
-            interfaces:
-            - type: masquerade
-              name: default
+          interfaces:
+          - name: default
+            type: masquerade
 
           autoattachGraphicsDevice:
-            enable: true
             value: false
           
           autoattachMemBalloon:
-            enable: true
             value: false
 
           autoattachSerialConsole:
-            enable: true
             value: true
