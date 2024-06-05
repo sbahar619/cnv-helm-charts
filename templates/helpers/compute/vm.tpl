@@ -65,8 +65,8 @@ Return the vm.spec.template.spec.networks object
 */}}
 
 {{- define "vm.spec.template.spec.networks" -}}
-{{- if .network.enable }}
-{{- range .network.networks }}
+{{- if .networks }}
+{{- range .networks }}
 - name: {{ .name }}
   {{- if ( eq .type "multus") }}
   {{ .type }}:

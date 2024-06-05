@@ -66,9 +66,7 @@ vm:
           memory: 1024M
       terminationGracePeriodSeconds:
         value: 0
-    network:
-      enable: false
-      networks:
+    networks:
       - name: default
         type: pod
     nodeSelector:

@@ -29,9 +29,7 @@ vm:
             - key: node-role.kubernetes.io/worker-realtime
               operator: Exists
 
-      network:
-        enable: true
-        networks:
+      networks:
         - name: default 
           type: pod
 
