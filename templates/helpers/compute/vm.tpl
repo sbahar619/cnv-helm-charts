@@ -44,8 +44,8 @@ Return the vm.spec.template.spec.domain.ioThreadsPolicy object
 */}}
 
 {{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
+{{- if .domain.ioThreadsPolicy }}
 {{- $ioThreadsPolicy := .domain.ioThreadsPolicy }}
-{{- if $ioThreadsPolicy.enable }}
 ioThreadsPolicy: {{ $ioThreadsPolicy.value }}
 {{- end }}
 {{- end }}

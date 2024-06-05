@@ -54,7 +54,6 @@ vm:
           enable: false
           value: true
       ioThreadsPolicy:
-        enable: false
         value: auto
       memory:
         enable: false

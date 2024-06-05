@@ -94,7 +94,6 @@ vm:
             enable: true
             pageSize: 1Gi
         ioThreadsPolicy:
-          enable: true
           value: auto
         terminationGracePeriodSeconds:
           enable: true
