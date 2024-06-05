@@ -64,7 +64,6 @@ vm:
       - name: default
         type: pod
     nodeSelector:
-      enable: false
       key: key
       value: value
     template:

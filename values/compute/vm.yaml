@@ -7,7 +7,6 @@ vm:
       running: true
 
       nodeSelector:
-        enable: true
         key: node-role.kubernetes.io/worker-realtime
         value: ""
 
