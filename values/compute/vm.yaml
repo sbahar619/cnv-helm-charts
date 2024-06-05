@@ -6,11 +6,6 @@ vm:
     - name: 1 
       running: true
 
-      # image example:
-      #   registry.redhat.io/rhel8/rhel-guest-image
-      #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
-      image: registry.redhat.io/rhel8/rhel-guest-image:latest
-
       nodeSelector:
         enable: true
         key: node-role.kubernetes.io/worker-realtime
@@ -39,22 +34,10 @@ vm:
         networks:
         - name: default 
           type: pod
-        # - name: sriov-net-1 
-        #   type: multus
-        #   networkName: sriov-network-1-sriov-network
-        # - name: sriov-net-2 
-        #   type: multus
-        #   networkName: sriov-network-2-sriov-network
-        # - name: sriov-net-3 
-        #   type: multus
-        #   networkName: sriov-network-3-sriov-network
 
       volumes:
         - name: containerdisk
           type: containerDisk
-          # image example:
-          #   registry.redhat.io/rhel8/rhel-guest-image
-          #   quay.io/openshift-cnv/qe-cnv-tests-fedora:37
           image: registry.redhat.io/rhel8/rhel-guest-image:latest
         - name: root-disk
           type: dataVolume
@@ -144,9 +127,9 @@ vm:
 
         devices:
           disks:
-          - name: cloudinitdisk
-            bus: virtio
           - name: containerdisk
+            bus: virtio
+          - name: cloudinitdisk
             bus: virtio
           networkInterfaceMultiqueue:
             enable: false
@@ -157,13 +140,7 @@ vm:
             interfaces:
             - type: masquerade
               name: default
-            # - type: sriov
-            #   name: sriov-net-1
-            # - type: sriov
-            #   name: sriov-net-2
-            # - type: sriov
-            #   name: sriov-net-3
-          
+
           autoattachGraphicsDevice:
             enable: true
             value: false

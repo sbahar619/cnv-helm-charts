@@ -127,7 +127,7 @@ Return the vm.spec.template.spec.nodeSelector object
 */}}
 
 {{- define "vm.spec.template.spec.nodeSelector" -}}
-{{- if .nodeSelector.enable }}
+{{- if and .nodeSelector .nodeSelector.enable }}
 nodeSelector:
   {{ .nodeSelector.key }}: {{ default "" .nodeSelector.value | quote }}
 {{- end }}

@@ -2,7 +2,9 @@
 vm:
   enable: false
   vms:
-  - domain:
+  - name: 1
+    running: true
+    domain:
       cpu:
         cores:
           enable: false
@@ -66,8 +68,6 @@ vm:
       terminationGracePeriodSeconds:
         enable: false
         value: 0
-    image: registry.redhat.io/rhel8/rhel-guest-image:latest
-    name: 1
     network:
       enable: false
       networks:
@@ -77,7 +77,6 @@ vm:
       enable: false
       key: key
       value: value
-    running: true
     template:
       metadata:
         annotations:
