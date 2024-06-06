@@ -21,8 +21,6 @@ vm:
               value: disable
         spec:
           tolerations:
-            enable: true
-            tolerations:
             - key: node-role.kubernetes.io/worker-realtime
               operator: Exists
 

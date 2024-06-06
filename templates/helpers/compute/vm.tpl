@@ -148,11 +148,11 @@ Return the vm.spec.template.spec.tolerations object
 {{- define "vm.spec.template.spec.tolerations" -}}
 {{- if and .template .template.spec .template.spec.tolerations }}
 {{- $tolerations := .template.spec.tolerations }}
-{{- if $tolerations.enable }}
 tolerations:
-{{- range $tolerations.tolerations }}
+{{- range $tolerations }}
+{{- if and .key .operator }}
 - key: {{ .key }}
-  operator: {{ .operator}}
+  operator: {{ .operator }}
 {{- end }}
 {{- end }}
 {{- end }}
