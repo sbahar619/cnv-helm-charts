@@ -70,10 +70,8 @@ vm:
           requests:
             memory: 1Gi
         memory:
-          enable: true
           guest: 4Gi
           hugepages:
-            enable: true
             pageSize: 1Gi
         ioThreadsPolicy:
           value: auto

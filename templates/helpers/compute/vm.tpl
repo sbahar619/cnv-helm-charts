@@ -207,14 +207,18 @@ Return the vm.spec.template.spec.domain.memory object
 */}}
 
 {{- define "vm.spec.template.spec.domain.memory" -}}
+{{- if and .domain .domain.memory }}
 {{- $memory := .domain.memory }}
-{{- if $memory.enable }}
 memory:
+  {{- if $memory.guest }}
   guest: {{ $memory.guest }}
+  {{- end }}
+  {{- if $memory.hugepages }}
   {{- $hugepages := $memory.hugepages }}
-  {{- if $hugepages }}
   hugepages:
+    {{- if $hugepages.pageSize }}
     pageSize: {{ $hugepages.pageSize }}
+    {{- end }}
   {{- end }}
 {{- end }}
 {{- end }}

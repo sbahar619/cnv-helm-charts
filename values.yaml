@@ -41,10 +41,8 @@ vm:
       ioThreadsPolicy:
         value: auto
       memory:
-        enable: false
         guest: 4Gi
         hugepages:
-          enable: false
           pageSize: 1Gi
       resources:
         requests:
