@@ -80,30 +80,21 @@ vm:
         terminationGracePeriodSeconds:
           value: 0
         cpu:
-          enable: true
           cores:
-            enable: true
             value: 2
           sockets:
-            enable: true
             value: 2
           threads:
-            enable: true
             value: 2
           dedicatedCpuPlacement:
-            enable: true
             value: true
           isolateEmulatorThread:
-            enable: true
             value: true
           model:
-            enable: true
             value: passthrough
           numa:
-            enable: true
             key: guestMappingPassthrough
-          realtime:
-            enable: true
+          realtime: "true"
 
         devices:
           disks:

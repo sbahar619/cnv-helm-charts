@@ -163,40 +163,40 @@ Return the vm.spec.template.spec.domain.cpu object
 */}}
 
 {{- define "vm.spec.template.spec.domain.cpu" -}}
+{{- if and .domain .domain.cpu }}
 {{- $cpu := .domain.cpu }}
-{{- if $cpu.enable }}
 cpu:
+{{- if $cpu.cores }}
 {{- $cores := $cpu.cores }}
-{{- if $cores.enable }}
   cores: {{ $cores.value }}
 {{- end }}
+{{- if $cpu.sockets }}
 {{- $sockets := $cpu.sockets }}
-{{- if $sockets.enable }}
   sockets: {{ $sockets.value }}
 {{- end }}
+{{- if $cpu.threads }}
 {{- $threads := $cpu.threads }}
-{{- if $threads.enable }}
   threads: {{ $threads.value }}
 {{- end }}
+{{- if $cpu.dedicatedCpuPlacement }}
 {{- $dedicatedCpuPlacement := $cpu.dedicatedCpuPlacement }}
-{{- if $dedicatedCpuPlacement.enable }}
   dedicatedCpuPlacement: {{ $dedicatedCpuPlacement.value }}
 {{- end }}
+{{- if $cpu.isolateEmulatorThread }}
 {{- $isolateEmulatorThread := $cpu.isolateEmulatorThread }}
-{{- if $isolateEmulatorThread.enable }}
   isolateEmulatorThread: {{ $isolateEmulatorThread.value }}
 {{- end }}
+{{- if $cpu.model }}
 {{- $model := $cpu.model }}
-{{- if $model.enable }}
   model: {{ $model.value }}
 {{- end }}
+{{- if $cpu.numa }}
 {{- $numa := $cpu.numa }}
-{{- if $numa.enable }}
   numa:
     {{ $numa.key }}: {}
 {{- end }}
+{{- if $cpu.realtime }}
 {{- $realtime := $cpu.realtime }}
-{{- if $realtime.enable }}
   realtime: {}
 {{- end }}
 {{- end }}

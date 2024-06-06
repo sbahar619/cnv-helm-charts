@@ -7,28 +7,19 @@ vm:
     domain:
       cpu:
         cores:
-          enable: false
           value: 2
         dedicatedCpuPlacement:
-          enable: false
           value: true
-        enable: false
         isolateEmulatorThread:
-          enable: false
           value: true
         model:
-          enable: false
           value: passthrough
         numa:
-          enable: false
           key: guestMappingPassthrough
-        realtime:
-          enable: false
+        realtime: "true"
         sockets:
-          enable: false
           value: 2
         threads:
-          enable: false
           value: 2
       devices:
         autoattachGraphicsDevice:
