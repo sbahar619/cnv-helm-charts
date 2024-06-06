@@ -69,14 +69,12 @@ vm:
     template:
       metadata:
         annotations:
-          annotations:
           - key: cpu-load-balancing.crio.io
             value: disable
           - key: cpu-quota.crio.io
             value: disable
           - key: irq-load-balancing.crio.io
             value: disable
-          enable: false
       spec:
         tolerations:
           enable: false

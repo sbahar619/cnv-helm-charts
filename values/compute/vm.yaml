@@ -13,8 +13,6 @@ vm:
       template:
         metadata:
           annotations:
-            enable: true
-            annotations:
             - key: cpu-load-balancing.crio.io
               value: disable
             - key: cpu-quota.crio.io
