@@ -10,9 +10,7 @@ spec:
   running: {{ .running }}
   template:
     metadata:
-      labels:
-        kubevirt.io/vm: {{ $initialContext.Release.Name }}-{{ .name }}-vm
-      {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
+      {{- include "vm.spec.template.metadata" . }}
     spec:
       {{- include "vm.spec.template.spec" . }}
 ---

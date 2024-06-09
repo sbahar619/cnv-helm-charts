@@ -12,6 +12,9 @@ vm:
 
       template:
         metadata:
+          labels:
+          - key: kubevirt.io/vm
+            value: value
           annotations:
             - key: cpu-load-balancing.crio.io
               value: disable
