@@ -107,7 +107,6 @@ mcp:
     value: worker-realtime
   machineConfigSelector:
     matchExpressions:
-      enable: false
       matchExpressions:
       - key: machineconfiguration.openshift.io/role
         operator: In
@@ -116,7 +115,6 @@ mcp:
         - worker-realtime
   nodeSelector:
     matchLabels:
-      enable: false
       key: node-role.kubernetes.io/worker-realtime
       value: ''
 
