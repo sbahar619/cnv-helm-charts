@@ -1,0 +1,19 @@
+mcp:
+  enable: true
+  labels:
+  - key: machineconfiguration.openshift.io/role
+    value: worker-realtime
+  machineConfigSelector:
+    matchExpressions:
+      enable: true
+      matchExpressions:
+      - key: machineconfiguration.openshift.io/role
+        operator: In
+        values:
+          - worker
+          - worker-realtime
+  nodeSelector:
+    matchLabels:
+      enable: true
+      key: node-role.kubernetes.io/worker-realtime
+      value: ""

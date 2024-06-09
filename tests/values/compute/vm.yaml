@@ -1,0 +1,115 @@
+vm:
+  enable: true
+
+  vms:
+
+    - name: 1 
+      running: true
+
+      nodeSelector:
+        key: node-role.kubernetes.io/worker-realtime
+        value: ""
+
+      template:
+        metadata:
+          annotations:
+            - key: cpu-load-balancing.crio.io
+              value: disable
+            - key: cpu-quota.crio.io
+              value: disable
+            - key: irq-load-balancing.crio.io
+              value: disable
+        spec:
+          tolerations:
+            - key: node-role.kubernetes.io/worker-realtime
+              operator: Exists
+
+      networks:
+        - name: default 
+          type: pod
+
+      volumes:
+        - name: containerdisk
+          type: containerDisk
+          image: registry.redhat.io/rhel8/rhel-guest-image:latest
+        - name: root-disk
+          type: dataVolume
+          dataVolume:
+            name: rt-dv-dv
+        - name: cloudinitdisk
+          type: cloudInitNoCloud
+          cloudInitNoCloud:
+
+            userData:
+              user: u
+              password: p
+
+            networkData:
+              version: 2
+
+              ethernets:
+                - name: eth0
+                  addresses:
+                    - fd10:0:2::2/120
+                  dhcp4:
+                    value: true
+                  gateway6:
+                    value: fd10:0:2::1
+                - name: eth1
+                  addresses:
+                    - 10.200.0.2/24
+                  dhcp4:
+                    value: true
+                  gateway6:
+                    value: true
+
+      domain:
+        resources:
+          requests:
+            memory: 1Gi
+        memory:
+          guest: 4Gi
+          hugepages:
+            pageSize: 1Gi
+        ioThreadsPolicy:
+          value: auto
+        terminationGracePeriodSeconds:
+          value: 0
+        cpu:
+          cores:
+            value: 2
+          sockets:
+            value: 2
+          threads:
+            value: 2
+          dedicatedCpuPlacement:
+            value: true
+          isolateEmulatorThread:
+            value: true
+          model:
+            value: passthrough
+          numa:
+            key: guestMappingPassthrough
+          realtime: "true"
+
+        devices:
+          disks:
+          - name: containerdisk
+            bus: virtio
+          - name: cloudinitdisk
+            bus: virtio
+          networkInterfaceMultiqueue:
+            value: true
+
+          interfaces:
+          - name: default
+            type: masquerade
+
+          autoattachGraphicsDevice:
+            value: false
+          
+          autoattachMemBalloon:
+            value: false
+
+          autoattachSerialConsole:
+            value: true

@@ -1,0 +1,21 @@
+PerformanceProfile:
+  enable: true
+  cpu:
+    isolated: 0-4
+    reserved: 5-7
+  globallyDisableIrqLoadBalancing: true
+  hugepages:
+    defaultHugepagesSize: 1G
+    pages:
+    - count: 8
+      size: 1G
+  realTimeKernel:
+    enabled: true
+  workloadHints:
+    highPowerConsumption: true
+    realTime: true
+  nodeSelector:
+    key: node-role.kubernetes.io/worker-realtime
+    value: ""
+  numa:
+    topologyPolicy: single-numa-node

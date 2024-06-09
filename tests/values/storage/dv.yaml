@@ -1,0 +1,23 @@
+dv:
+  enable: true
+  source:
+    registry:
+      enable: true
+      url: registry.redhat.io/rhel8/rhel-guest-image:latest
+      secretRef:
+        enable: true
+        value: pull-secret
+      pullMethod:
+        enable: true
+        value: node
+    blank:
+      enable: false
+  pvc:
+    enable: true
+    storageClassName: ocs-storagecluster-ceph-rbd
+    volumeMode: Block
+    accessModes:
+    - ReadWriteMany
+    resources:
+      requests:
+        storage: 1Gi

@@ -1,0 +1,12 @@
+SriovNetwork:
+  enable: true
+  SriovNetworks:
+  - name: 1
+    namespace: openshift-sriov-network-operator 
+    resourceName: sriov_net_new
+  # - name: 2
+  #   namespace: openshift-sriov-network-operator 
+  #   resourceName: sriov_net_2
+  # - name: 3
+  #   namespace: openshift-sriov-network-operator 
+  #   resourceName: sriov_net_3
