@@ -119,26 +119,26 @@ mcp:
       value: ''
 
 PerformanceProfile:
-cpu:
-  isolated: 4-39,44-79
-  reserved: 0-3,40-43
-enable: false
-globallyDisableIrqLoadBalancing: true
-hugepages:
-  defaultHugepagesSize: 1G
-  pages:
-  - count: 8
-    size: 1G
-nodeSelector:
-  key: node-role.kubernetes.io/worker-realtime
-  value: ''
-numa:
-  topologyPolicy: single-numa-node
-realTimeKernel:
-  enabled: true
-workloadHints:
-  highPowerConsumption: true
-  realTime: true
+  enable: false
+  cpu:
+    isolated: 4-39,44-79
+    reserved: 0-3,40-43
+  globallyDisableIrqLoadBalancing: true
+  hugepages:
+    defaultHugepagesSize: 1G
+    pages:
+    - count: 8
+      size: 1G
+  nodeSelector:
+    key: node-role.kubernetes.io/worker-realtime
+    value: ''
+  numa:
+    topologyPolicy: single-numa-node
+  realTimeKernel:
+    enabled: true
+  workloadHints:
+    highPowerConsumption: true
+    realTime: true
 
 # NETWORK
 nncp:
