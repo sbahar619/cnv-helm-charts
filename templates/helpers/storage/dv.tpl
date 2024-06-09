@@ -3,8 +3,10 @@ Return the dv.spec.pvc.accessModes object
 */}}
 
 {{- define "dv.spec.pvc.accessModes" -}}
+{{- if and .Values.dv .Values.dv.pvc .Values.dv.pvc.accessModes }}
 {{- range .Values.dv.pvc.accessModes }}
 - {{ . }}
+{{- end }}
 {{- end }}
 {{- end }}
 
@@ -13,15 +15,17 @@ Return the dv.spec.source.registry object
 */}}
 
 {{- define "dv.spec.source.registry" -}}
+{{- if and .Values.dv .Values.dv.source .Values.dv.source.registry }}
 {{- $registry := .Values.dv.source.registry }}
-{{- if $registry.enable }}
 registry:
+  {{- if $registry.url }}
   url: {{ $registry.url }}
-  {{- if $registry.secretRef.enable }}
-  secretRef: {{ $registry.secretRef.value }}
   {{- end }}
-  {{- if $registry.pullMethod.enable }}
-  pullMethod: {{ $registry.pullMethod.value }}
+  {{- if $registry.secretRef }}
+  secretRef: {{ $registry.secretRef }}
+  {{- end }}
+  {{- if $registry.pullMethod }}
+  pullMethod: {{ $registry.pullMethod }}
   {{- end }}
 {{- end }}
 {{- end }}

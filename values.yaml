@@ -169,13 +169,14 @@ nad:
     vlan: 861
 
 SriovNetwork:
+  enable: false
   SriovNetworks:
   - name: 1
     namespace: openshift-sriov-network-operator
     resourceName: sriov_net
-  enable: false
 
 SriovNetworkNodePolicy:
+  enable: false
   SriovNetworkNodePolicys:
   - name: 1
     namespace: openshift-sriov-network-operator
@@ -189,7 +190,6 @@ SriovNetworkNodePolicy:
       value: true
     numVfs: 32
     resourceName: sriov_net
-  enable: false
 
 # STORAGE
 dv:
@@ -209,17 +209,14 @@ dv:
     registry:
       enable: false
       pullMethod:
-        enable: false
-        value: node
-      secretRef:
-        enable: false
-        value: pull-secret
+        enable: node
+      secretRef: pull-secret
       url: registry.redhat.io/rhel8/rhel-guest-image:latest
 
 pvc:
+  enable: false
   accessModes:
   - ReadWriteOnce
-  enable: false
   resources:
     requests:
       storage: 1Gi
