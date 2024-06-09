@@ -144,28 +144,16 @@ workloadHints:
 nncp:
   enable: false
   nncps:
-  - interfaces:
+  - name: 1
+    interfaces:
     - name: br1
-      ports:
-      - ens1f3
-      state: up
       type: linux-bridge
-    name: 1
-    nodeSelector:
-      enable: false
-      key: kubernetes.io/hostname
-      value: master2.bm02-ibm.ibmc.cnv-qe.rhood.us
-  - interfaces:
-    - name: br1
-      ports:
-      - ens1f3
       state: up
-      type: linux-bridge
-    name: 2
+      ports:
+      - eno3
     nodeSelector:
-      enable: false
-      key: mykey
-      value: myval
+      key: node-role.kubernetes.io/worker
+      value: ""
 
 nad:
   enable: false
@@ -173,18 +161,12 @@ nad:
   network:
     bridge: br1
     cniVersion: 0.3.1
-    ipam:
-      enable: false
-      value: '{}'
+    ipam: '{}'
     macspoofchk: true
     name: bridge-network
-    preserveDefaultVlan:
-      enable: false
-      value: false
+    preserveDefaultVlan: false
     type: cnv-bridge
-    vlan:
-      enable: false
-      value: 861
+    vlan: 861
 
 SriovNetwork:
   SriovNetworks:
