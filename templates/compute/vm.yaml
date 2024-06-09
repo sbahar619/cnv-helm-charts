@@ -18,7 +18,6 @@ spec:
       {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
       domain:
         {{- include "vm.spec.template.spec.domain" . }}
-          rng: {}
         machine:
           type: ""
       {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
