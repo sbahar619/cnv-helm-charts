@@ -3,8 +3,8 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
-{{- if .domain.devices }}
-{{- $devices := .domain.devices }}
+{{- if .template.spec.domain.devices }}
+{{- $devices := .template.spec.domain.devices }}
 devices:
 {{- if $devices.interfaces }}
   {{- $interfaces := $devices.interfaces }}
@@ -47,8 +47,8 @@ Return the vm.spec.template.spec.domain.ioThreadsPolicy object
 */}}
 
 {{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
-{{- if .domain.ioThreadsPolicy }}
-{{- $ioThreadsPolicy := .domain.ioThreadsPolicy }}
+{{- if .template.spec.domain.ioThreadsPolicy }}
+{{- $ioThreadsPolicy := .template.spec.domain.ioThreadsPolicy }}
 ioThreadsPolicy: {{ $ioThreadsPolicy.value }}
 {{- end }}
 {{- end }}
@@ -58,8 +58,8 @@ Return the vm.spec.template.spec.domain.cpu object
 */}}
 
 {{- define "vm.spec.template.spec.domain.cpu" -}}
-{{- if .domain.cpu }}
-{{- $cpu := .domain.cpu }}
+{{- if .template.spec.domain.cpu }}
+{{- $cpu := .template.spec.domain.cpu }}
 cpu:
 {{- if $cpu.cores }}
 {{- $cores := $cpu.cores }}
@@ -102,8 +102,8 @@ Return the vm.spec.template.spec.domain.memory object
 */}}
 
 {{- define "vm.spec.template.spec.domain.memory" -}}
-{{- if .domain.memory }}
-{{- $memory := .domain.memory }}
+{{- if .template.spec.domain.memory }}
+{{- $memory := .template.spec.domain.memory }}
 memory:
   {{- if $memory.guest }}
   guest: {{ $memory.guest }}
@@ -123,8 +123,8 @@ Return the vm.spec.template.spec.domain.resources object
 */}}
 
 {{- define "vm.spec.template.spec.domain.resources.requests.memory" -}}
-{{- if and .domain.resources .domain.resources.requests .domain.resources.requests.memory }}
-{{- $memory := .domain.resources.requests.memory }}
+{{- if and .template .template.spec .template.spec.domain .template.spec.domain.resources .template.spec.domain.resources.requests .template.spec.domain.resources.requests.memory }}
+{{- $memory := .template.spec.domain.resources.requests.memory }}
 resources:
   requests:
     memory: {{ $memory }}

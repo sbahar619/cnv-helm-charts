@@ -4,49 +4,6 @@ vm:
   vms:
   - name: 1
     running: true
-    domain:
-      cpu:
-        cores:
-          value: 2
-        dedicatedCpuPlacement:
-          value: true
-        isolateEmulatorThread:
-          value: true
-        model:
-          value: passthrough
-        numa:
-          key: guestMappingPassthrough
-        realtime: "true"
-        sockets:
-          value: 2
-        threads:
-          value: 2
-      devices:
-        autoattachGraphicsDevice:
-          value: false
-        autoattachMemBalloon:
-          value: false
-        autoattachSerialConsole:
-          value: true
-        disks:
-        - bus: virtio
-          name: cloudinitdisk
-        - bus: virtio
-          name: containerdisk
-        interfaces:
-          - name: default
-            type: masquerade
-        networkInterfaceMultiqueue:
-          value: true
-      ioThreadsPolicy:
-        value: auto
-      memory:
-        guest: 4Gi
-        hugepages:
-          pageSize: 1Gi
-      resources:
-        requests:
-          memory: 1024M
     networks:
       - name: default
         type: pod
@@ -66,6 +23,50 @@ vm:
           - key: irq-load-balancing.crio.io
             value: disable
       spec:
+        domain:
+          cpu:
+            cores:
+              value: 2
+            dedicatedCpuPlacement:
+              value: true
+            isolateEmulatorThread:
+              value: true
+            model:
+              value: passthrough
+            numa:
+              key: guestMappingPassthrough
+            realtime: "true"
+            sockets:
+              value: 2
+            threads:
+              value: 2
+          devices:
+            autoattachGraphicsDevice:
+              value: false
+            autoattachMemBalloon:
+              value: false
+            autoattachSerialConsole:
+              value: true
+            disks:
+            - bus: virtio
+              name: cloudinitdisk
+            - bus: virtio
+              name: containerdisk
+            interfaces:
+              - name: default
+                type: masquerade
+            networkInterfaceMultiqueue:
+              value: true
+          ioThreadsPolicy:
+            value: auto
+          memory:
+            guest: 4Gi
+            hugepages:
+              pageSize: 1Gi
+          resources:
+            requests:
+              memory: 1024M
+
         tolerations:
           - key: node-role.kubernetes.io/worker-realtime
             operator: Exists

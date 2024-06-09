@@ -3,7 +3,7 @@ Return the vm.spec.template.spec.domain object
 */}}
 
 {{- define "vm.spec.template.spec.domain" -}}
-{{- if .domain }}
+{{- if .template.spec.domain }}
 domain:
   {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 2 }}
   {{- include "vm.spec.template.spec.domain.cpu" . | indent 2 }}
@@ -40,12 +40,24 @@ Return the vm.spec.template object
 */}}
 
 {{- define "vm.spec.template" -}}
-  {{- if .template.metadata }}
+  {{- if .template }}
+  template:
+    {{- if .template.metadata }}
     metadata:
       {{- include "vm.spec.template.metadata" . }}
-  {{- end }}
-  {{- if .template.spec }}
+    {{- end }}
+    {{- if .template.spec }}
     spec:
       {{- include "vm.spec.template.spec" . }}
+    {{- end }}
   {{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec object
+*/}}
+
+{{- define "vm.spec" -}}
+running: {{ .running }}
+{{- include "vm.spec.template" . }}
 {{- end }}

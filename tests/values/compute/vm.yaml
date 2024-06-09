@@ -23,6 +23,55 @@ vm:
             - key: irq-load-balancing.crio.io
               value: disable
         spec:
+          domain:
+            resources:
+              requests:
+                memory: 1Gi
+            memory:
+              guest: 4Gi
+              hugepages:
+                pageSize: 1Gi
+            ioThreadsPolicy:
+              value: auto
+            cpu:
+              cores:
+                value: 2
+              sockets:
+                value: 2
+              threads:
+                value: 2
+              dedicatedCpuPlacement:
+                value: true
+              isolateEmulatorThread:
+                value: true
+              model:
+                value: passthrough
+              numa:
+                key: guestMappingPassthrough
+              realtime: "true"
+
+            devices:
+              disks:
+              - name: containerdisk
+                bus: virtio
+              - name: cloudinitdisk
+                bus: virtio
+              networkInterfaceMultiqueue:
+                value: true
+
+              interfaces:
+              - name: default
+                type: masquerade
+
+              autoattachGraphicsDevice:
+                value: false
+              
+              autoattachMemBalloon:
+                value: false
+
+              autoattachSerialConsole:
+                value: true
+
           tolerations:
             - key: node-role.kubernetes.io/worker-realtime
               operator: Exists
@@ -66,52 +115,3 @@ vm:
                     value: true
                   gateway6:
                     value: true
-
-      domain:
-        resources:
-          requests:
-            memory: 1Gi
-        memory:
-          guest: 4Gi
-          hugepages:
-            pageSize: 1Gi
-        ioThreadsPolicy:
-          value: auto
-        cpu:
-          cores:
-            value: 2
-          sockets:
-            value: 2
-          threads:
-            value: 2
-          dedicatedCpuPlacement:
-            value: true
-          isolateEmulatorThread:
-            value: true
-          model:
-            value: passthrough
-          numa:
-            key: guestMappingPassthrough
-          realtime: "true"
-
-        devices:
-          disks:
-          - name: containerdisk
-            bus: virtio
-          - name: cloudinitdisk
-            bus: virtio
-          networkInterfaceMultiqueue:
-            value: true
-
-          interfaces:
-          - name: default
-            type: masquerade
-
-          autoattachGraphicsDevice:
-            value: false
-          
-          autoattachMemBalloon:
-            value: false
-
-          autoattachSerialConsole:
-            value: true

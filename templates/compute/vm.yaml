@@ -7,9 +7,7 @@ metadata:
   namespace: {{ $initialContext.Release.Namespace }}
   name: {{ $initialContext.Release.Name }}-{{ .name }}-vm
 spec:
-  running: {{ .running }}
-  template:
-    {{- include "vm.spec.template" . }}
+  {{ include "vm.spec" . }}
 ---
 {{- end }}
 {{- end }}
