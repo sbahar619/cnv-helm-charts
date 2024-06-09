@@ -3,8 +3,9 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
-{{- if .template.spec.domain.devices }}
-{{- $devices := .template.spec.domain.devices }}
+{{- $domain := .template.spec.domain }}
+{{- if $domain.devices }}
+{{- $devices := $domain.devices }}
 devices:
 {{- if $devices.interfaces }}
   {{- $interfaces := $devices.interfaces }}
@@ -47,8 +48,9 @@ Return the vm.spec.template.spec.domain.ioThreadsPolicy object
 */}}
 
 {{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
-{{- if .template.spec.domain.ioThreadsPolicy }}
-{{- $ioThreadsPolicy := .template.spec.domain.ioThreadsPolicy }}
+{{- $domain := .template.spec.domain }}
+{{- if $domain.ioThreadsPolicy }}
+{{- $ioThreadsPolicy := $domain.ioThreadsPolicy }}
 ioThreadsPolicy: {{ $ioThreadsPolicy.value }}
 {{- end }}
 {{- end }}
@@ -58,8 +60,9 @@ Return the vm.spec.template.spec.domain.cpu object
 */}}
 
 {{- define "vm.spec.template.spec.domain.cpu" -}}
-{{- if .template.spec.domain.cpu }}
-{{- $cpu := .template.spec.domain.cpu }}
+{{- $domain := .template.spec.domain }}
+{{- if $domain.cpu }}
+{{- $cpu := $domain.cpu }}
 cpu:
 {{- if $cpu.cores }}
 {{- $cores := $cpu.cores }}
@@ -102,8 +105,9 @@ Return the vm.spec.template.spec.domain.memory object
 */}}
 
 {{- define "vm.spec.template.spec.domain.memory" -}}
-{{- if .template.spec.domain.memory }}
-{{- $memory := .template.spec.domain.memory }}
+{{- $domain := .template.spec.domain }}
+{{- if $domain.memory }}
+{{- $memory := $domain.memory }}
 memory:
   {{- if $memory.guest }}
   guest: {{ $memory.guest }}
