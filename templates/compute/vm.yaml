@@ -17,15 +17,10 @@ spec:
       {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
       {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
       domain:
-        {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 8 }}
-        {{- include "vm.spec.template.spec.domain.cpu" . | indent 8 }}
-        {{- include "vm.spec.template.spec.domain.memory" . | indent 8 }}
-        devices:
-            {{- include "vm.spec.template.spec.domain.devices" . | indent 10 }}
+        {{- include "vm.spec.template.spec.domain" . }}
           rng: {}
         machine:
           type: ""
-        {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 8 }}
       {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
       {{- include "vm.spec.template.spec.domain.terminationGracePeriodSeconds" . | indent 6 }}
       networks:

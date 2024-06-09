@@ -5,38 +5,39 @@ Return the vm.spec.template.spec.domain.devices object
 {{- define "vm.spec.template.spec.domain.devices" -}}
 {{- if and .domain .domain.devices }}
 {{- $devices := .domain.devices }}
+devices:
 {{- if $devices.interfaces }}
-{{- $interfaces := $devices.interfaces }}
-interfaces:
-{{- range $interfaces }}
-  - {{ .type }}: {}
-    name: {{ .name }}
-{{- end }}
+  {{- $interfaces := $devices.interfaces }}
+  interfaces:
+  {{- range $interfaces }}
+    - {{ .type }}: {}
+      name: {{ .name }}
+  {{- end }}
 {{- end }}
 {{- if $devices.networkInterfaceMultiqueue }}
-{{- $networkInterfaceMultiqueue := $devices.networkInterfaceMultiqueue }}
-networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
+  {{- $networkInterfaceMultiqueue := $devices.networkInterfaceMultiqueue }}
+  networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
 {{- end }}
 {{- if $devices.autoattachGraphicsDevice }}
-{{- $autoattachGraphicsDevice := $devices.autoattachGraphicsDevice }}
-autoattachGraphicsDevice: {{ $autoattachGraphicsDevice.value }}
+  {{- $autoattachGraphicsDevice := $devices.autoattachGraphicsDevice }}
+  autoattachGraphicsDevice: {{ $autoattachGraphicsDevice.value }}
 {{- end }}
 {{- if $devices.autoattachMemBalloon }}
-{{- $autoattachMemBalloon := $devices.autoattachMemBalloon }}
-autoattachMemBalloon: {{ $autoattachMemBalloon.value }}
+  {{- $autoattachMemBalloon := $devices.autoattachMemBalloon }}
+  autoattachMemBalloon: {{ $autoattachMemBalloon.value }}
 {{- end }}
 {{- if $devices.autoattachSerialConsole }}
-{{- $autoattachSerialConsole := $devices.autoattachSerialConsole }}
-autoattachSerialConsole: {{ $autoattachSerialConsole.value }}
+  {{- $autoattachSerialConsole := $devices.autoattachSerialConsole }}
+  autoattachSerialConsole: {{ $autoattachSerialConsole.value }}
 {{- end }}
 {{- if $devices.disks }}
-{{- $disks := $devices.disks }}
-disks:
-{{- range $disks }}
-- name: {{ .name }}
-  disk:
-    bus: {{ .bus }}
-{{- end }}
+  {{- $disks := $devices.disks }}
+  disks:
+  {{- range $disks }}
+  - name: {{ .name }}
+    disk:
+      bus: {{ .bus }}
+  {{- end }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -270,4 +271,16 @@ volumes:
   name: {{ .name }}
 {{- end }}
 {{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain object
+*/}}
+
+{{- define "vm.spec.template.spec.domain" -}}
+{{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 8 }}
+{{- include "vm.spec.template.spec.domain.cpu" . | indent 8 }}
+{{- include "vm.spec.template.spec.domain.memory" . | indent 8 }}
+{{- include "vm.spec.template.spec.domain.devices" . | indent 8 }}
+{{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 8 }}
 {{- end }}
