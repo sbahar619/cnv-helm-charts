@@ -66,7 +66,6 @@ vm:
           resources:
             requests:
               memory: 1024M
-
         tolerations:
           - key: node-role.kubernetes.io/worker-realtime
             operator: Exists
