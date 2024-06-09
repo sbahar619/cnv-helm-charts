@@ -123,8 +123,9 @@ Return the vm.spec.template.spec.domain.resources object
 */}}
 
 {{- define "vm.spec.template.spec.domain.resources.requests.memory" -}}
-{{- if and .template .template.spec .template.spec.domain .template.spec.domain.resources .template.spec.domain.resources.requests .template.spec.domain.resources.requests.memory }}
-{{- $memory := .template.spec.domain.resources.requests.memory }}
+{{- $domain := .template.spec.domain }}
+{{- if and $domain.resources $domain.resources.requests $domain.resources.requests.memory }}
+{{- $memory := $domain.resources.requests.memory }}
 resources:
   requests:
     memory: {{ $memory }}
