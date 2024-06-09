@@ -14,16 +14,7 @@ spec:
         kubevirt.io/vm: {{ $initialContext.Release.Name }}-{{ .name }}-vm
       {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
     spec:
-      {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
-      {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
-      domain:
-        {{- include "vm.spec.template.spec.domain" . }}
-        machine:
-          type: ""
-      {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
-      {{- include "vm.spec.template.spec.terminationGracePeriodSeconds" . | indent 6 }}
-      networks:
-        {{- include "vm.spec.template.spec.networks" . | indent 8 }}
+      {{- include "vm.spec.template.spec" . }}
 ---
 {{- end }}
 {{- end }}

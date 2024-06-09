@@ -69,6 +69,7 @@ Return the vm.spec.template.spec.networks object
 
 {{- define "vm.spec.template.spec.networks" -}}
 {{- if .networks }}
+networks:
 {{- range .networks }}
 - name: {{ .name }}
   {{- if ( eq .type "multus") }}
@@ -278,9 +279,24 @@ Return the vm.spec.template.spec.domain object
 */}}
 
 {{- define "vm.spec.template.spec.domain" -}}
-{{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 8 }}
-{{- include "vm.spec.template.spec.domain.cpu" . | indent 8 }}
-{{- include "vm.spec.template.spec.domain.memory" . | indent 8 }}
-{{- include "vm.spec.template.spec.domain.devices" . | indent 8 }}
-{{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 8 }}
+{{- if .domain }}
+domain:
+  {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 2 }}
+  {{- include "vm.spec.template.spec.domain.cpu" . | indent 2 }}
+  {{- include "vm.spec.template.spec.domain.memory" . | indent 2 }}
+  {{- include "vm.spec.template.spec.domain.devices" . | indent 2 }}
+  {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 2 }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec object
+*/}}
+{{- define "vm.spec.template.spec" -}}
+  {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
+  {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
+  {{- include "vm.spec.template.spec.domain" . | indent 6 }}
+  {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
+  {{- include "vm.spec.template.spec.terminationGracePeriodSeconds" . | indent 6 }}
+  {{- include "vm.spec.template.spec.networks" . | indent 6 }}
 {{- end }}
