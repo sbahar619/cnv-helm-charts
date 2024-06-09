@@ -34,3 +34,18 @@ Return the vm.spec.template.metadata object
     {{- include "vm.spec.template.metadata.labels" . | indent 6 }}
     {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
 {{- end }}
+
+{{/*
+Return the vm.spec.template object
+*/}}
+
+{{- define "vm.spec.template" -}}
+  {{- if .template.metadata }}
+    metadata:
+      {{- include "vm.spec.template.metadata" . }}
+  {{- end }}
+  {{- if .template.spec }}
+    spec:
+      {{- include "vm.spec.template.spec" . }}
+  {{- end }}
+{{- end }}

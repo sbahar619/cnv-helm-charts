@@ -9,10 +9,7 @@ metadata:
 spec:
   running: {{ .running }}
   template:
-    metadata:
-      {{- include "vm.spec.template.metadata" . }}
-    spec:
-      {{- include "vm.spec.template.spec" . }}
+    {{- include "vm.spec.template" . }}
 ---
 {{- end }}
 {{- end }}
