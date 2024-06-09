@@ -23,6 +23,7 @@ vm:
           tolerations:
             - key: node-role.kubernetes.io/worker-realtime
               operator: Exists
+          terminationGracePeriodSeconds: 0
 
       networks:
         - name: default 
@@ -73,8 +74,6 @@ vm:
             pageSize: 1Gi
         ioThreadsPolicy:
           value: auto
-        terminationGracePeriodSeconds:
-          value: 0
         cpu:
           cores:
             value: 2

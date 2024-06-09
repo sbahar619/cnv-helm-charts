@@ -22,7 +22,7 @@ spec:
         machine:
           type: ""
       {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
-      {{- include "vm.spec.template.spec.domain.terminationGracePeriodSeconds" . | indent 6 }}
+      {{- include "vm.spec.template.spec.terminationGracePeriodSeconds" . | indent 6 }}
       networks:
         {{- include "vm.spec.template.spec.networks" . | indent 8 }}
 ---

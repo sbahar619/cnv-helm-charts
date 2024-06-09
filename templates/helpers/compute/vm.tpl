@@ -57,10 +57,10 @@ ioThreadsPolicy: {{ $ioThreadsPolicy.value }}
 Return the vm.spec.template.spec.domain.terminationGracePeriodSeconds object
 */}}
 
-{{- define "vm.spec.template.spec.domain.terminationGracePeriodSeconds" -}}
-{{- if and .domain .domain.terminationGracePeriodSeconds }}
-{{- $terminationGracePeriodSeconds := .domain.terminationGracePeriodSeconds }}
-terminationGracePeriodSeconds: {{ $terminationGracePeriodSeconds.value }}
+{{- define "vm.spec.template.spec.terminationGracePeriodSeconds" -}}
+{{- if and .template .template.spec }}
+{{- $terminationGracePeriodSeconds := .template.spec.terminationGracePeriodSeconds }}
+terminationGracePeriodSeconds: {{ $terminationGracePeriodSeconds }}
 {{- end }}
 {{- end }}
 {{/*

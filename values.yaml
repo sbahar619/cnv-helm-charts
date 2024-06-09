@@ -47,8 +47,6 @@ vm:
       resources:
         requests:
           memory: 1024M
-      terminationGracePeriodSeconds:
-        value: 0
     networks:
       - name: default
         type: pod
@@ -68,6 +66,7 @@ vm:
         tolerations:
           - key: node-role.kubernetes.io/worker-realtime
             operator: Exists
+        terminationGracePeriodSeconds: 0
     volumes:
     - image: registry.redhat.io/rhel8/rhel-guest-image:latest
       name: containerdisk
