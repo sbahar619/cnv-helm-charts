@@ -5,26 +5,5 @@ kind: PerformanceProfile
 metadata:
   name: {{ .Release.Name }}
 spec:
-  cpu:
-    {{- $cpu := $PerformanceProfile.cpu }}
-    isolated: {{ $cpu.isolated }}
-    reserved: {{ $cpu.reserved }}
-  globallyDisableIrqLoadBalancing: {{ $PerformanceProfile.globallyDisableIrqLoadBalancing }}
-  hugepages:
-    {{- $hugepages := $PerformanceProfile.hugepages }}
-    defaultHugepagesSize: {{ $hugepages.defaultHugepagesSize }}
-    {{- include "PerformanceProfile.spec.hugepages.pages" . | indent 4}}
-  realTimeKernel:
-    {{- $realTimeKernel := $PerformanceProfile.realTimeKernel }}
-    enabled: {{ $realTimeKernel.enabled }}
-  workloadHints:
-    {{- $workloadHints := $PerformanceProfile.workloadHints }}
-    highPowerConsumption: {{ $workloadHints.highPowerConsumption }}
-    realTime: {{ $workloadHints.realTime }}
-  nodeSelector:
-    {{- $nodeSelector := $PerformanceProfile.nodeSelector }}
-    {{ $nodeSelector.key }}: {{ default "" $nodeSelector.value | quote }}
-  numa:
-    {{- $numa := $PerformanceProfile.numa }}
-    topologyPolicy: {{ $numa.topologyPolicy }}
+  {{- include "PerformanceProfile.spec" . | indent 2 }}
 {{- end }}
