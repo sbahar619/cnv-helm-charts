@@ -39,6 +39,24 @@ Return the PerformanceProfile.spec object
 {{- end }}
 
 {{/*
+Return the PerformanceProfile.spec.cpu object
+*/}}
+
+{{- define "PerformanceProfile.spec.cpu" -}}
+  {{- $cpu := .Values.PerformanceProfile.cpu }}
+  isolated: {{ $cpu.isolated }}
+  reserved: {{ $cpu.reserved }}
+{{ end -}}
+
+{{/*
+Return the PerformanceProfile.spec.globallyDisableIrqLoadBalancing object
+*/}}
+
+{{- define "PerformanceProfile.spec.globallyDisableIrqLoadBalancing" -}}
+  {{- $globallyDisableIrqLoadBalancing := .Values.PerformanceProfile.globallyDisableIrqLoadBalancing }} {{ $globallyDisableIrqLoadBalancing }}
+{{ end -}}
+
+{{/*
 Return the PerformanceProfile.spec.hugepages object
 */}}
 
@@ -96,22 +114,4 @@ Return the PerformanceProfile.spec.numa object
 {{- define "PerformanceProfile.spec.numa" -}}
   {{- $numa := .Values.PerformanceProfile.numa }}
   topologyPolicy: {{ $numa.topologyPolicy }}
-{{ end -}}
-
-{{/*
-Return the PerformanceProfile.spec.globallyDisableIrqLoadBalancing object
-*/}}
-
-{{- define "PerformanceProfile.spec.globallyDisableIrqLoadBalancing" -}}
-  {{- $globallyDisableIrqLoadBalancing := .Values.PerformanceProfile.globallyDisableIrqLoadBalancing }} {{ $globallyDisableIrqLoadBalancing }}
-{{ end -}}
-
-{{/*
-Return the PerformanceProfile.spec.cpu object
-*/}}
-
-{{- define "PerformanceProfile.spec.cpu" -}}
-  {{- $cpu := .Values.PerformanceProfile.cpu }}
-  isolated: {{ $cpu.isolated }}
-  reserved: {{ $cpu.reserved }}
 {{ end -}}
