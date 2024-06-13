@@ -209,9 +209,7 @@ dv:
     blank:
       enable: false
     registry:
-      enable: false
-      pullMethod:
-        enable: node
+      pullMethod: node
       secretRef: pull-secret
       url: registry.redhat.io/rhel8/rhel-guest-image:latest
 

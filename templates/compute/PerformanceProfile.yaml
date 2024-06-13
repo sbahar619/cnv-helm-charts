@@ -1,9 +1,8 @@
-{{- $PerformanceProfile := .Values.PerformanceProfile }}
+{{- $PerformanceProfile := .Values.PerformanceProfile -}}
 {{- if $PerformanceProfile.enable }}
 apiVersion: performance.openshift.io/v2
 kind: PerformanceProfile
 metadata:
   name: {{ .Release.Name }}
-spec:
-  {{- include "PerformanceProfile.spec" . | indent 2 }}
+spec: {{- include "PerformanceProfile.spec" . | nindent 2 }}
 {{- end }}
