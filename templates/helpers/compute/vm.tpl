@@ -3,6 +3,7 @@ Return the vm.spec.template.spec.domain object
 */}}
 
 {{- define "vm.spec.template.spec.domain" -}}
+
 {{- if .template.spec.domain }}
 domain:
   {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 2 }}
@@ -18,6 +19,7 @@ Return the vm.spec.template.spec object
 */}}
 
 {{- define "vm.spec.template.spec" -}}
+
   {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
   {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
   {{- include "vm.spec.template.spec.domain" . | indent 6 }}
@@ -31,16 +33,20 @@ Return the vm.spec.template object
 */}}
 
 {{- define "vm.spec.template" -}}
+
   {{- if .template }}
   template:
+
     {{- if .template.metadata }}
     metadata:
       {{- include "vm.spec.template.metadata" . }}
     {{- end }}
+
     {{- if .template.spec }}
     spec:
       {{- include "vm.spec.template.spec" . }}
     {{- end }}
+
   {{- end }}
 {{- end }}
 
@@ -60,10 +66,12 @@ Return the vm.spec.template.spec.domain.devices object
 */}}
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
+
 {{- $domain := .template.spec.domain }}
 {{- if $domain.devices }}
 {{- $devices := $domain.devices }}
 devices:
+
 {{- if $devices.interfaces }}
   {{- $interfaces := $devices.interfaces }}
   interfaces:
@@ -72,22 +80,27 @@ devices:
       name: {{ .name }}
   {{- end }}
 {{- end }}
+
 {{- if $devices.networkInterfaceMultiqueue }}
   {{- $networkInterfaceMultiqueue := $devices.networkInterfaceMultiqueue }}
   networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
 {{- end }}
+
 {{- if $devices.autoattachGraphicsDevice }}
   {{- $autoattachGraphicsDevice := $devices.autoattachGraphicsDevice }}
   autoattachGraphicsDevice: {{ $autoattachGraphicsDevice.value }}
 {{- end }}
+
 {{- if $devices.autoattachMemBalloon }}
   {{- $autoattachMemBalloon := $devices.autoattachMemBalloon }}
   autoattachMemBalloon: {{ $autoattachMemBalloon.value }}
 {{- end }}
+
 {{- if $devices.autoattachSerialConsole }}
   {{- $autoattachSerialConsole := $devices.autoattachSerialConsole }}
   autoattachSerialConsole: {{ $autoattachSerialConsole.value }}
 {{- end }}
+
 {{- if $devices.disks }}
   {{- $disks := $devices.disks }}
   disks:
@@ -97,6 +110,7 @@ devices:
       bus: {{ .bus }}
   {{- end }}
 {{- end }}
+
 {{- end }}
 {{- end }}
 
