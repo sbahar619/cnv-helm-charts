@@ -49,8 +49,10 @@ Return the vm.spec object
 */}}
 
 {{- define "vm.spec" -}}
-running: {{ .running }}
-{{- include "vm.spec.template" . }}
+
+  running: {{ .running }}
+  {{- include "vm.spec.template" . }}
+
 {{- end }}
 
 {{/*
