@@ -25,28 +25,19 @@ vm:
       spec:
         domain:
           cpu:
-            cores:
-              value: 2
-            dedicatedCpuPlacement:
-              value: true
-            isolateEmulatorThread:
-              value: true
-            model:
-              value: passthrough
+            dedicatedCpuPlacement: "true"
+            isolateEmulatorThread: "true"
+            model: passthrough
             numa:
               key: guestMappingPassthrough
             realtime: "true"
-            sockets:
-              value: 2
-            threads:
-              value: 2
+            cores: 2
+            sockets: 2
+            threads: 2
           devices:
-            autoattachGraphicsDevice:
-              value: false
-            autoattachMemBalloon:
-              value: false
-            autoattachSerialConsole:
-              value: true
+            autoattachGraphicsDevice: "true"
+            autoattachMemBalloon: "false"
+            autoattachSerialConsole: "true"
             disks:
             - bus: virtio
               name: cloudinitdisk
@@ -55,10 +46,8 @@ vm:
             interfaces:
               - name: default
                 type: masquerade
-            # networkInterfaceMultiqueue:
-            #   value: true
-          ioThreadsPolicy:
-            value: auto
+            networkInterfaceMultiqueue: "true"
+          ioThreadsPolicy: auto
           memory:
             guest: 4Gi
             hugepages:

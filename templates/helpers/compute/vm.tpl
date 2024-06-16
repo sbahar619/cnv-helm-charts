@@ -83,22 +83,22 @@ devices:
 
 {{- if $devices.networkInterfaceMultiqueue }}
   {{- $networkInterfaceMultiqueue := $devices.networkInterfaceMultiqueue }}
-  networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue.value }}
+  networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue }}
 {{- end }}
 
 {{- if $devices.autoattachGraphicsDevice }}
   {{- $autoattachGraphicsDevice := $devices.autoattachGraphicsDevice }}
-  autoattachGraphicsDevice: {{ $autoattachGraphicsDevice.value }}
+  autoattachGraphicsDevice: {{ $autoattachGraphicsDevice }}
 {{- end }}
 
 {{- if $devices.autoattachMemBalloon }}
   {{- $autoattachMemBalloon := $devices.autoattachMemBalloon }}
-  autoattachMemBalloon: {{ $autoattachMemBalloon.value }}
+  autoattachMemBalloon: {{ $autoattachMemBalloon }}
 {{- end }}
 
 {{- if $devices.autoattachSerialConsole }}
   {{- $autoattachSerialConsole := $devices.autoattachSerialConsole }}
-  autoattachSerialConsole: {{ $autoattachSerialConsole.value }}
+  autoattachSerialConsole: {{ $autoattachSerialConsole }}
 {{- end }}
 
 {{- if $devices.disks }}
@@ -123,7 +123,7 @@ Return the vm.spec.template.spec.domain.ioThreadsPolicy object
 {{- $domain := .template.spec.domain }}
 {{- if $domain.ioThreadsPolicy }}
 {{- $ioThreadsPolicy := $domain.ioThreadsPolicy }}
-ioThreadsPolicy: {{ $ioThreadsPolicy.value }}
+ioThreadsPolicy: {{ $ioThreadsPolicy }}
 {{- end }}
 {{- end }}
 
@@ -139,32 +139,32 @@ Return the vm.spec.template.spec.domain.cpu object
 cpu:
 {{- if $cpu.cores }}
 {{- $cores := $cpu.cores }}
-  cores: {{ $cores.value }}
+  cores: {{ $cores }}
 {{- end }}
 
 {{- if $cpu.sockets }}
 {{- $sockets := $cpu.sockets }}
-  sockets: {{ $sockets.value }}
+  sockets: {{ $sockets }}
 {{- end }}
 
 {{- if $cpu.threads }}
 {{- $threads := $cpu.threads }}
-  threads: {{ $threads.value }}
+  threads: {{ $threads }}
 {{- end }}
 
 {{- if $cpu.dedicatedCpuPlacement }}
 {{- $dedicatedCpuPlacement := $cpu.dedicatedCpuPlacement }}
-  dedicatedCpuPlacement: {{ $dedicatedCpuPlacement.value }}
+  dedicatedCpuPlacement: {{ $dedicatedCpuPlacement }}
 {{- end }}
 
 {{- if $cpu.isolateEmulatorThread }}
 {{- $isolateEmulatorThread := $cpu.isolateEmulatorThread }}
-  isolateEmulatorThread: {{ $isolateEmulatorThread.value }}
+  isolateEmulatorThread: {{ $isolateEmulatorThread }}
 {{- end }}
 
 {{- if $cpu.model }}
 {{- $model := $cpu.model }}
-  model: {{ $model.value }}
+  model: {{ $model }}
 {{- end }}
 
 {{- if $cpu.numa }}

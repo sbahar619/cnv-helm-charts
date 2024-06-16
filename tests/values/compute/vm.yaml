@@ -31,21 +31,14 @@ vm:
               guest: 4Gi
               hugepages:
                 pageSize: 1Gi
-            ioThreadsPolicy:
-              value: auto
+            ioThreadsPolicy: auto
             cpu:
-              cores:
-                value: 2
-              sockets:
-                value: 2
-              threads:
-                value: 2
-              dedicatedCpuPlacement:
-                value: true
-              isolateEmulatorThread:
-                value: true
-              model:
-                value: passthrough
+              cores: 2
+              sockets: 2
+              threads: 2
+              dedicatedCpuPlacement: "true"
+              isolateEmulatorThread: "true"
+              model: passthrough
               numa:
                 key: guestMappingPassthrough
               realtime: "true"
@@ -56,21 +49,15 @@ vm:
                 bus: virtio
               - name: cloudinitdisk
                 bus: virtio
-              networkInterfaceMultiqueue:
-                value: true
+              networkInterfaceMultiqueue: "false"
 
               interfaces:
               - name: default
                 type: masquerade
 
-              autoattachGraphicsDevice:
-                value: false
-              
-              autoattachMemBalloon:
-                value: false
-
-              autoattachSerialConsole:
-                value: true
+              autoattachGraphicsDevice: "false"
+              autoattachMemBalloon: "true"
+              autoattachSerialConsole: "true"
 
           tolerations:
             - key: node-role.kubernetes.io/worker-realtime
