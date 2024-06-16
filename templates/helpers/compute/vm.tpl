@@ -119,6 +119,7 @@ Return the vm.spec.template.spec.domain.ioThreadsPolicy object
 */}}
 
 {{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
+
 {{- $domain := .template.spec.domain }}
 {{- if $domain.ioThreadsPolicy }}
 {{- $ioThreadsPolicy := $domain.ioThreadsPolicy }}
@@ -131,6 +132,7 @@ Return the vm.spec.template.spec.domain.cpu object
 */}}
 
 {{- define "vm.spec.template.spec.domain.cpu" -}}
+
 {{- $domain := .template.spec.domain }}
 {{- if $domain.cpu }}
 {{- $cpu := $domain.cpu }}
@@ -139,35 +141,43 @@ cpu:
 {{- $cores := $cpu.cores }}
   cores: {{ $cores.value }}
 {{- end }}
+
 {{- if $cpu.sockets }}
 {{- $sockets := $cpu.sockets }}
   sockets: {{ $sockets.value }}
 {{- end }}
+
 {{- if $cpu.threads }}
 {{- $threads := $cpu.threads }}
   threads: {{ $threads.value }}
 {{- end }}
+
 {{- if $cpu.dedicatedCpuPlacement }}
 {{- $dedicatedCpuPlacement := $cpu.dedicatedCpuPlacement }}
   dedicatedCpuPlacement: {{ $dedicatedCpuPlacement.value }}
 {{- end }}
+
 {{- if $cpu.isolateEmulatorThread }}
 {{- $isolateEmulatorThread := $cpu.isolateEmulatorThread }}
   isolateEmulatorThread: {{ $isolateEmulatorThread.value }}
 {{- end }}
+
 {{- if $cpu.model }}
 {{- $model := $cpu.model }}
   model: {{ $model.value }}
 {{- end }}
+
 {{- if $cpu.numa }}
 {{- $numa := $cpu.numa }}
   numa:
     {{ $numa.key }}: {}
 {{- end }}
+
 {{- if $cpu.realtime }}
 {{- $realtime := $cpu.realtime }}
   realtime: {}
 {{- end }}
+
 {{- end }}
 {{- end }}
 
@@ -176,6 +186,7 @@ Return the vm.spec.template.spec.domain.memory object
 */}}
 
 {{- define "vm.spec.template.spec.domain.memory" -}}
+
 {{- $domain := .template.spec.domain }}
 {{- if $domain.memory }}
 {{- $memory := $domain.memory }}
@@ -183,6 +194,7 @@ memory:
   {{- if $memory.guest }}
   guest: {{ $memory.guest }}
   {{- end }}
+
   {{- if $memory.hugepages }}
   {{- $hugepages := $memory.hugepages }}
   hugepages:
@@ -190,6 +202,7 @@ memory:
     pageSize: {{ $hugepages.pageSize }}
     {{- end }}
   {{- end }}
+
 {{- end }}
 {{- end }}
 
@@ -198,6 +211,7 @@ Return the vm.spec.template.spec.domain.resources object
 */}}
 
 {{- define "vm.spec.template.spec.domain.resources.requests.memory" -}}
+
 {{- $domain := .template.spec.domain }}
 {{- if and $domain.resources $domain.resources.requests $domain.resources.requests.memory }}
 {{- $memory := $domain.resources.requests.memory }}
@@ -212,16 +226,19 @@ Return the vm.spec.template.spec.networks object
 */}}
 
 {{- define "vm.spec.template.spec.networks" -}}
+
 {{- if .networks }}
 networks:
 {{- range .networks }}
 - name: {{ .name }}
+
   {{- if ( eq .type "multus") }}
   {{ .type }}:
     networkName: {{ .networkName }}
   {{- else }}
   {{ .type }}: {}
   {{- end }}
+
 {{- end }}
 {{- end }}
 {{- end }}
@@ -231,11 +248,13 @@ Return the vm.spec.template.spec.nodeSelector object
 */}}
 
 {{- define "vm.spec.template.spec.nodeSelector" -}}
+
 {{- if .nodeSelector }}
 nodeSelector:
 {{- if .nodeSelector.key }}
   {{ .nodeSelector.key }}: {{ default "" .nodeSelector.value | quote }}
 {{- end }}
+
 {{- end }}
 {{- end }}
 
@@ -244,6 +263,7 @@ Return the vm.spec.template.spec.terminationGracePeriodSeconds object
 */}}
 
 {{- define "vm.spec.template.spec.terminationGracePeriodSeconds" -}}
+
 {{- if .template.spec.terminationGracePeriodSeconds }}
 {{- $terminationGracePeriodSeconds := .template.spec.terminationGracePeriodSeconds }}
 terminationGracePeriodSeconds: {{ $terminationGracePeriodSeconds }}
@@ -255,6 +275,7 @@ Return the vm.spec.template.spec.tolerations object
 */}}
 
 {{- define "vm.spec.template.spec.tolerations" -}}
+
 {{- if and .template .template.spec .template.spec.tolerations }}
 {{- $tolerations := .template.spec.tolerations }}
 tolerations:
@@ -265,6 +286,7 @@ tolerations:
 {{- end }}
 {{- end }}
 {{- end }}
+
 {{- end }}
 
 {{/*
@@ -272,12 +294,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 */}}
 
 {{- define "vm.spec.template.spec.volumes.cloudInitNoCloud" -}}
+
 {{- if .cloudInitNoCloud }}
 
   {{- if .cloudInitNoCloud.networkData }}
   {{- $networkData := .cloudInitNoCloud.networkData }}
     networkData: |
       version: {{ $networkData.version }}
+
       {{- if $networkData.ethernets }}
       {{- $ethernets := $networkData.ethernets }}
       ethernets:
@@ -289,9 +313,11 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
           - {{ . }}
           {{- end }}
         {{- end }}
+
         {{- if and .dhcp4 .dhcp4.value }}
           dhcp4: {{ .dhcp4.value }}
         {{- end }}
+
         {{- if and .gateway6 .gateway6.value }}
           gateway6: {{ .gateway6.value }}
         {{- end }}
@@ -320,23 +346,28 @@ Return the vm.spec.template.spec.volumess object
 */}}
 
 {{- define "vm.spec.template.spec.volumes" -}}
+
 {{- $volumes := .volumes }}
 volumes:
 {{- range $volumes }}
+
 {{- if eq .type "containerDisk" }}
 - {{ .type }}:
     image: {{ .image }}
   name: {{ .name }}
+
 {{- else if eq .type "cloudInitNoCloud" }}
 - {{ .type }}:
   {{- include "vm.spec.template.spec.volumes.cloudInitNoCloud" . }}
   name: {{ .name }}
+
 {{- else if eq .type "dataVolume" }}
 - {{ .type }}:
     name: {{ .dataVolume.name }}
   name: {{ .name }}
 {{- end }}
 {{- end }}
+
 {{- end }}
 
 {{/*
@@ -344,6 +375,7 @@ Return the vm.spec.template.metadata object
 */}}
 
 {{- define "vm.spec.template.metadata" -}}
+
     {{- include "vm.spec.template.metadata.labels" . | indent 6 }}
     {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
 {{- end }}
@@ -353,6 +385,7 @@ Return the vm.spec.template.metadata.labels object
 */}}
 
 {{- define "vm.spec.template.metadata.labels" -}}
+
 {{- if and .template .template.metadata .template.metadata.labels }}
 {{- $labels := .template.metadata.labels }}
 labels:
@@ -360,6 +393,7 @@ labels:
   {{ .key }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
+
 {{- end }}
 
 {{/*
@@ -367,6 +401,7 @@ Return the vm.spec.template.metadata.annotations object
 */}}
 
 {{- define "vm.spec.template.metadata.annotations" -}}
+
 {{- if and .template .template.metadata .template.metadata.annotations }}
 {{- $annotations := .template.metadata.annotations }}
 annotations:
@@ -374,6 +409,7 @@ annotations:
   {{ .key }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
+
 {{- end }}
 
 
