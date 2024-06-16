@@ -69,7 +69,7 @@ vm:
         tolerations:
           - key: node-role.kubernetes.io/worker-realtime
             operator: Exists
-        terminationGracePeriodSeconds: 0
+        terminationGracePeriodSeconds: "0"
     volumes:
     - image: registry.redhat.io/rhel8/rhel-guest-image:latest
       name: containerdisk
