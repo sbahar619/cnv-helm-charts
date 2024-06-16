@@ -55,8 +55,8 @@ vm:
             interfaces:
               - name: default
                 type: masquerade
-            networkInterfaceMultiqueue:
-              value: true
+            # networkInterfaceMultiqueue:
+            #   value: true
           ioThreadsPolicy:
             value: auto
           memory:
