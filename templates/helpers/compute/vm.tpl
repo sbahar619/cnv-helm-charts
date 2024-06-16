@@ -314,12 +314,12 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
           {{- end }}
         {{- end }}
 
-        {{- if and .dhcp4 .dhcp4.value }}
-          dhcp4: {{ .dhcp4.value }}
+        {{- if .dhcp4 }}
+          dhcp4: {{ .dhcp4 }}
         {{- end }}
 
-        {{- if and .gateway6 .gateway6.value }}
-          gateway6: {{ .gateway6.value }}
+        {{- if .gateway6 }}
+          gateway6: {{ .gateway6 }}
         {{- end }}
       {{- end }}
       {{- end }}

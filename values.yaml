@@ -72,17 +72,13 @@ vm:
           ethernets:
             - addresses:
                 - fd10:0:2::2/120
-              dhcp4:
-                value: true
-              gateway6:
-                value: fd10:0:2::1
+              dhcp4: "true"
+              gateway6: fd10:0:2::1
               name: eth0
             - addresses:
                 - 10.200.0.2/24
-              dhcp4:
-                value: true
-              gateway6:
-                value: true
+              dhcp4: "true"
+              gateway6: fd10:0:2::1
               name: eth1
           version: 2
         userData:
