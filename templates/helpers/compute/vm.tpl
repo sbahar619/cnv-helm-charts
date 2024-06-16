@@ -27,15 +27,6 @@ Return the vm.spec.template.spec object
 {{- end }}
 
 {{/*
-Return the vm.spec.template.metadata object
-*/}}
-
-{{- define "vm.spec.template.metadata" -}}
-    {{- include "vm.spec.template.metadata.labels" . | indent 6 }}
-    {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
-{{- end }}
-
-{{/*
 Return the vm.spec.template object
 */}}
 
@@ -333,17 +324,12 @@ volumes:
 {{- end }}
 
 {{/*
-Return the vm.spec.template.metadata.annotations object
+Return the vm.spec.template.metadata object
 */}}
 
-{{- define "vm.spec.template.metadata.annotations" -}}
-{{- if and .template .template.metadata .template.metadata.annotations }}
-{{- $annotations := .template.metadata.annotations }}
-annotations:
-{{- range $annotations }}
-  {{ .key }}: {{ .value | quote }}
-{{- end }}
-{{- end }}
+{{- define "vm.spec.template.metadata" -}}
+    {{- include "vm.spec.template.metadata.labels" . | indent 6 }}
+    {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
 {{- end }}
 
 {{/*
@@ -355,6 +341,20 @@ Return the vm.spec.template.metadata.labels object
 {{- $labels := .template.metadata.labels }}
 labels:
 {{- range $labels }}
+  {{ .key }}: {{ .value | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.metadata.annotations object
+*/}}
+
+{{- define "vm.spec.template.metadata.annotations" -}}
+{{- if and .template .template.metadata .template.metadata.annotations }}
+{{- $annotations := .template.metadata.annotations }}
+annotations:
+{{- range $annotations }}
   {{ .key }}: {{ .value | quote }}
 {{- end }}
 {{- end }}
