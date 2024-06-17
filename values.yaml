@@ -59,33 +59,37 @@ vm:
           - key: node-role.kubernetes.io/worker-realtime
             operator: Exists
         terminationGracePeriodSeconds: "0"
-    volumes:
-    - image: registry.redhat.io/rhel8/rhel-guest-image:latest
-      name: containerdisk
-      type: containerDisk
-    - dataVolume:
-        name: rt-dv-dv
-      name: root-disk
-      type: dataVolume
-    - cloudInitNoCloud:
-        networkData:
-          ethernets:
-            - addresses:
-                - fd10:0:2::2/120
-              dhcp4: "true"
-              gateway6: fd10:0:2::1
-              name: eth0
-            - addresses:
-                - 10.200.0.2/24
-              dhcp4: "true"
-              gateway6: fd10:0:2::1
-              name: eth1
-          version: 2
-        userData:
-          password: p
-          user: u
-      name: cloudinitdisk
-      type: cloudInitNoCloud
+    
+    ## @param vm.vms.volumes List of volumes that can be mounted by disks belonging to the vmi
+    ## E.g.
+    ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
+    ##   name: containerdisk
+    ##   type: containerDisk
+    ## - dataVolume:
+    ##     name: rt-dv-dv
+    ##   name: root-disk
+    ##   type: dataVolume
+    ## - cloudInitNoCloud:
+    ##     networkData:
+    ##       ethernets:
+    ##         - addresses:
+    ##             - fd10:0:2::2/120
+    ##           dhcp4: "true"
+    ##           gateway6: fd10:0:2::1
+    ##           name: eth0
+    ##         - addresses:
+    ##             - 10.200.0.2/24
+    ##           dhcp4: "true"
+    ##           gateway6: fd10:0:2::1
+    ##           name: eth1
+    ##       version: 2
+    ##     userData:
+    ##       password: p
+    ##       user: u
+    ##   name: cloudinitdisk
+    ##   type: cloudInitNoCloud
+    ##
+    volumes: []
 
 mcp:
   enable: false
