@@ -82,17 +82,17 @@ storage:
   {{- end }}
 
   {{- if $storage.storageClassName }}
-  storageClassName: {{  $storage.storageClassName }}
+  storageClassName: {{ $storage.storageClassName }}
   {{- end }}
 
   {{- if $storage.volumeMode }}
-  volumeMode: {{  $storage.volumeMode }}
+  volumeMode: {{ $storage.volumeMode }}
   {{- end }}
 
   {{- if and $storage.resources $storage.resources.requests $storage.resources.requests.storage }}
   resources:
     requests:
-      storage: {{  $storage.resources.requests.storage }}
+      storage: {{ $storage.resources.requests.storage }}
   {{- end }}
 
 {{- end }}
@@ -108,5 +108,37 @@ Return the dv.spec.storage.accessModes object
 {{- range  $accessModes }}
 - {{ . }}
 {{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Return the dv.spec.pvc object
+*/}}
+
+{{- define "dv.spec.pvc" -}}
+
+{{- if .Values.dv.pvc }}
+{{- $pvc := .Values.dv.pvc }}
+storage:
+
+  {{- if $pvc.accessModes }}
+  accessModes:
+      {{- include "dv.spec.pvc.accessModes" . | indent 4 }}
+  {{- end }}
+
+  {{- if $pvc.storageClassName }}
+  storageClassName: {{ $pvc.storageClassName }}
+  {{- end }}
+
+  {{- if $pvc.volumeMode }}
+  volumeMode: {{ $pvc.volumeMode }}
+  {{- end }}
+
+  {{- if and $pvc.resources $pvc.resources.requests $pvc.resources.requests.storage }}
+  resources:
+    requests:
+      storage: {{ $pvc.resources.requests.storage }}
+  {{- end }}
+
 {{- end }}
 {{- end }}

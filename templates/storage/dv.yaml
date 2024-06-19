@@ -14,12 +14,6 @@ spec:
   {{- end }}
   {{- if .Values.dv.pvc.enable }}
   pvc:
-    accessModes:
-      {{- include "dv.spec.pvc.accessModes" . | indent 4 }}
-    storageClassName: {{ .Values.dv.pvc.storageClassName }}
-    volumeMode: {{ .Values.dv.pvc.volumeMode }}
-    resources:
-      requests:
-        storage: {{ .Values.dv.pvc.resources.requests.storage }}
+    {{- include "dv.spec.pvc" . | indent 4 }}
 {{- end }}
 {{- end }}
