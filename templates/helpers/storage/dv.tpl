@@ -142,3 +142,25 @@ storage:
 
 {{- end }}
 {{- end }}
+
+{{/*
+Return the dv.spec.source.pvc object
+*/}}
+
+{{- define "dv.spec.source.pvc" -}}
+
+{{- if .Values.dv.pvc }}
+{{- $pvc := .Values.dv.source.pvc }}
+pvc:
+
+  {{- if $pvc.name }}
+  name: {{ $pvc.name }}
+  {{- end }}
+
+  {{- if $pvc.namespace }}
+  namespace: {{ $pvc.namespace }}
+  {{- end }}
+
+{{- end }}
+{{- end }}
+

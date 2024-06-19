@@ -214,6 +214,12 @@ dv:
     ##   url: registry.redhat.io/rhel8/rhel-guest-image:latest  
     registry: {}
 
+    ## @param dv.source.pvc
+    ## E.g.
+    ## name: rhel9-dede71e24368
+    ## namespace: openshift-virtualization-os-images  
+    pvc: {}
+
   ## @param dv.sourceRef 
   ## E.g.
   ## kind: DataVolume:

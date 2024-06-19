@@ -11,6 +11,7 @@ spec:
   source:
     {{- include "dv.spec.source.registry" . | indent 4 }}
     {{- include "dv.spec.source.blank" . | indent 4 }}
+    {{- include "dv.spec.source.pvc" . | indent 4 }}
   {{- end }}
   {{- if .Values.dv.pvc.enable }}
   pvc:
