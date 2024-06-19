@@ -12,9 +12,11 @@ vm:
 
       template:
         metadata:
+
           labels:
           - key: kubevirt.io/vm
             value: value
+
           annotations:
             - key: cpu-load-balancing.crio.io
               value: disable
@@ -22,16 +24,33 @@ vm:
               value: disable
             - key: irq-load-balancing.crio.io
               value: disable
+
         spec:
           domain:
+
             resources:
               requests:
                 memory: 1Gi
+
             memory:
               guest: 4Gi
               hugepages:
                 pageSize: 1Gi
-            ioThreadsPolicy: auto
+
+            devices:
+              disks:
+              - name: containerdisk
+                bus: virtio
+              - name: cloudinitdisk
+                bus: virtio
+              interfaces:
+              - name: default
+                type: masquerade
+              networkInterfaceMultiqueue: "false"
+              autoattachGraphicsDevice: "false"
+              autoattachMemBalloon: "true"
+              autoattachSerialConsole: "true"
+
             cpu:
               cores: 2
               sockets: 2
@@ -43,25 +62,12 @@ vm:
                 key: guestMappingPassthrough
               realtime: "true"
 
-            devices:
-              disks:
-              - name: containerdisk
-                bus: virtio
-              - name: cloudinitdisk
-                bus: virtio
-              networkInterfaceMultiqueue: "false"
-
-              interfaces:
-              - name: default
-                type: masquerade
-
-              autoattachGraphicsDevice: "false"
-              autoattachMemBalloon: "true"
-              autoattachSerialConsole: "true"
+            ioThreadsPolicy: auto
 
           tolerations:
             - key: node-role.kubernetes.io/worker-realtime
               operator: Exists
+              
           terminationGracePeriodSeconds: 0
 
       networks:

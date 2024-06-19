@@ -1,65 +1,130 @@
 # COMPUTE
+
+ ## @param vm
+ ##
 vm:
-  enable: false
+
+  ## @param vm.enable
+  ##
+  enable: ""
+
+  ## @param vm.vms
+  ##
   vms:
-  - name: 1
-    running: true
-    networks:
-      - name: default
-        type: pod
-    nodeSelector:
-      key: key
-      value: value
+
+    ## @param vm.vms.name
+    ##
+  - name: ""
+
+    ## @param vm.vms.running
+    ##
+    running: ""
+
+    ## @param vm.vms.nodeSelector
+    ## E.g. 
+    ## key: key
+    ## value: value
+    ##
+    nodeSelector: {}
+
+    ## @param vm.vms.template
+    ##
     template:
+
+      ## @param vm.vms.template.metadata
+      ##
       metadata:
-        labels:
-          - key: kubevirt.io/vm
-            value: value
-        annotations:
-          - key: cpu-load-balancing.crio.io
-            value: disable
-          - key: cpu-quota.crio.io
-            value: disable
-          - key: irq-load-balancing.crio.io
-            value: disable
+
+        ## @param vm.vms.template.labels
+        ## E.g. 
+        ## - key: kubevirt.io/vm
+        ##   value: value
+        ##
+        labels: []
+
+        ## @param vm.vms.template.annotations
+        ## E.g. 
+        ## - key: cpu-load-balancing.crio.io
+        ##   value: disable
+        ##
+        annotations: []
+
+      ## @param vm.vms.template.spec
+      ##
       spec:
+
+        ## @param vm.vms.template.spec.domain
+        ##
         domain:
-          cpu:
-            dedicatedCpuPlacement: "true"
-            isolateEmulatorThread: "true"
-            model: passthrough
-            numa:
-              key: guestMappingPassthrough
-            realtime: "true"
-            cores: 2
-            sockets: 2
-            threads: 2
-          devices:
-            autoattachGraphicsDevice: "true"
-            autoattachMemBalloon: "false"
-            autoattachSerialConsole: "true"
-            disks:
-            - bus: virtio
-              name: cloudinitdisk
-            - bus: virtio
-              name: containerdisk
-            interfaces:
-              - name: default
-                type: masquerade
-            networkInterfaceMultiqueue: "true"
-          ioThreadsPolicy: auto
-          memory:
-            guest: 4Gi
-            hugepages:
-              pageSize: 1Gi
-          resources:
-            requests:
-              memory: 1024M
-        tolerations:
-          - key: node-role.kubernetes.io/worker-realtime
-            operator: Exists
-        terminationGracePeriodSeconds: "0"
+
+          ## @param vm.vms.template.spec.domain.resources
+          ## E.g.
+          ## requests:
+          ##   memory: 1024M
+          ##
+          resources: {}
+
+          ## @param vm.vms.template.spec.domain.memory
+          ## E.g.
+          ## guest: 4Gi
+          ## hugepages:
+          ##   pageSize: 1Gi
+          ##
+          memory: {}
+
+          ## @param vm.vms.template.spec.domain.devices
+          ## E.g.
+          ## disks:
+          ## - bus: virtio
+          ##   name: cloudinitdisk
+          ## - bus: virtio
+          ##   name: containerdisk
+          ## interfaces:
+          ##   - name: default
+          ##     type: masquerade
+          ## networkInterfaceMultiqueue: "true"
+          ## autoattachGraphicsDevice: "true"
+          ## autoattachMemBalloon: "false"
+          ## autoattachSerialConsole: "true"
+          ##
+          devices: {}
+
+          ## @param vm.vms.template.spec.domain.cpu
+          ## E.g.
+          ## cores: 2
+          ## sockets: 2
+          ## threads: 2
+          ## dedicatedCpuPlacement: "true"
+          ## isolateEmulatorThread: "true"
+          ## model: passthrough
+          ## numa:
+          ##   key: guestMappingPassthrough
+          ## realtime: "true"
+          ##
+          cpu: {}
+            
+          ## @param vm.vms.template.spec.domain.ioThreadsPolicy
+          ##
+          ioThreadsPolicy: ""
+
+         ## @param vm.vms.template.spec.tolerations
+         ## E.g.
+         ## - key: node-role.kubernetes.io/worker-realtime
+         ##   operator: Exists
+         ##
+        tolerations: []
+
+        ## @param vm.vms.template.spec.terminationGracePeriodSeconds
+        ##
+        terminationGracePeriodSeconds: ""
     
+    ## @param vm.vms.networks 
+    ## E.g. 
+    ## - name: default
+    ##   type: pod
+    ##
+    networks: []
+
     ## @param vm.vms.volumes
     ## E.g.
     ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
