@@ -91,6 +91,24 @@ vm:
     ##
     volumes: []
 
+    ## @param vm.vms.dataVolumeTemplates
+    ## E.g.
+    ## - apiVersion: cdi.kubevirt.io/v1beta1
+    ##   kind: DataVolume
+    ##   metadata:
+    ##     name: rhel9-realtime
+    ##   spec:
+    ##     sourceRef:
+    ##       kind: DataSource
+    ##       name: rhel9
+    ##       namespace: openshift-virtualization-os-images
+    ##     storage:
+    ##       resources:
+    ##         requests:
+    ##           storage: 30Gi
+
+    dataVolumeTemplates: {}
+
 mcp:
   enable: false
   labels:

@@ -58,6 +58,7 @@ Return the vm.spec object
 
   running: {{ .running }}
   {{- include "vm.spec.template" . }}
+  {{- include "vm.spec.dataVolumeTemplates" . }}
 
 {{- end }}
 
@@ -410,6 +411,49 @@ annotations:
 {{- end }}
 {{- end }}
 
+{{- end }}
+
+{{/*
+Return the vm.spec.dataVolumeTemplates object
+*/}}
+
+{{- define "vm.spec.dataVolumeTemplates" -}}
+
+{{- if .dataVolumeTemplates }}
+  dataVolumeTemplates:
+  {{- range .dataVolumeTemplates }}
+    - apiVersion: cdi.kubevirt.io/v1beta1
+      kind: DataVolume
+      metadata:
+
+        {{- if .metadata.name }}
+        name: {{ .metadata.name }}
+        {{- end }}
+      spec:
+        sourceRef:
+        {{- $sourceRef := .spec.sourceRef }}
+
+          {{- if $sourceRef.kind }}
+          kind: {{ $sourceRef.kind }}
+          {{- end }}
+
+          {{- if $sourceRef.name }}
+          name: {{ $sourceRef.name }}
+          {{- end }}
+
+          {{- if $sourceRef.namespace }}
+          namespace: {{ $sourceRef.namespace }}
+          {{- end }}
+        storage:
+        {{- $storage := .spec.storage }}
+          resources:
+            requests:
+
+              {{- if $storage.resources.requests.storage }}
+              storage: {{ $storage.resources.requests.storage }}
+              {{- end }}
+  {{- end }}
+{{- end }}
 {{- end }}
 
 
