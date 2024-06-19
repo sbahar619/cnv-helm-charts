@@ -104,8 +104,8 @@ Return the dv.spec.storage.accessModes object
 
 {{- define "dv.spec.storage.accessModes" -}}
 {{- if and .Values.dv .Values.dv.storage .Values.dv.storage.accessModes }}
-{{- $accessModes := .Values.dv.storage.accessModes }}
-{{- range  $accessModes }}
+{{- $storage := .Values.dv.storage }}
+{{- range  $storage.accessModes }}
 - {{ . }}
 {{- end }}
 {{- end }}
