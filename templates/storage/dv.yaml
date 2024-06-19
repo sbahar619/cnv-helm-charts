@@ -4,17 +4,22 @@ kind: DataVolume
 metadata:
   name: {{ .Release.Name }}-dv
 spec:
+  {{- include "dv.spec.sourceRef" . | indent 2 }}
+  {{- include "dv.spec.storage" . | indent 2 }}
+
+  {{- if.Values.dv.source }}
   source:
     {{- include "dv.spec.source.registry" . | indent 4 }}
     {{- include "dv.spec.source.blank" . | indent 4 }}
+  {{- end }}
   {{- if .Values.dv.pvc.enable }}
   pvc:
     accessModes:
-        {{- include "dv.spec.pvc.accessModes" . | indent 4 }}
+      {{- include "dv.spec.pvc.accessModes" . | indent 4 }}
     storageClassName: {{ .Values.dv.pvc.storageClassName }}
     volumeMode: {{ .Values.dv.pvc.volumeMode }}
     resources:
       requests:
-          storage: {{ .Values.dv.pvc.resources.requests.storage }}
+        storage: {{ .Values.dv.pvc.resources.requests.storage }}
 {{- end }}
 {{- end }}

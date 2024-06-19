@@ -60,7 +60,7 @@ vm:
             operator: Exists
         terminationGracePeriodSeconds: "0"
     
-    ## @param vm.vms.volumes List of volumes that can be mounted by disks belonging to the vmi
+    ## @param vm.vms.volumes
     ## E.g.
     ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
     ##   name: containerdisk
@@ -194,13 +194,42 @@ dv:
         storage: 1Gi
     storageClassName: ocs-storagecluster-ceph-rbd
     volumeMode: Block
+
+  ## @param dv.source
+  ## E.g.
+  ## registry:
+  ##   pullMethod: node
+  ##   secretRef: pull-secret
+  ##   url: registry.redhat.io/rhel8/rhel-guest-image:latest
   source:
-    blank:
-      enable: false
-    registry:
-      pullMethod: node
-      secretRef: pull-secret
-      url: registry.redhat.io/rhel8/rhel-guest-image:latest
+
+    ## @param dv.source.blank
+    blank: ""
+
+    ## @param dv.source.registry
+    ## E.g.
+    ## registry:
+    ##   pullMethod: node
+    ##   secretRef: pull-secret
+    ##   url: registry.redhat.io/rhel8/rhel-guest-image:latest  
+    registry: {}
+
+  ## @param dv.sourceRef 
+  ## E.g.
+  ## kind: DataVolume:
+  ## name: rhel8-15728c1d93e3
+  ## namespace: openshift-virtualization-os-images 
+  sourceRef: {}
+
+  ## @param dv.storage
+  ## E.g.
+  ## accessModes:
+  ##   - ReadWriteOnce
+  ##   resources:
+  ##     requests:
+  ##       storage: 1Gi
+  ##   storageClassName: ocs-storagecluster-ceph-rbd  
+  storage: {}
 
 pvc:
   enable: false
