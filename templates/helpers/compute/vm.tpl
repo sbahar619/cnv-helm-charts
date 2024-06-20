@@ -78,10 +78,10 @@ devices:
     {{- include "vm.spec.template.spec.domain.devices.interfaces" . }}
   {{- end }}
 
-  {{- include "vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue" . }}
-  {{- include "vm.spec.template.spec.domain.devices.autoattachGraphicsDevice" . }}
-  {{- include "vm.spec.template.spec.domain.devices.autoattachMemBalloon" . }}
-  {{- include "vm.spec.template.spec.domain.devices.autoattachSerialConsole" . }}
+    {{- include "renderKeyValuePair" (dict "key" "networkInterfaceMultiqueue" "value" .template.spec.domain.devices.networkInterfaceMultiqueue) }}
+    {{- include "renderKeyValuePair" (dict "key" "autoattachGraphicsDevice" "value" .template.spec.domain.devices.autoattachGraphicsDevice) }}
+    {{- include "renderKeyValuePair" (dict "key" "autoattachMemBalloon" "value" .template.spec.domain.devices.autoattachMemBalloon) }}
+    {{- include "renderKeyValuePair" (dict "key" "autoattachSerialConsole" "value" .template.spec.domain.devices.autoattachSerialConsole) }}
 
   {{- if $devices.disks }}
   {{- $disks := $devices.disks }}
@@ -120,59 +120,6 @@ Return the vm.spec.template.spec.domain.devices.disks object
   {{- end }}
 
 {{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.networkInterfaceMultiqueue" -}}
-
-  {{- if .template.spec.domain.devices.networkInterfaceMultiqueue }}
-  {{- $networkInterfaceMultiqueue := .template.spec.domain.devices.networkInterfaceMultiqueue }}
-  networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue }}
-  {{- end }}
-
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.devices.autoattachGraphicsDevice object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.autoattachGraphicsDevice" -}}
-
-  {{- if .template.spec.domain.devices.autoattachGraphicsDevice }}
-  {{- $autoattachGraphicsDevice := .template.spec.domain.devices.autoattachGraphicsDevice }}
-  autoattachGraphicsDevice: {{ $autoattachGraphicsDevice }}
-  {{- end }}
-
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.devices.autoattachMemBalloon object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.autoattachMemBalloon" -}}
-
-  {{- if .template.spec.domain.devices.autoattachMemBalloon }}
-  {{- $autoattachMemBalloon := .template.spec.domain.devices.autoattachMemBalloon }}
-  autoattachMemBalloon: {{ $autoattachMemBalloon }}
-  {{- end }}
-
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.devices.autoattachSerialConsole object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.autoattachSerialConsole" -}}
-
-  {{- if .template.spec.domain.devices.autoattachSerialConsole }}
-  {{- $autoattachSerialConsole := .template.spec.domain.devices.autoattachSerialConsole }}
-  autoattachSerialConsole: {{ $autoattachSerialConsole }}
-  {{- end }}
-
-{{- end }}
-
 
 {{/*
 Return the vm.spec.template.spec.domain.ioThreadsPolicy object
