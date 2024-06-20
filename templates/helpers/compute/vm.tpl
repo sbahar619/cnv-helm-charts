@@ -5,8 +5,9 @@ Return the vm.spec.template.spec.domain object
 {{- define "vm.spec.template.spec.domain" -}}
 
 {{- if .template.spec.domain }}
+{{- $domain := .template.spec.domain }}
 domain:
-  {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 2 }}
+  {{- include "renderKeyValuePair" (dict "key" "ioThreadsPolicy" "value" $domain.ioThreadsPolicy) }}
   {{- include "vm.spec.template.spec.domain.cpu" . | indent 2 }}
   {{- include "vm.spec.template.spec.domain.memory" . | indent 2 }}
   {{- include "vm.spec.template.spec.domain.devices" . | indent 2 }}
@@ -125,19 +126,6 @@ Return the vm.spec.template.spec.domain.devices.disks object
         bus: {{ .bus }}
   {{- end }}
 
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.ioThreadsPolicy object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
-
-{{- $domain := .template.spec.domain }}
-{{- if $domain.ioThreadsPolicy }}
-{{- $ioThreadsPolicy := $domain.ioThreadsPolicy }}
-ioThreadsPolicy: {{ $ioThreadsPolicy }}
-{{- end }}
 {{- end }}
 
 {{/*
