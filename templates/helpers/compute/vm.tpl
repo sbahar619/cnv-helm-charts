@@ -172,16 +172,13 @@ Return the vm.spec.template.spec.domain.memory object
 {{- if $domain.memory }}
 {{- $memory := $domain.memory }}
 memory:
-  {{- if $memory.guest }}
-  guest: {{ $memory.guest }}
-  {{- end }}
+
+  {{- include "renderKeyValuePair" (dict "key" "guest" "value" $memory.guest) }}
 
   {{- if $memory.hugepages }}
   {{- $hugepages := $memory.hugepages }}
   hugepages:
-    {{- if $hugepages.pageSize }}
-    pageSize: {{ $hugepages.pageSize }}
-    {{- end }}
+    {{- include "renderKeyValuePair" (dict "key" "pageSize" "value" $hugepages.pageSize) | indent 2 }}
   {{- end }}
 
 {{- end }}
