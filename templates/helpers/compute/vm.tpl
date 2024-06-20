@@ -78,10 +78,16 @@ devices:
     {{- include "vm.spec.template.spec.domain.devices.interfaces" . }}
   {{- end }}
 
-    {{- include "renderKeyValuePair" (dict "key" "networkInterfaceMultiqueue" "value" .template.spec.domain.devices.networkInterfaceMultiqueue) }}
-    {{- include "renderKeyValuePair" (dict "key" "autoattachGraphicsDevice" "value" .template.spec.domain.devices.autoattachGraphicsDevice) }}
-    {{- include "renderKeyValuePair" (dict "key" "autoattachMemBalloon" "value" .template.spec.domain.devices.autoattachMemBalloon) }}
-    {{- include "renderKeyValuePair" (dict "key" "autoattachSerialConsole" "value" .template.spec.domain.devices.autoattachSerialConsole) }}
+  {{- $keyValuePairs := dict 
+    "networkInterfaceMultiqueue" $devices.networkInterfaceMultiqueue 
+    "autoattachGraphicsDevice" $devices.autoattachGraphicsDevice 
+    "autoattachMemBalloon" $devices.autoattachMemBalloon 
+    "autoattachSerialConsole" $devices.autoattachSerialConsole 
+  -}}
+
+  {{- range $key, $value := $keyValuePairs }}
+    {{- include "renderKeyValuePair" (dict "key" $key "value" $value) }}
+  {{- end }}
 
   {{- if $devices.disks }}
   {{- $disks := $devices.disks }}
