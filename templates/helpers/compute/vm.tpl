@@ -138,45 +138,25 @@ Return the vm.spec.template.spec.domain.cpu object
 {{- if $domain.cpu }}
 {{- $cpu := $domain.cpu }}
 cpu:
-{{- if $cpu.cores }}
-{{- $cores := $cpu.cores }}
-  cores: {{ $cores }}
-{{- end }}
 
-{{- if $cpu.sockets }}
-{{- $sockets := $cpu.sockets }}
-  sockets: {{ $sockets }}
-{{- end }}
+  {{- $keyValuePairs := dict 
+    "cores" $cpu.cores 
+    "sockets" $cpu.sockets
+    "threads" $cpu.threads
+    "dedicatedCpuPlacement" $cpu.dedicatedCpuPlacement
+    "isolateEmulatorThread" $cpu.isolateEmulatorThread
+    "model" $cpu.model
+    "realtime" "{}"
+  -}}
 
-{{- if $cpu.threads }}
-{{- $threads := $cpu.threads }}
-  threads: {{ $threads }}
-{{- end }}
-
-{{- if $cpu.dedicatedCpuPlacement }}
-{{- $dedicatedCpuPlacement := $cpu.dedicatedCpuPlacement }}
-  dedicatedCpuPlacement: {{ $dedicatedCpuPlacement }}
-{{- end }}
-
-{{- if $cpu.isolateEmulatorThread }}
-{{- $isolateEmulatorThread := $cpu.isolateEmulatorThread }}
-  isolateEmulatorThread: {{ $isolateEmulatorThread }}
-{{- end }}
-
-{{- if $cpu.model }}
-{{- $model := $cpu.model }}
-  model: {{ $model }}
-{{- end }}
+  {{- range $key, $value := $keyValuePairs }}
+    {{- include "renderKeyValuePair" (dict "key" $key "value" $value) }}
+  {{- end }}
 
 {{- if $cpu.numa }}
 {{- $numa := $cpu.numa }}
   numa:
-    {{ $numa.key }}: {}
-{{- end }}
-
-{{- if $cpu.realtime }}
-{{- $realtime := $cpu.realtime }}
-  realtime: {}
+    {{- include "renderKeyValuePair" (dict "key" $numa.key "value" "{}") | indent 2 }}
 {{- end }}
 
 {{- end }}
