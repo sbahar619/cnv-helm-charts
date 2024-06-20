@@ -73,36 +73,32 @@ Return the vm.spec.template.spec.domain.devices object
 {{- $devices := $domain.devices }}
 devices:
 
-{{- if $devices.interfaces }}
-  {{- $interfaces := $devices.interfaces }}
+  {{- if .template.spec.domain.devices.interfaces }}
   interfaces:
-  {{- range $interfaces }}
-    - {{ .type }}: {}
-      name: {{ .name }}
+    {{- include "vm.spec.template.spec.domain.devices.interfaces" . }}
   {{- end }}
-{{- end }}
 
-{{- if $devices.networkInterfaceMultiqueue }}
+  {{- if $devices.networkInterfaceMultiqueue }}
   {{- $networkInterfaceMultiqueue := $devices.networkInterfaceMultiqueue }}
   networkInterfaceMultiqueue: {{ $networkInterfaceMultiqueue }}
-{{- end }}
+  {{- end }}
 
-{{- if $devices.autoattachGraphicsDevice }}
+  {{- if $devices.autoattachGraphicsDevice }}
   {{- $autoattachGraphicsDevice := $devices.autoattachGraphicsDevice }}
   autoattachGraphicsDevice: {{ $autoattachGraphicsDevice }}
-{{- end }}
+  {{- end }}
 
-{{- if $devices.autoattachMemBalloon }}
+  {{- if $devices.autoattachMemBalloon }}
   {{- $autoattachMemBalloon := $devices.autoattachMemBalloon }}
   autoattachMemBalloon: {{ $autoattachMemBalloon }}
-{{- end }}
+  {{- end }}
 
-{{- if $devices.autoattachSerialConsole }}
+  {{- if $devices.autoattachSerialConsole }}
   {{- $autoattachSerialConsole := $devices.autoattachSerialConsole }}
   autoattachSerialConsole: {{ $autoattachSerialConsole }}
-{{- end }}
+  {{- end }}
 
-{{- if $devices.disks }}
+  {{- if $devices.disks }}
   {{- $disks := $devices.disks }}
   disks:
   {{- range $disks }}
@@ -110,9 +106,23 @@ devices:
     disk:
       bus: {{ .bus }}
   {{- end }}
-{{- end }}
+  {{- end }}
 
 {{- end }}
+{{- end }}
+
+{{/*
+Return the vm.spec.template.spec.domain.devices.interfaces object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.devices.interfaces" -}}
+
+  {{- $interfaces := .template.spec.domain.devices.interfaces }}
+  {{- range $interfaces }}
+    - {{ .type }}: {}
+      name: {{ .name }}
+  {{- end }}
+
 {{- end }}
 
 {{/*
