@@ -25,7 +25,7 @@ Return the vm.spec.template.spec object
   {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
   {{- include "vm.spec.template.spec.domain" . | indent 6 }}
   {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
-  {{- include "vm.spec.template.spec.terminationGracePeriodSeconds" . | indent 6 }}
+  {{- include "vm.spec.template.spec.terminationGracePeriodSeconds" . | indent 4 }}
   {{- include "vm.spec.template.spec.networks" . | indent 6 }}
 {{- end }}
 
@@ -191,11 +191,12 @@ Return the vm.spec.template.spec.domain.resources object
 {{- define "vm.spec.template.spec.domain.resources.requests.memory" -}}
 
 {{- $domain := .template.spec.domain }}
-{{- if and $domain.resources $domain.resources.requests $domain.resources.requests.memory }}
-{{- $memory := $domain.resources.requests.memory }}
+{{- if $domain.resources }}
 resources:
+  {{- if $domain.resources.requests }}
   requests:
-    memory: {{ $memory }}
+    {{- include "renderKeyValuePair" (dict "key" "memory" "value" $domain.resources.requests.memory) | indent 2 }}
+  {{- end }}
 {{- end }}
 {{- end }}
 
@@ -242,10 +243,8 @@ Return the vm.spec.template.spec.terminationGracePeriodSeconds object
 
 {{- define "vm.spec.template.spec.terminationGracePeriodSeconds" -}}
 
-{{- if .template.spec.terminationGracePeriodSeconds }}
-{{- $terminationGracePeriodSeconds := .template.spec.terminationGracePeriodSeconds }}
-terminationGracePeriodSeconds: {{ $terminationGracePeriodSeconds }}
-{{- end }}
+  {{- $terminationGracePeriodSeconds := .template.spec.terminationGracePeriodSeconds }}
+  {{- include "renderKeyValuePair" (dict "key" "terminationGracePeriodSeconds" "value" $terminationGracePeriodSeconds) }}
 {{- end }}
 
 {{/*

@@ -68,7 +68,7 @@ vm:
             - key: node-role.kubernetes.io/worker-realtime
               operator: Exists
               
-          terminationGracePeriodSeconds: 0
+          terminationGracePeriodSeconds: "0"
 
       networks:
         - name: default 
