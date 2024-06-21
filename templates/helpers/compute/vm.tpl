@@ -1,69 +1,4 @@
 {{/*
-Return the vm.spec.template.spec.domain object
-*/}}
-
-{{- define "vm.spec.template.spec.domain" -}}
-
-{{- if .template.spec.domain }}
-{{- $domain := .template.spec.domain }}
-domain:
-  {{- include "renderKeyValuePair" (dict "key" "ioThreadsPolicy" "value" $domain.ioThreadsPolicy) }}
-  {{- include "vm.spec.template.spec.domain.cpu" . | indent 2 }}
-  {{- include "vm.spec.template.spec.domain.memory" . | indent 2 }}
-  {{- include "vm.spec.template.spec.domain.devices" . | indent 2 }}
-  {{- include "vm.spec.template.spec.domain.resources.requests.memory" . | indent 2 }}
-{{- end }}
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec object
-*/}}
-
-{{- define "vm.spec.template.spec" -}}
-
-  {{- include "vm.spec.template.spec.nodeSelector" . | indent 6 }}
-  {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
-  {{- include "vm.spec.template.spec.domain" . | indent 6 }}
-  {{- include "vm.spec.template.spec.volumes" . | indent 6 }}
-  {{- include "vm.spec.template.spec.terminationGracePeriodSeconds" . | indent 4 }}
-  {{- include "vm.spec.template.spec.networks" . | indent 6 }}
-{{- end }}
-
-{{/*
-Return the vm.spec.template object
-*/}}
-
-{{- define "vm.spec.template" -}}
-
-  {{- if .template }}
-  template:
-
-    {{- if .template.metadata }}
-    metadata:
-      {{- include "vm.spec.template.metadata" . }}
-    {{- end }}
-
-    {{- if .template.spec }}
-    spec:
-      {{- include "vm.spec.template.spec" . }}
-    {{- end }}
-
-  {{- end }}
-{{- end }}
-
-{{/*
-Return the vm.spec object
-*/}}
-
-{{- define "vm.spec" -}}
-
-  running: {{ .running }}
-  {{- include "vm.spec.template" . }}
-  {{- include "vm.spec.dataVolumeTemplates" . }}
-
-{{- end }}
-
-{{/*
 Return the vm.spec.template.spec.domain.devices object
 */}}
 
@@ -247,6 +182,17 @@ Return the vm.spec.template.spec.terminationGracePeriodSeconds object
   {{- include "renderKeyValuePair" (dict "key" "terminationGracePeriodSeconds" "value" $terminationGracePeriodSeconds) }}
 {{- end }}
 
+
+{{/*
+Return the vm.spec.template.spec.domain.ioThreadsPolicy object
+*/}}
+
+{{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
+
+  {{- $ioThreadsPolicy := .template.spec.domain.ioThreadsPolicy }}
+  {{- include "renderKeyValuePair" (dict "key" "ioThreadsPolicy" "value" $ioThreadsPolicy) }}
+{{- end }}
+
 {{/*
 Return the vm.spec.template.spec.tolerations object
 */}}
@@ -338,16 +284,6 @@ volumes:
 {{- end }}
 
 {{/*
-Return the vm.spec.template.metadata object
-*/}}
-
-{{- define "vm.spec.template.metadata" -}}
-
-    {{- include "vm.spec.template.metadata.labels" . | indent 6 }}
-    {{- include "vm.spec.template.metadata.annotations" . | indent 6 }}
-{{- end }}
-
-{{/*
 Return the vm.spec.template.metadata.labels object
 */}}
 
@@ -407,9 +343,3 @@ Return the vm.spec.dataVolumeTemplates object
   {{- end }}
 {{- end }}
 {{- end }}
-
-
-
-
-
-
