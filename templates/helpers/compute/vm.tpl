@@ -391,33 +391,19 @@ Return the vm.spec.dataVolumeTemplates object
     - apiVersion: cdi.kubevirt.io/v1beta1
       kind: DataVolume
       metadata:
-
-        {{- if .metadata.name }}
-        name: {{ .metadata.name }}
-        {{- end }}
+        {{- include "renderKeyValuePair" (dict "key" "name" "value" .metadata.name) | indent 6 }}
       spec:
         sourceRef:
         {{- $sourceRef := .spec.sourceRef }}
 
-          {{- if $sourceRef.kind }}
-          kind: {{ $sourceRef.kind }}
-          {{- end }}
-
-          {{- if $sourceRef.name }}
-          name: {{ $sourceRef.name }}
-          {{- end }}
-
-          {{- if $sourceRef.namespace }}
-          namespace: {{ $sourceRef.namespace }}
-          {{- end }}
+          {{- include "renderKeyValuePair" (dict "key" "kind" "value" $sourceRef.kind) | indent 8 }}
+          {{- include "renderKeyValuePair" (dict "key" "name" "value" $sourceRef.name) | indent 8 }}
+          {{- include "renderKeyValuePair" (dict "key" "namespace" "value" $sourceRef.namespace) | indent 8 }}
         storage:
         {{- $storage := .spec.storage }}
           resources:
             requests:
-
-              {{- if $storage.resources.requests.storage }}
-              storage: {{ $storage.resources.requests.storage }}
-              {{- end }}
+              {{- include "renderKeyValuePair" (dict "key" "storage" "value" $storage.resources.requests.storage) | indent 12 }}
   {{- end }}
 {{- end }}
 {{- end }}
