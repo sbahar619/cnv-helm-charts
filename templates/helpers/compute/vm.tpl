@@ -276,8 +276,8 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 
   {{- if .cloudInitNoCloud.networkData }}
   {{- $networkData := .cloudInitNoCloud.networkData }}
-    networkData: |
-      version: {{ $networkData.version }}
+    networkData: {{ printf "|" }}
+      {{- include "renderKeyValuePair" (dict "key" "version" "value" $networkData.version) | indent 4 }}
 
       {{- if $networkData.ethernets }}
       {{- $ethernets := $networkData.ethernets }}
@@ -291,27 +291,17 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
           {{- end }}
         {{- end }}
 
-        {{- if .dhcp4 }}
-          dhcp4: {{ .dhcp4 }}
-        {{- end }}
-
-        {{- if .gateway6 }}
-          gateway6: {{ .gateway6 }}
-        {{- end }}
+          {{- include "renderKeyValuePair" (dict "key" "dhcp4" "value" .dhcp4) | indent 8 }}
+          {{- include "renderKeyValuePair" (dict "key" "gateway6" "value" .gateway6) | indent 8 }}
       {{- end }}
       {{- end }}
   {{- end }}
 
   {{- if .cloudInitNoCloud.userData }}
   {{- $userData := .cloudInitNoCloud.userData }}
-    userData: |-
-      #cloud-config
-      {{- if $userData.user }}
-      user: {{ $userData.user }}
-      {{- end }}
-      {{- if $userData.password }}
-      password: {{ $userData.password }}
-      {{- end }}
+    userData: {{ printf "|-" }}
+      {{- include "renderKeyValuePair" (dict "key" "user" "value" $userData.user) | indent 4 }}
+      {{- include "renderKeyValuePair" (dict "key" "password" "value" $userData.password) | indent 4 }}
       chpasswd: { expire: False }
   {{- end }}
 
