@@ -167,6 +167,7 @@ vm:
   ##       resources:
   ##         requests:
   ##           storage: 30Gi
+  ##
   dataVolumeTemplates: []
 
 mcp:
