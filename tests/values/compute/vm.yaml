@@ -61,7 +61,36 @@ vm:
           realtime: "true"
 
         ioThreadsPolicy: auto
+      volumes:
+      - name: containerdisk
+        type: containerDisk
+        image: registry.redhat.io/rhel8/rhel-guest-image:latest
+      - name: root-disk
+        type: dataVolume
+        dataVolume:
+          name: rt-dv-dv
+      - name: cloudinitdisk
+        type: cloudInitNoCloud
+        cloudInitNoCloud:
 
+          userData:
+            user: u
+            password: p
+
+          networkData:
+            version: 2
+
+            ethernets:
+              - name: eth0
+                addresses:
+                  - fd10:0:2::2/120
+                dhcp4: "true"
+                gateway6: fd10:0:2::1
+              - name: eth1
+                addresses:
+                  - 10.200.0.2/24
+                dhcp4: "true"
+                gateway6: fd10:0:2::1
       tolerations:
         - key: node-role.kubernetes.io/worker-realtime
           operator: Exists
@@ -86,34 +115,3 @@ vm:
   networks:
     - name: default 
       type: pod
-
-  volumes:
-    - name: containerdisk
-      type: containerDisk
-      image: registry.redhat.io/rhel8/rhel-guest-image:latest
-    - name: root-disk
-      type: dataVolume
-      dataVolume:
-        name: rt-dv-dv
-    - name: cloudinitdisk
-      type: cloudInitNoCloud
-      cloudInitNoCloud:
-
-        userData:
-          user: u
-          password: p
-
-        networkData:
-          version: 2
-
-          ethernets:
-            - name: eth0
-              addresses:
-                - fd10:0:2::2/120
-              dhcp4: "true"
-              gateway6: fd10:0:2::1
-            - name: eth1
-              addresses:
-                - 10.200.0.2/24
-              dhcp4: "true"
-              gateway6: fd10:0:2::1

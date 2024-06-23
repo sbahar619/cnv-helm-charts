@@ -261,7 +261,7 @@ Return the vm.spec.template.spec.volumess object
 
 {{- define "vm.spec.template.spec.volumes" -}}
 
-{{- $volumes := .Values.vm.volumes }}
+{{- $volumes := .Values.vm.template.spec.volumes }}
 volumes:
 {{- range $volumes }}
 

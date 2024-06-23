@@ -103,11 +103,42 @@ vm:
         ##
         ioThreadsPolicy: ""
 
-        ## @param vm.template.spec.tolerations
-        ## E.g.
-        ## - key: node-role.kubernetes.io/worker-realtime
-        ##   operator: Exists
-        ##
+      ## @param vm.template.spec.volumes
+      ## E.g.
+      ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
+      ##   name: containerdisk
+      ##   type: containerDisk
+      ## - dataVolume:
+      ##     name: rt-dv-dv
+      ##   name: root-disk
+      ##   type: dataVolume
+      ## - cloudInitNoCloud:
+      ##     networkData:
+      ##       ethernets:
+      ##         - addresses:
+      ##             - fd10:0:2::2/120
+      ##           dhcp4: "true"
+      ##           gateway6: fd10:0:2::1
+      ##           name: eth0
+      ##         - addresses:
+      ##             - 10.200.0.2/24
+      ##           dhcp4: "true"
+      ##           gateway6: fd10:0:2::1
+      ##           name: eth1
+      ##       version: 2
+      ##     userData:
+      ##       password: p
+      ##       user: u
+      ##   name: cloudinitdisk
+      ##   type: cloudInitNoCloud
+      ##
+      volumes: []
+
+      ## @param vm.template.spec.tolerations
+      ## E.g.
+      ## - key: node-role.kubernetes.io/worker-realtime
+      ##   operator: Exists
+      ##
       tolerations: []
 
       ## @param vm.template.spec.terminationGracePeriodSeconds
@@ -120,37 +151,6 @@ vm:
   ##   type: pod
   ##
   networks: []
-
-  ## @param vm.volumes
-  ## E.g.
-  ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
-  ##   name: containerdisk
-  ##   type: containerDisk
-  ## - dataVolume:
-  ##     name: rt-dv-dv
-  ##   name: root-disk
-  ##   type: dataVolume
-  ## - cloudInitNoCloud:
-  ##     networkData:
-  ##       ethernets:
-  ##         - addresses:
-  ##             - fd10:0:2::2/120
-  ##           dhcp4: "true"
-  ##           gateway6: fd10:0:2::1
-  ##           name: eth0
-  ##         - addresses:
-  ##             - 10.200.0.2/24
-  ##           dhcp4: "true"
-  ##           gateway6: fd10:0:2::1
-  ##           name: eth1
-  ##       version: 2
-  ##     userData:
-  ##       password: p
-  ##       user: u
-  ##   name: cloudinitdisk
-  ##   type: cloudInitNoCloud
-  ##
-  volumes: []
 
   ## @param vm.dataVolumeTemplates
   ## E.g.
