@@ -3,7 +3,7 @@ apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
   namespace: {{ .Release.Namespace }}
-  name: {{ .Release.Name }}-vm
+  name: {{ include "renderName" (dict "prefix" .Release.Name "suffix" "vm") }}
 spec:
   running: {{ .Values.vm.running }}
 
@@ -22,7 +22,6 @@ spec:
       {{- include "vm.spec.template.spec.tolerations" . | indent 6 }}
 
       {{- if .Values.vm.template.spec.domain }}
-      {{- $domain := .Values.vm.template.spec.domain }}
       domain:
         {{- include "vm.spec.template.spec.domain.ioThreadsPolicy" . | indent 6 }}
         {{- include "vm.spec.template.spec.domain.cpu" . | indent 8 }}

@@ -13,3 +13,12 @@ Usage:
   {{ .key }}: {{ .value }}
   {{- end }}
 {{- end }}
+
+{{/*
+This template generates a string in the format:
+  <prefix>-<release-name>-<suffix>
+where <prefix> and <suffix> are passed as parameters using a dictionary.
+*/}}
+{{- define "renderName" -}}
+{{- printf "%s-%s" .prefix .suffix -}}
+{{- end -}}
