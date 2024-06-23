@@ -4,12 +4,12 @@ Return the vm.spec.template.spec.domain.devices object
 
 {{- define "vm.spec.template.spec.domain.devices" -}}
 
-{{- $domain := .template.spec.domain }}
+{{- $domain := .Values.vm.template.spec.domain }}
 {{- if $domain.devices }}
 {{- $devices := $domain.devices }}
 devices:
 
-  {{- if .template.spec.domain.devices.interfaces }}
+  {{- if .Values.vm.template.spec.domain.devices.interfaces }}
   interfaces:
     {{- include "vm.spec.template.spec.domain.devices.interfaces" . }}
   {{- end }}
@@ -40,8 +40,8 @@ Return the vm.spec.template.spec.domain.devices.interfaces object
 
 {{- define "vm.spec.template.spec.domain.devices.interfaces" -}}
 
-  {{- $interfaces := .template.spec.domain.devices.interfaces }}
-  {{- range $interfaces }}
+  {{- $devices := .Values.vm.template.spec.domain.devices }}
+  {{- range $devices.interfaces }}
     - {{ .type }}: {}
       name: {{ .name }}
   {{- end }}
@@ -54,8 +54,8 @@ Return the vm.spec.template.spec.domain.devices.disks object
 
 {{- define "vm.spec.template.spec.domain.devices.disks" -}}
 
-  {{- $disks := .template.spec.domain.devices.disks }}
-  {{- range $disks }}
+  {{- $devices := .Values.vm.template.spec.domain.devices }}
+  {{- range $devices.disks }}
     - name: {{ .name }}
       disk:
         bus: {{ .bus }}
@@ -69,7 +69,7 @@ Return the vm.spec.template.spec.domain.cpu object
 
 {{- define "vm.spec.template.spec.domain.cpu" -}}
 
-{{- $domain := .template.spec.domain }}
+{{- $domain := .Values.vm.template.spec.domain }}
 {{- if $domain.cpu }}
 {{- $cpu := $domain.cpu }}
 cpu:
@@ -103,7 +103,7 @@ Return the vm.spec.template.spec.domain.memory object
 
 {{- define "vm.spec.template.spec.domain.memory" -}}
 
-{{- $domain := .template.spec.domain }}
+{{- $domain := .Values.vm.template.spec.domain }}
 {{- if $domain.memory }}
 {{- $memory := $domain.memory }}
 memory:
@@ -125,7 +125,7 @@ Return the vm.spec.template.spec.domain.resources object
 
 {{- define "vm.spec.template.spec.domain.resources.requests.memory" -}}
 
-{{- $domain := .template.spec.domain }}
+{{- $domain := .Values.vm.template.spec.domain }}
 {{- if $domain.resources }}
 resources:
   {{- if $domain.resources.requests }}
@@ -141,9 +141,9 @@ Return the vm.spec.template.spec.networks object
 
 {{- define "vm.spec.template.spec.networks" -}}
 
-{{- if .networks }}
+{{- if .Values.vm.networks }}
 networks:
-{{- range .networks }}
+{{- range .Values.vm.networks }}
 - name: {{ .name }}
 
   {{- if ( eq .type "multus") }}
@@ -163,10 +163,11 @@ Return the vm.spec.template.spec.nodeSelector object
 
 {{- define "vm.spec.template.spec.nodeSelector" -}}
 
-{{- if .nodeSelector }}
+{{- if .Values.vm.nodeSelector }}
+{{- $nodeSelector := .Values.vm.nodeSelector }}
 nodeSelector:
-{{- if .nodeSelector.key }}
-  {{ .nodeSelector.key }}: {{ default "" .nodeSelector.value | quote }}
+{{- if .Values.vm.nodeSelector.key }}
+  {{ $nodeSelector.key }}: {{ default "" $nodeSelector.value | quote }}
 {{- end }}
 
 {{- end }}
@@ -178,7 +179,7 @@ Return the vm.spec.template.spec.terminationGracePeriodSeconds object
 
 {{- define "vm.spec.template.spec.terminationGracePeriodSeconds" -}}
 
-  {{- $terminationGracePeriodSeconds := .template.spec.terminationGracePeriodSeconds }}
+  {{- $terminationGracePeriodSeconds := .Values.vm.template.spec.terminationGracePeriodSeconds }}
   {{- include "renderKeyValuePair" (dict "key" "terminationGracePeriodSeconds" "value" $terminationGracePeriodSeconds) }}
 {{- end }}
 
@@ -189,7 +190,7 @@ Return the vm.spec.template.spec.domain.ioThreadsPolicy object
 
 {{- define "vm.spec.template.spec.domain.ioThreadsPolicy" -}}
 
-  {{- $ioThreadsPolicy := .template.spec.domain.ioThreadsPolicy }}
+  {{- $ioThreadsPolicy := .Values.vm.template.spec.domain.ioThreadsPolicy }}
   {{- include "renderKeyValuePair" (dict "key" "ioThreadsPolicy" "value" $ioThreadsPolicy) }}
 {{- end }}
 
@@ -199,8 +200,8 @@ Return the vm.spec.template.spec.tolerations object
 
 {{- define "vm.spec.template.spec.tolerations" -}}
 
-{{- if and .template .template.spec .template.spec.tolerations }}
-{{- $tolerations := .template.spec.tolerations }}
+{{- if and .Values.vm.template .Values.vm.template.spec .Values.vm.template.spec.tolerations }}
+{{- $tolerations := .Values.vm.template.spec.tolerations }}
 tolerations:
 {{- range $tolerations }}
 {{- if and .key .operator }}
@@ -260,7 +261,7 @@ Return the vm.spec.template.spec.volumess object
 
 {{- define "vm.spec.template.spec.volumes" -}}
 
-{{- $volumes := .volumes }}
+{{- $volumes := .Values.vm.volumes }}
 volumes:
 {{- range $volumes }}
 
@@ -289,8 +290,8 @@ Return the vm.spec.template.metadata.labels object
 
 {{- define "vm.spec.template.metadata.labels" -}}
 
-{{- if and .template .template.metadata .template.metadata.labels }}
-{{- $labels := .template.metadata.labels }}
+{{- if and .Values.vm.template .Values.vm.template.metadata .Values.vm.template.metadata.labels }}
+{{- $labels := .Values.vm.template.metadata.labels }}
 labels:
 {{- range $labels }}
   {{ .key }}: {{ .value | quote }}
@@ -305,8 +306,8 @@ Return the vm.spec.template.metadata.annotations object
 
 {{- define "vm.spec.template.metadata.annotations" -}}
 
-{{- if and .template .template.metadata .template.metadata.annotations }}
-{{- $annotations := .template.metadata.annotations }}
+{{- if and .Values.vm.template .Values.vm.template.metadata .Values.vm.template.metadata.annotations }}
+{{- $annotations := .Values.vm.template.metadata.annotations }}
 annotations:
 {{- range $annotations }}
   {{ .key }}: {{ .value | quote }}
@@ -321,9 +322,9 @@ Return the vm.spec.dataVolumeTemplates object
 
 {{- define "vm.spec.dataVolumeTemplates" -}}
 
-{{- if .dataVolumeTemplates }}
+{{- if .Values.vm.dataVolumeTemplates }}
   dataVolumeTemplates:
-  {{- range .dataVolumeTemplates }}
+  {{- range .Values.vm.dataVolumeTemplates }}
     - apiVersion: cdi.kubevirt.io/v1beta1
       kind: DataVolume
       metadata:

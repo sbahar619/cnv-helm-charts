@@ -8,171 +8,166 @@ vm:
   ##
   enable: ""
 
-  ## @param vm.vms
+  ## @param vm.name
   ##
-  vms:
+  name: ""
 
-    ## @param vm.vms.name
+  ## @param vm.running
+  ##
+  running: ""
+
+  ## @param vm.nodeSelector
+  ## E.g. 
+  ## key: key
+  ## value: value
+  ##
+  nodeSelector: {}
+
+  ## @param vm.template
+  ##
+  template:
+
+    ## @param vm.template.metadata
     ##
-  - name: ""
+    metadata:
 
-    ## @param vm.vms.running
-    ##
-    running: ""
-
-    ## @param vm.vms.nodeSelector
-    ## E.g. 
-    ## key: key
-    ## value: value
-    ##
-    nodeSelector: {}
-
-    ## @param vm.vms.template
-    ##
-    template:
-
-      ## @param vm.vms.template.metadata
+      ## @param vm.template.labels
+      ## E.g. 
+      ## - key: kubevirt.io/vm
+      ##   value: value
       ##
-      metadata:
+      labels: []
 
-        ## @param vm.vms.template.labels
-        ## E.g. 
-        ## - key: kubevirt.io/vm
-        ##   value: value
-        ##
-        labels: []
-
-        ## @param vm.vms.template.annotations
-        ## E.g. 
-        ## - key: cpu-load-balancing.crio.io
-        ##   value: disable
-        ##
-        annotations: []
-
-      ## @param vm.vms.template.spec
+      ## @param vm.template.annotations
+      ## E.g. 
+      ## - key: cpu-load-balancing.crio.io
+      ##   value: disable
       ##
-      spec:
+      annotations: []
 
-        ## @param vm.vms.template.spec.domain
-        ##
-        domain:
-
-          ## @param vm.vms.template.spec.domain.resources
-          ## E.g.
-          ## requests:
-          ##   memory: 1024M
-          ##
-          resources: {}
-
-          ## @param vm.vms.template.spec.domain.memory
-          ## E.g.
-          ## guest: 4Gi
-          ## hugepages:
-          ##   pageSize: 1Gi
-          ##
-          memory: {}
-
-          ## @param vm.vms.template.spec.domain.devices
-          ## E.g.
-          ## disks:
-          ## - bus: virtio
-          ##   name: cloudinitdisk
-          ## - bus: virtio
-          ##   name: containerdisk
-          ## interfaces:
-          ##   - name: default
-          ##     type: masquerade
-          ## networkInterfaceMultiqueue: "true"
-          ## autoattachGraphicsDevice: "true"
-          ## autoattachMemBalloon: "false"
-          ## autoattachSerialConsole: "true"
-          ##
-          devices: {}
-
-          ## @param vm.vms.template.spec.domain.cpu
-          ## E.g.
-          ## cores: 2
-          ## sockets: 2
-          ## threads: 2
-          ## dedicatedCpuPlacement: "true"
-          ## isolateEmulatorThread: "true"
-          ## model: passthrough
-          ## numa:
-          ##   key: guestMappingPassthrough
-          ## realtime: "true"
-          ##
-          cpu: {}
-            
-          ## @param vm.vms.template.spec.domain.ioThreadsPolicy
-          ##
-          ioThreadsPolicy: ""
-
-         ## @param vm.vms.template.spec.tolerations
-         ## E.g.
-         ## - key: node-role.kubernetes.io/worker-realtime
-         ##   operator: Exists
-         ##
-        tolerations: []
-
-        ## @param vm.vms.template.spec.terminationGracePeriodSeconds
-        ##
-        terminationGracePeriodSeconds: ""
-    
-    ## @param vm.vms.networks 
-    ## E.g. 
-    ## - name: default
-    ##   type: pod
+    ## @param vm.template.spec
     ##
-    networks: []
+    spec:
 
-    ## @param vm.vms.volumes
-    ## E.g.
-    ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
-    ##   name: containerdisk
-    ##   type: containerDisk
-    ## - dataVolume:
-    ##     name: rt-dv-dv
-    ##   name: root-disk
-    ##   type: dataVolume
-    ## - cloudInitNoCloud:
-    ##     networkData:
-    ##       ethernets:
-    ##         - addresses:
-    ##             - fd10:0:2::2/120
-    ##           dhcp4: "true"
-    ##           gateway6: fd10:0:2::1
-    ##           name: eth0
-    ##         - addresses:
-    ##             - 10.200.0.2/24
-    ##           dhcp4: "true"
-    ##           gateway6: fd10:0:2::1
-    ##           name: eth1
-    ##       version: 2
-    ##     userData:
-    ##       password: p
-    ##       user: u
-    ##   name: cloudinitdisk
-    ##   type: cloudInitNoCloud
-    ##
-    volumes: []
+      ## @param vm.template.spec.domain
+      ##
+      domain:
 
-    ## @param vm.vms.dataVolumeTemplates
-    ## E.g.
-    ## - apiVersion: cdi.kubevirt.io/v1beta1
-    ##   kind: DataVolume
-    ##   metadata:
-    ##     name: rhel9-realtime
-    ##   spec:
-    ##     sourceRef:
-    ##       kind: DataSource
-    ##       name: rhel9
-    ##       namespace: openshift-virtualization-os-images
-    ##     storage:
-    ##       resources:
-    ##         requests:
-    ##           storage: 30Gi
+        ## @param vm.template.spec.domain.resources
+        ## E.g.
+        ## requests:
+        ##   memory: 1024M
+        ##
+        resources: {}
 
-    dataVolumeTemplates: {}
+        ## @param vm.template.spec.domain.memory
+        ## E.g.
+        ## guest: 4Gi
+        ## hugepages:
+        ##   pageSize: 1Gi
+        ##
+        memory: {}
+
+        ## @param vm.template.spec.domain.devices
+        ## E.g.
+        ## disks:
+        ## - bus: virtio
+        ##   name: cloudinitdisk
+        ## - bus: virtio
+        ##   name: containerdisk
+        ## interfaces:
+        ##   - name: default
+        ##     type: masquerade
+        ## networkInterfaceMultiqueue: "true"
+        ## autoattachGraphicsDevice: "true"
+        ## autoattachMemBalloon: "false"
+        ## autoattachSerialConsole: "true"
+        ##
+        devices: {}
+
+        ## @param vm.template.spec.domain.cpu
+        ## E.g.
+        ## cores: 2
+        ## sockets: 2
+        ## threads: 2
+        ## dedicatedCpuPlacement: "true"
+        ## isolateEmulatorThread: "true"
+        ## model: passthrough
+        ## numa:
+        ##   key: guestMappingPassthrough
+        ## realtime: "true"
+        ##
+        cpu: {}
+          
+        ## @param vm.template.spec.domain.ioThreadsPolicy
+        ##
+        ioThreadsPolicy: ""
+
+        ## @param vm.template.spec.tolerations
+        ## E.g.
+        ## - key: node-role.kubernetes.io/worker-realtime
+        ##   operator: Exists
+        ##
+      tolerations: []
+
+      ## @param vm.template.spec.terminationGracePeriodSeconds
+      ##
+      terminationGracePeriodSeconds: ""
+  
+  ## @param vm.networks 
+  ## E.g. 
+  ## - name: default
+  ##   type: pod
+  ##
+  networks: []
+
+  ## @param vm.volumes
+  ## E.g.
+  ## - image: registry.redhat.io/rhel8/rhel-guest-image:latest
+  ##   name: containerdisk
+  ##   type: containerDisk
+  ## - dataVolume:
+  ##     name: rt-dv-dv
+  ##   name: root-disk
+  ##   type: dataVolume
+  ## - cloudInitNoCloud:
+  ##     networkData:
+  ##       ethernets:
+  ##         - addresses:
+  ##             - fd10:0:2::2/120
+  ##           dhcp4: "true"
+  ##           gateway6: fd10:0:2::1
+  ##           name: eth0
+  ##         - addresses:
+  ##             - 10.200.0.2/24
+  ##           dhcp4: "true"
+  ##           gateway6: fd10:0:2::1
+  ##           name: eth1
+  ##       version: 2
+  ##     userData:
+  ##       password: p
+  ##       user: u
+  ##   name: cloudinitdisk
+  ##   type: cloudInitNoCloud
+  ##
+  volumes: []
+
+  ## @param vm.dataVolumeTemplates
+  ## E.g.
+  ## - apiVersion: cdi.kubevirt.io/v1beta1
+  ##   kind: DataVolume
+  ##   metadata:
+  ##     name: rhel9-realtime
+  ##   spec:
+  ##     sourceRef:
+  ##       kind: DataSource
+  ##       name: rhel9
+  ##       namespace: openshift-virtualization-os-images
+  ##     storage:
+  ##       resources:
+  ##         requests:
+  ##           storage: 30Gi
+  dataVolumeTemplates: []
 
 mcp:
   enable: false
