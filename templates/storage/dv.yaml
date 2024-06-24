@@ -15,6 +15,6 @@ spec:
   {{- end }}
   {{- if .Values.dv.pvc.enable }}
   pvc:
-    {{- include "dv.spec.pvc" . | indent 4 }}
+    {{- include "dv.spec.pvc" . | indent 2 }}
 {{- end }}
 {{- end }}

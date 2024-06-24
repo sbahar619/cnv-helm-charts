@@ -119,7 +119,6 @@ Return the dv.spec.pvc object
 
 {{- if .Values.dv.pvc }}
 {{- $pvc := .Values.dv.pvc }}
-storage:
 
   {{- if $pvc.accessModes }}
   accessModes:
