@@ -149,7 +149,7 @@ Return the dv.spec.source.pvc object
 
 {{- define "dv.spec.source.pvc" -}}
 
-{{- if .Values.dv.pvc }}
+{{- if .Values.dv.source.pvc }}
 {{- $pvc := .Values.dv.source.pvc }}
 pvc:
 

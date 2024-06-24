@@ -8,6 +8,9 @@ dv:
       pullMethod: node
     blank:
       enable: false
+    pvc:
+      name: "pvc-1"
+      namespace: "ns-1"
   pvc:
     enable: true
     storageClassName: ocs-storagecluster-ceph-rbd
