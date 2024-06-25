@@ -16,12 +16,9 @@ vm:
         value: value
 
       annotations:
-        - key: cpu-load-balancing.crio.io
-          value: disable
-        - key: cpu-quota.crio.io
-          value: disable
-        - key: irq-load-balancing.crio.io
-          value: disable
+        cpu-load-balancing.crio.io: "disable"
+        cpu-quota.crio.io: "disable"
+        irq-load-balancing.crio.io: "disable"
 
     spec:
       domain:

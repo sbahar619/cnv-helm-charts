@@ -259,15 +259,10 @@ Return the vm.spec.template.metadata.annotations object
 */}}
 
 {{- define "vm.spec.template.metadata.annotations" -}}
-
-{{- if and .Values.vm.template .Values.vm.template.metadata .Values.vm.template.metadata.annotations }}
+{{- if .Values.vm.template.metadata.annotations }}
 {{- $annotations := .Values.vm.template.metadata.annotations }}
-annotations:
-{{- range $annotations }}
-  {{ .key }}: {{ .value | quote }}
+annotations: {{ toYaml $annotations | nindent 2 }}
 {{- end }}
-{{- end }}
-
 {{- end }}
 
 {{/*
@@ -277,6 +272,6 @@ Return the vm.spec.dataVolumeTemplates object
 {{- define "vm.spec.dataVolumeTemplates" -}}
 
 {{- if .Values.vm.dataVolumeTemplates}}
-  dataVolumeTemplates: {{ toYaml .Values.vm.dataVolumeTemplates | nindent 4}}
+  dataVolumeTemplates: {{ toYaml .Values.vm.dataVolumeTemplates | nindent 4 }}
 {{- end }}
 {{- end }}
