@@ -322,25 +322,7 @@ Return the vm.spec.dataVolumeTemplates object
 
 {{- define "vm.spec.dataVolumeTemplates" -}}
 
-{{- if .Values.vm.dataVolumeTemplates }}
-  dataVolumeTemplates:
-  {{- range .Values.vm.dataVolumeTemplates }}
-    - apiVersion: cdi.kubevirt.io/v1beta1
-      kind: DataVolume
-      metadata:
-        {{- include "renderKeyValuePair" (dict "key" "name" "value" .metadata.name) | indent 6 }}
-      spec:
-        sourceRef:
-        {{- $sourceRef := .spec.sourceRef }}
-
-          {{- include "renderKeyValuePair" (dict "key" "kind" "value" $sourceRef.kind) | indent 8 }}
-          {{- include "renderKeyValuePair" (dict "key" "name" "value" $sourceRef.name) | indent 8 }}
-          {{- include "renderKeyValuePair" (dict "key" "namespace" "value" $sourceRef.namespace) | indent 8 }}
-        storage:
-        {{- $storage := .spec.storage }}
-          resources:
-            requests:
-              {{- include "renderKeyValuePair" (dict "key" "storage" "value" $storage.resources.requests.storage) | indent 12 }}
-  {{- end }}
+{{- if .Values.vm.dataVolumeTemplates}}
+  dataVolumeTemplates: {{ toYaml .Values.vm.dataVolumeTemplates | nindent 4}}
 {{- end }}
 {{- end }}
