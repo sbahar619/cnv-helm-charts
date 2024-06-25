@@ -38,12 +38,14 @@ vm:
         devices:
           disks:
           - name: containerdisk
-            bus: virtio
+            disk:
+              bus: virtio
           - name: cloudinitdisk
-            bus: virtio
+            disk:
+              bus: virtio
           interfaces:
-          - name: default
-            type: masquerade
+          - masquerade: {}
+            name: default
           networkInterfaceMultiqueue: "false"
           autoattachGraphicsDevice: "false"
           autoattachMemBalloon: "true"

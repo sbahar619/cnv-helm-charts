@@ -71,20 +71,18 @@ vm:
         ## @param vm.template.spec.domain.devices
         ## E.g.
         ## disks:
-        ## - bus: virtio
-        ##   name: cloudinitdisk
-        ## - bus: virtio
-        ##   name: containerdisk
+        ## - name: containerdisk
+        ##   disk:
+        ##     bus: virtio
+        ## - name: cloudinitdisk
+        ##   disk:
+        ##     bus: virtio
         ## interfaces:
-        ##   - name: default
-        ##     type: masquerade
-        ##   - name: bridge-net
-        ##     type: bridge
-        ##   - type: sriov
-        ##     name: sriov-net-1
-        ## networkInterfaceMultiqueue: "true"
-        ## autoattachGraphicsDevice: "true"
-        ## autoattachMemBalloon: "false"
+        ## - masquerade: {}
+        ##   name: default
+        ## networkInterfaceMultiqueue: "false"
+        ## autoattachGraphicsDevice: "false"
+        ## autoattachMemBalloon: "true"
         ## autoattachSerialConsole: "true"
         ##
         devices: {}

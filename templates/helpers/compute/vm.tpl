@@ -10,8 +10,9 @@ Return the vm.spec.template.spec.domain.devices object
 devices:
 
   {{- if .Values.vm.template.spec.domain.devices.interfaces }}
+  {{- $interfaces := $devices.interfaces }}
   interfaces:
-    {{- include "vm.spec.template.spec.domain.devices.interfaces" . }}
+    {{- toYaml $interfaces | nindent 4 }}
   {{- end }}
 
   {{- $keyValuePairs := dict 
@@ -28,39 +29,10 @@ devices:
   {{- if $devices.disks }}
   {{- $disks := $devices.disks }}
   disks:
-    {{- include "vm.spec.template.spec.domain.devices.disks" . }}
+    {{- toYaml $disks | nindent 4 }}
   {{- end }}
 
 {{- end }}
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.devices.interfaces object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.interfaces" -}}
-
-  {{- $devices := .Values.vm.template.spec.domain.devices }}
-  {{- range $devices.interfaces }}
-    - {{ .type }}: {}
-      name: {{ .name }}
-  {{- end }}
-
-{{- end }}
-
-{{/*
-Return the vm.spec.template.spec.domain.devices.disks object
-*/}}
-
-{{- define "vm.spec.template.spec.domain.devices.disks" -}}
-
-  {{- $devices := .Values.vm.template.spec.domain.devices }}
-  {{- range $devices.disks }}
-    - name: {{ .name }}
-      disk:
-        bus: {{ .bus }}
-  {{- end }}
-
 {{- end }}
 
 {{/*
