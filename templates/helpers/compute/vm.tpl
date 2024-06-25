@@ -223,32 +223,14 @@ Return the vm.spec.template.spec.volumes.cloudInitNoCloud object
 
   {{- if .cloudInitNoCloud.networkData }}
   {{- $networkData := .cloudInitNoCloud.networkData }}
-    networkData: {{ printf "|" }}
-      {{- include "renderKeyValuePair" (dict "key" "version" "value" $networkData.version) | indent 4 }}
-
-      {{- if $networkData.ethernets }}
-      {{- $ethernets := $networkData.ethernets }}
-      ethernets:
-      {{- range $ethernets }}
-        {{ .name }}:
-        {{- if .addresses }}
-          addresses:
-          {{- range .addresses }}
-          - {{ . }}
-          {{- end }}
-        {{- end }}
-
-          {{- include "renderKeyValuePair" (dict "key" "dhcp4" "value" .dhcp4) | indent 8 }}
-          {{- include "renderKeyValuePair" (dict "key" "gateway6" "value" .gateway6) | indent 8 }}
-      {{- end }}
-      {{- end }}
+    networkData: {{ printf "|" }} {{ toYaml .cloudInitNoCloud.networkData | nindent 6 }}
   {{- end }}
 
   {{- if .cloudInitNoCloud.userData }}
   {{- $userData := .cloudInitNoCloud.userData }}
     userData: {{ printf "|-" }}
-      {{- include "renderKeyValuePair" (dict "key" "user" "value" $userData.user) | indent 4 }}
-      {{- include "renderKeyValuePair" (dict "key" "password" "value" $userData.password) | indent 4 }}
+      #cloud-config
+      {{- toYaml .cloudInitNoCloud.userData | nindent 6 }}
       chpasswd: { expire: False }
   {{- end }}
 

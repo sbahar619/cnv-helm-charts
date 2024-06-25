@@ -61,6 +61,7 @@ vm:
           realtime: "true"
 
         ioThreadsPolicy: auto
+        
       volumes:
       - name: containerdisk
         type: containerDisk
@@ -74,23 +75,21 @@ vm:
         cloudInitNoCloud:
 
           userData:
-            user: u
+            user: u    
             password: p
 
           networkData:
             version: 2
-
             ethernets:
-              - name: eth0
-                addresses:
-                  - fd10:0:2::2/120
-                dhcp4: "true"
+              eth0:
+                dhcp4: true
                 gateway6: fd10:0:2::1
-              - name: eth1
+              eth1:
                 addresses:
-                  - 10.200.0.2/24
-                dhcp4: "true"
+                - 10.200.0.1/24
+                dhcp4: true
                 gateway6: fd10:0:2::1
+
       tolerations:
         - key: node-role.kubernetes.io/worker-realtime
           operator: Exists
