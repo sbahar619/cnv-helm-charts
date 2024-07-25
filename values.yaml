@@ -81,6 +81,10 @@ vm:
         ## interfaces:
         ## - masquerade: {}
         ##   name: default
+        ## - bridge: {}
+        ##   name: bridge-net
+        ## - sriov: {}
+        ##   name: sriov-net
         ## networkInterfaceMultiqueue: "false"
         ## autoattachGraphicsDevice: "false"
         ## autoattachMemBalloon: "true"
@@ -116,6 +120,9 @@ vm:
       ##   name: root-disk
       ##   type: dataVolume
       ## - cloudInitNoCloud:
+      ##     userData:
+      ##       user: u    
+      ##       password: p
       ##     networkData:  
       ##       ethernets:
       ##         eth0:
@@ -148,7 +155,7 @@ vm:
   ## - name: default
   ##   type: pod
   ## - name: bridge-net
-  ##   type: bridge
+  ##   type: multus
   ##   networkName: bridge-nad
   ## - name: sriov-net-1 
   ##   type: multus
