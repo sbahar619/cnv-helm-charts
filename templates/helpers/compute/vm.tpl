@@ -103,6 +103,7 @@ resources:
   {{- if $domain.resources.requests }}
   requests:
     {{- include "renderKeyValuePair" (dict "key" "memory" "value" $domain.resources.requests.memory) | indent 2 }}
+    {{- include "renderKeyValuePair" (dict "key" "cpu" "value" $domain.resources.requests.cpu) | indent 2 }}
   {{- end }}
 {{- end }}
 {{- end }}
