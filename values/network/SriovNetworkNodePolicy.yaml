@@ -13,6 +13,7 @@ SriovNetworkNodePolicy:
       - eno2
       - eno2
     numVfs: 32
+    deviceType: vfio-pci
   # - name: 2
   #   namespace: openshift-sriov-network-operator
   #   resourceName: sriov_net_2
@@ -25,6 +26,7 @@ SriovNetworkNodePolicy:
   #     - eno2
   #     - eno2
   #   numVfs: 8
+  #   deviceType: vfio-pci
   # - name: 3
   #   namespace: openshift-sriov-network-operator
   #   resourceName: sriov_net_3
@@ -37,4 +39,5 @@ SriovNetworkNodePolicy:
   #     - eno2
   #     - eno2
   #   numVfs: 8
+  #   deviceType: vfio-pci
     

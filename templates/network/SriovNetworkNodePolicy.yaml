@@ -12,7 +12,8 @@ spec:
   nodeSelector:
     {{ .nodeSelector.key }}: {{ .nodeSelector.value | quote }}
   numVfs: {{ .numVfs }}
-  {{- include "SriovNetworkNodePolicy.spec.nicSelector" . | indent 2}}
+  {{- include "SriovNetworkNodePolicy.spec.nicSelector" . | indent 2 }}
+  {{- include "SriovNetworkNodePolicy.spec.deviceType" . | indent 2 }}
 ---
 {{- end }}
 {{- end }}

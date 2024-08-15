@@ -11,3 +11,13 @@ nicSelector:
 {{- end }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return the SriovNetworkNodePolicy.spec.deviceType object
+*/}}
+
+{{- define "SriovNetworkNodePolicy.spec.deviceType" }}
+{{- if .deviceType }}
+deviceType: {{ .deviceType }}
+{{- end }}
+{{- end }}

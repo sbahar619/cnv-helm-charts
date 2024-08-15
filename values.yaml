@@ -271,6 +271,7 @@ SriovNetworkNodePolicy:
       value: true
     numVfs: 32
     resourceName: sriov_net
+    deviceType: vfio-pci
 
 # STORAGE
 dv:
