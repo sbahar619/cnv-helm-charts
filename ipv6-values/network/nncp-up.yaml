@@ -1,0 +1,16 @@
+nncp:
+  enable: true
+  nncps:
+
+  - name: 1
+    interfaces:
+    - name: br1
+      type: linux-bridge
+      state: up
+      ports:
+      - eno4
+    nodeSelector:
+      key: node-role.kubernetes.io/worker
+      value: ""
+
+  

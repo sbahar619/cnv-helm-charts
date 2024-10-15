@@ -1,0 +1,67 @@
+vm:
+  enable: true
+
+  name: rhel8-1
+  running: true
+
+  nodeSelector:
+    key: node-role.kubernetes.io/worker
+    value: ""
+
+  template:
+    metadata: ""
+
+    spec:
+      domain:
+
+        resources:
+          requests:
+            memory: 1Gi
+
+        devices:
+          disks:
+          - name: containerdisk
+            disk:
+              bus: virtio
+          - name: cloudinitdisk
+            disk:
+              bus: virtio
+          interfaces:
+          - masquerade: {}
+            name: default
+          - bridge: {}
+            name: net-1
+        
+      volumes:
+      - name: containerdisk
+        type: containerDisk
+        image: registry.redhat.io/rhel8/rhel-guest-image:latest
+     
+      - name: cloudinitdisk
+        type: cloudInitNoCloud
+        cloudInitNoCloud:
+
+          userData:
+            user: u    
+            password: p
+          
+          networkData:  
+            ethernets:
+              eth0:
+                addresses:
+                - fd10:0:2::2/120
+                dhcp4: true
+                gateway6: fd10:0:2::1
+              eth1:
+                addresses:
+                - fd10:0:3::3/120 
+                dhcp4: true
+                gateway6: fd10:0:3::1
+            version: 2
+
+  networks:
+    - name: default 
+      type: pod
+    - name: net-1
+      type: multus
+      networkName: bridge-nad
