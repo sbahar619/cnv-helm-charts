@@ -1,0 +1,12 @@
+nad:
+  enable: true
+  name: bridge-nad-2
+  network:
+    cniVersion: "0.3.1"
+    name: "bridge-network"
+    type: "cnv-bridge"
+    bridge: "br1"
+    macspoofchk: true
+    ipam: "{}"
+    vlan: "1007"
+    preserveDefaultVlan: "false"
