@@ -56,7 +56,7 @@ vm:
                 gateway6: fd10:0:2::1
               eth1:
                 addresses:
-                - fd10:0:3::4/120 
+                - fd10:0:3::5/120
                 dhcp4: true
                 gateway6: fd10:0:3::1
               eth2:
