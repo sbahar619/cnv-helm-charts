@@ -1,6 +1,6 @@
 nad:
   enable: true
-  name: bridge-nad-1
+  name: bridge-nad-vlan-1
   network:
     cniVersion: "0.3.1"
     name: "bridge-network"

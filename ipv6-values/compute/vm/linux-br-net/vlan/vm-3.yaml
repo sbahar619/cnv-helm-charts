@@ -71,7 +71,7 @@ vm:
       type: pod
     - name: net-1
       type: multus
-      networkName: bridge-nad-1
+      networkName: bridge-nad-vlan-1
     - name: net-2
       type: multus
-      networkName: bridge-nad-2
+      networkName: bridge-nad-vlan-2
